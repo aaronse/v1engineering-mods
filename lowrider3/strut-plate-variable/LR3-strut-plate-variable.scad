@@ -1,6 +1,10 @@
-//beam_len = 1400;
-//num_keys = 8;
+// Slightly modified version of Jamie's script intended to be called via 
+// OpenSCAD's commandline based automation.
 
+// Jamie's original script:
+// - https://www.printables.com/model/206716-lr3-strut-plate-variable
+
+// beam_len's default will be overidden by command line param-value.
 beam_len = 790;
 
 // Compute number of braces given specified beam length
@@ -9,7 +13,7 @@ beam_len = 790;
 // 
 // But doc also has 2' design with 6 braces, when 5 would satisfy the 200mm
 // requirement.  So, we'll add an additional brace for short gantry, until
-// if/when this assumption is clarified otherwise.
+// if/when this assumption is corrected/clarified.
 num_braces = ceil(beam_len / 200) + ((beam_len < 800) ? 2 : 1);
 
 echo(str("beam_len = ", beam_len));
