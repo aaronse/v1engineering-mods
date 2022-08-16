@@ -1,14 +1,14 @@
 # Lowrider 3 mod, generate all the Struts
 
 ## Summary
-- Generate *ALL the Strut .SVG files, to the nearest 10mm, so that LR3 builders don't have to.
+- Generate *ALL the Strut .SVG files, in 1mm increments, so that LR3 builders don't have to.
 - For more context, see https://forum.v1engineering.com/t/lowrider-3-cnc-lr3-release-notes/32748/350
 
-*ALL - as in all the possible sizes that would be rationally chosen.  10mm increments.
+*ALL - as in all the possible sizes that would be rationally chosen 480mm to 1700mm, in 1mm increments.
 - From https://docs.v1engineering.com/lowrider/calculator
-  - Min 12" Usable Cutting Area, has 480mm Tube/Strut Length
-  - Max 60" Usable Cutting Area = 1700mm Tube/Strut Length 
-
+  - Min 12" Usable Cutting Area would have 480mm Tube/Strut Length
+  - Max 60" Usable Cutting Area would have 1700mm Tube/Strut Length 
+ 
 
 ## Usage
 - Generate some .SVG struts
