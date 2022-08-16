@@ -22,6 +22,14 @@ for /l %i in (1000,1,1700) do "C:\Program Files\OpenSCAD\openscad.exe" --D "beam
 - Publish somewhere folks can access, e.g. this repo
     https://raw.githubusercontent.com/aaronse/v1engineering-mods/main/lowrider3/strut-plate-variable/out/lr3-strut-plate-variable_780.svg
 
+- Test/Verify Output :
+
+```
+echo ^<html^>^<style^>body {font-size:100px; white-space:nowrap }^</style^>^<body^> > test.html
+for /l %i in (480,1,700) do echo ^<br/^>%i ^<img src=out_0/lr3-strut-plate-variable_%i.svg /^> >> test.html
+echo ^</body^>^</html^> >> test.html
+start test.html
+```
 
 ## Acknowledgments
 - Copied/forked from Jamie's https://www.printables.com/model/206716-lr3-strut-plate-variable
