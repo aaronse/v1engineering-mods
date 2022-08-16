@@ -1,0 +1,81 @@
+<html>
+<!--
+22/08/15 copied from https://codepen.io/amatulic/pen/eYeBLva
+
+by Alex Matulich, February 2022
+Thingiverse: https://www.thingiverse.com/amatulic/designs
+Website: https://www.nablu.com
+-->
+
+<head>
+  <script type="text/javascript">
+    var sctx;
+
+    function initialize() {
+      var canvas = document.getElementById("canvas");
+      sctx = canvas.getContext("2d");
+    }
+
+    function charwidth(fontname, style) {
+      sctx.font = (style + " 20px " + fontname).trim();
+      var charlen = [];
+      for (i = 0; i < 256; ++i) //{ charlen[i] = 10; console.log(i); }
+        charlen[i] = sctx.measureText(String.fromCharCode(i)).width / 20;
+      return charlen;
+    }
+
+    function generate() {
+      var fontname = document.getElementById("fontname").value;
+      var fontstyle = document.getElementById("fontstyle").value;
+      var widths = charwidth(fontname, fontstyle);
+      //var arrayname = toCamelCase(fontname) + toCamelCase(fontstyle);
+      var arrayname = "fontWidthProportions"; 
+      var outputhtml = "// " + toCamelCase(fontname) + " " + toCamelCase(fontstyle) + " width proportions<br/>\n";
+      outputhtml += arrayname + " = [<br/>\n" + widths[0].toString();
+      var len = widths.length;
+      for (i = 0; i < len; ++i) outputhtml += ', ' + widths[i].toString();
+      outputhtml += "<br/>\n];\n";
+      document.getElementById("output").innerHTML = outputhtml;
+      document.getElementById('usage').innerHTML = "<h3>Usage</h3>\n<p>The array above shows character width as a multiple of font size. To get the width of a character <code>&lt;char&gt;</code> given font size <code>&lt;fontsize&gt;</code> using the font \"" + fontname + " " + fontstyle + "\":</p>\n<p><code>&nbsp; charwidth = " + arrayname + "[ord(char)] * fontsize;<code></p>\n";
+      document.getElementById('sample').innerHTML = "<h3>Font sample</h3>\n<p style=\"font: " + fontstyle + " 20px " + fontname + ";\">" + fontname + " " + fontstyle + ": 0123456789 ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz</p>\n";
+    }
+    // convert the input array to camel case
+    function toCamelCase(stringinput) {
+      if (stringinput.length == 0) return '';
+      var inputArray = stringinput.match(/[A-Z\xC0-\xD6\xD8-\xDE]?[a-z\xDF-\xF6\xF8-\xFF]+|[A-Z\xC0-\xD6\xD8-\xDE]+(?![a-z\xDF-\xF6\xF8-\xFF])|\d+/g);
+      result = "";
+      for (let i = 0, len = inputArray.length; i < len; i++) {
+        let currentStr = inputArray[i];
+        let tempStr = currentStr.toLowerCase();
+        // convert first letter to upper case (the word is in lowercase)
+        tempStr = tempStr.substr(0, 1).toUpperCase() + tempStr.substr(1);
+        result += tempStr;
+      }
+      return result;
+    }
+  </script>
+</head>
+
+<body onload="initialize()">
+  <h1>OpenSCAD proportional font widths</h1>
+  <form>
+    <fieldset>
+      <legend>Identify the font</legend>
+      <input type="text" id="fontname" name="fontname" value="Liberation Sans">
+      <label for="fontname">Font name</label><br />
+      <input type="text" id="fontstyle" name="fontstyle" value="bold">
+      <label for="fontstyle">Font style (bold, italic, etc. or leave blank)<br />
+    </fieldset>
+    <input type="button" onclick="generate()" value="Generate OpenSCAD font width proportions">
+  </form>
+  <h2>Copy and paste this code into OpenSCAD</h2>
+  <div id="output" style="border:5px ridge silver; padding:1em; font-family:monospace;">
+  </div>
+  <div id="usage">
+  </div>
+  <div id="sample">
+  </div>
+  <canvas id="canvas"></canvas>
+</body>
+
+</html>
