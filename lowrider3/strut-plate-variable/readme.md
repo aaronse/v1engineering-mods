@@ -13,20 +13,18 @@
 ## Usage
 - Generate some .SVG struts
 ```
-for /l %i in (480,10,1700) do "C:\Program Files\OpenSCAD\openscad.exe" --D "beam_len=%i" -q -o out\lr3-strut-plate-variable_%i.svg LR3-strut-plate-variable.scad
+for /l %i in (480,1,999) do "C:\Program Files\OpenSCAD\openscad.exe" --D "beam_len=%i" -q -o svg_0\lr3-strut-plate-variable_%i.svg LR3-strut-plate-variable.scad
 
-for /l %i in (480,1,999) do "C:\Program Files\OpenSCAD\openscad.exe" --D "beam_len=%i" -q -o out_0\lr3-strut-plate-variable_%i.svg LR3-strut-plate-variable.scad
-
-for /l %i in (1000,1,1700) do "C:\Program Files\OpenSCAD\openscad.exe" --D "beam_len=%i" -q -o out_1\lr3-strut-plate-variable_%i.svg LR3-strut-plate-variable.scad
+for /l %i in (1000,1,1700) do "C:\Program Files\OpenSCAD\openscad.exe" --D "beam_len=%i" -q -o svg_1\lr3-strut-plate-variable_%i.svg LR3-strut-plate-variable.scad
 ```
 - Publish somewhere folks can access, e.g. this repo
-    https://raw.githubusercontent.com/aaronse/v1engineering-mods/main/lowrider3/strut-plate-variable/out/lr3-strut-plate-variable_780.svg
+    https://raw.githubusercontent.com/aaronse/v1engineering-mods/main/lowrider3/strut-plate-variable/svg_0/lr3-strut-plate-variable_780.svg
 
-- Test/Verify Output :
+- Test/Verify Output, generate test.html file, zoom out and scroll through, eyeball verify quality :
 
 ```
 echo ^<html^>^<style^>body {font-size:100px; white-space:nowrap }^</style^>^<body^> > test.html
-for /l %i in (480,1,700) do echo ^<br/^>%i ^<img src=out_0/lr3-strut-plate-variable_%i.svg /^> >> test.html
+for /l %i in (480,1,999) do echo ^<br/^>%i ^<img src=svg_0/lr3-strut-plate-variable_%i.svg /^> >> test.html
 echo ^</body^>^</html^> >> test.html
 start test.html
 ```
