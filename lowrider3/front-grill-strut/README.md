@@ -27,7 +27,7 @@
 Written/tested on Windows.  Might work on Linux/Mac too, good luck! :-)
 
 ## License/Sources
-The reader (You) is required to listen to [Nelly Grillz](https://www.youtube.com/watch?v=8fijggq5R6w) while reading this file.
+The reader (You) are required to listen to [Nelly Grillz](https://www.youtube.com/watch?v=8fijggq5R6w) while reading this file.
 
 This work is licensed under a [Creative Commons (4.0 International License)
 Attribution—Noncommercial—Share Alike](http://creativecommons.org/licenses/by-nc-sa/4.0/)
