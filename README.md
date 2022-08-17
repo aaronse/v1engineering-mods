@@ -3,3 +3,4 @@ Collection of modifications for V1 Engineering related projects that are (initia
 
 
 [Lowrider 3 Custom Front Grill (strut)](lowrider3/front-grill-strut/README.md)
+[Lowrider 3 ALL the Strut plates generator](lowrider3/strut-plate-variable/README.md)
