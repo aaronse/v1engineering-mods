@@ -1,11 +1,19 @@
 <html>
 <!--
-22/08/15 copied from https://codepen.io/amatulic/pen/eYeBLva
+PURPOSE/USAGE
+  Use this if you want OpenSCAD text autocentered, and width proportions for
+  the font you're using are not already declared within fontWidthProportions.scad
 
-by Alex Matulich, February 2022
-Thingiverse: https://www.thingiverse.com/amatulic/designs
-Website: https://www.nablu.com
--->
+HISTORY
+  2022/8/17 Modified to generate char width proportion arrays for OpenSCAD
+  based fontWidthProportions.scad.
+  
+  2022/8/15 Originally copied from https://codepen.io/amatulic/pen/eYeBLva
+    Original Notes:
+      by Alex Matulich, February 2022
+      Thingiverse: https://www.thingiverse.com/amatulic/designs
+      Website: https://www.nablu.com
+  -->
 
 <head>
   <script type="text/javascript">
@@ -16,8 +24,8 @@ Website: https://www.nablu.com
       sctx = canvas.getContext("2d");
     }
 
-    function charwidth(fontname, style) {
-      sctx.font = (style + " 20px " + fontname).trim();
+    function charwidth(fontName, style) {
+      sctx.font = (style + " 20px " + fontName).trim();
       var charlen = [];
       for (i = 0; i < 256; ++i) //{ charlen[i] = 10; console.log(i); }
         charlen[i] = sctx.measureText(String.fromCharCode(i)).width / 20;
@@ -25,19 +33,19 @@ Website: https://www.nablu.com
     }
 
     function generate() {
-      var fontname = document.getElementById("fontname").value;
-      var fontstyle = document.getElementById("fontstyle").value;
-      var widths = charwidth(fontname, fontstyle);
-      //var arrayname = toCamelCase(fontname) + toCamelCase(fontstyle);
-      var arrayname = "fontWidthProportions"; 
-      var outputhtml = "// " + toCamelCase(fontname) + " " + toCamelCase(fontstyle) + " width proportions<br/>\n";
-      outputhtml += arrayname + " = [<br/>\n" + widths[0].toString();
+      var fontName = document.getElementById("fontName").value;
+      var fontStyle = document.getElementById("fontStyle").value;
+      var widths = charwidth(fontName, fontStyle);
+      var outputHtml = "// " + toCamelCase(fontName) + " " + toCamelCase(fontStyle) + " width proportions<br/>\n";
+      var fontStyleStr = (!fontStyle || fontStyle.trim().length == 0) ? "" : ":style=" + fontStyle.toLowerCase();
+      //var arrayname = "fontWidthProportions"; 
+      outputHtml += "[\"" + fontName.toLowerCase()  + fontStyleStr + "\",[" + widths[0].toString();
       var len = widths.length;
-      for (i = 0; i < len; ++i) outputhtml += ', ' + widths[i].toString();
-      outputhtml += "<br/>\n];\n";
-      document.getElementById("output").innerHTML = outputhtml;
-      document.getElementById('usage').innerHTML = "<h3>Usage</h3>\n<p>The array above shows character width as a multiple of font size. To get the width of a character <code>&lt;char&gt;</code> given font size <code>&lt;fontsize&gt;</code> using the font \"" + fontname + " " + fontstyle + "\":</p>\n<p><code>&nbsp; charwidth = " + arrayname + "[ord(char)] * fontsize;<code></p>\n";
-      document.getElementById('sample').innerHTML = "<h3>Font sample</h3>\n<p style=\"font: " + fontstyle + " 20px " + fontname + ";\">" + fontname + " " + fontstyle + ": 0123456789 ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz</p>\n";
+      for (i = 0; i < len; ++i) outputHtml += ', ' + widths[i].toString();
+      outputHtml += "]],\n";
+      document.getElementById("output").innerHTML = outputHtml;
+      //document.getElementById('usage').innerHTML = "<h3>Usage</h3>\n<p>The array above shows character width as a multiple of font size. To get the width of a character <code>&lt;char&gt;</code> given font size <code>&lt;fontsize&gt;</code> using the font \"" + fontName + " " + fontStyle + "\":</p>\n<p><code>&nbsp; charwidth = " + arrayname + "[ord(char)] * fontsize;<code></p>\n";
+      document.getElementById('sample').innerHTML = "<h3>Font sample</h3>\n<p style=\"font: " + fontStyle + " 20px " + fontName + ";\">" + fontName + " " + fontStyle + ": 0123456789 ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz</p>\n";
     }
     // convert the input array to camel case
     function toCamelCase(stringinput) {
@@ -61,10 +69,10 @@ Website: https://www.nablu.com
   <form>
     <fieldset>
       <legend>Identify the font</legend>
-      <input type="text" id="fontname" name="fontname" value="Liberation Sans">
-      <label for="fontname">Font name</label><br />
-      <input type="text" id="fontstyle" name="fontstyle" value="bold">
-      <label for="fontstyle">Font style (bold, italic, etc. or leave blank)<br />
+      <input type="text" id="fontName" name="fontName" value="Arial">
+      <label for="fontName">Font name</label><br />
+      <input type="text" id="fontStyle" name="fontStyle" value="bold">
+      <label for="fontStyle">Font style (bold, italic, etc. or leave blank)<br />
     </fieldset>
     <input type="button" onclick="generate()" value="Generate OpenSCAD font width proportions">
   </form>
