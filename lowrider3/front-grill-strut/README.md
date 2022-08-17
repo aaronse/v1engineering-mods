@@ -1,5 +1,5 @@
 
- # V1E LowRider 3 mod - Custom Front Grill (strut)
+ # V1E LowRider 3 mod - Create Custom Front Grill (Strut) .SVG
 
 ![image](https://user-images.githubusercontent.com/16479976/185211181-13c51572-bade-4159-9ef1-2c4805e55c40.png)
 
