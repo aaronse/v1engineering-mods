@@ -1,10 +1,13 @@
 
  # V1E LowRider 3 mod - Custom Front Grill (strut)
 
+![image](https://user-images.githubusercontent.com/16479976/185211181-13c51572-bade-4159-9ef1-2c4805e55c40.png)
+
+
 ![image](https://user-images.githubusercontent.com/16479976/185208280-0517d4ed-d515-4908-ae9b-3cce6fc0075e.png)
 
 ### Purpose
-- Generate a fancy custom, but practical, stronger, front grill strut for your [V1Engineering LowRider 3](https://docs.v1engineering.com/lowrider) CNC.
+- Generate a fancy custom, but practical, stronger, solid front grill strut for your [V1Engineering LowRider 3](https://docs.v1engineering.com/lowrider) CNC.
 - Honestly, I initially used this as a practical opportunity to learn some [OpenSCAD](https://www.openscad.org/).
 
 
