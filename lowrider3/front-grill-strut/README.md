@@ -1,30 +1,28 @@
 
- # V1E LowRider 3 mod - Custom Front Grill (strut)
+ # V1E LowRider 3 mod - Create Custom Front Grill (Strut) .SVG
+
+![image](https://user-images.githubusercontent.com/16479976/185211181-13c51572-bade-4159-9ef1-2c4805e55c40.png)
+
+
+![image](https://user-images.githubusercontent.com/16479976/185208280-0517d4ed-d515-4908-ae9b-3cce6fc0075e.png)
+
+### Purpose
+- Generate a fancy custom, but practical, stronger, solid front grill strut for your [V1Engineering LowRider 3](https://docs.v1engineering.com/lowrider) CNC.
+- Honestly, I initially used this as a practical opportunity to learn some [OpenSCAD](https://www.openscad.org/).
+
+
+### Usage:
+- See code comments for usage instructions.  Here's a (stale?) snapshot for convenience :  
+
+![image](https://user-images.githubusercontent.com/16479976/185208846-09f1b5c4-13e0-4a3c-8c61-c7fe1c63bd20.png)
+
+### Notes:
+Written/tested on Windows.  Might work on Linux/Mac too, good luck! :-)
+
 
 ### Acknowledgements
 - Remix/based-on [Jamie's script](https://www.printables.com/model/206716-lr3-strut-plate-variable) for creating variable length struts designed for V1 Engineering's Lowrider 3.
 
-### Goals
-- Opportunity to learn and use [OpenSCAD](https://www.openscad.org/).
-
-### Usage:
- 1) Edit _beam_len_, set to match your LR3's EMT Rail length.  Use https://docs.v1engineering.com/lowrider/calculator/ to figure out "Tube Length" (and other dimensions) for your build.
-     - For example 4' (1220mm) usable cutting width requires 55" = 1400mm tube length for the gantry.
-
- 2) Edit num_keys, set to number of beam braces, which should be spaced, ideally, no more than 8" (203mm) a part.  
- 
-     Intentionally did not automatically compute num_keys because you might want to deviate from the ideal max spacing, within reason, as you balance aesthetics against optimal strength.
-
- 3) Render and export in .svg format
-
- 4) Open .SVG in EstlCam, or which ever software you use to generate CNC gcode.
-
- 5) Cut...
-
-[gen_openscad_char_width_array.html]()
-
-### Notes:
-Written/tested on Windows.  Might work on Linux/Mac too, good luck! :-)
 
 ## License/Sources
 You are required to listen to [Nelly Grillz](https://www.youtube.com/watch?v=8fijggq5R6w) while reading this file.
