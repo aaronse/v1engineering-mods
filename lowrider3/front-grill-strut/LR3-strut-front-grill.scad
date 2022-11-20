@@ -56,8 +56,8 @@ cnc_name =
 // for one text string, but useful in other situations with lots of 
 // text to layout.
 cnc_name_font =
-    "roboto:style=condensed"; // Download from https://www.dafont.com/roboto.font
-    //"nasalization";             // Download from https://www.dafont.com/nasalization.font
+    //"roboto:style=condensed"; // Download from https://www.dafont.com/roboto.font
+    "nasalization";             // Download from https://www.dafont.com/nasalization.font
     //"arial";
     //"arial:style=bold";
     // - Font name, and optional style, use lowercase.
