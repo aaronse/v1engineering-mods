@@ -29,6 +29,7 @@
 Render_CNC = 1;             // Flag indicating whether to Render CNC 
                             // (Set 0 if only want to render and export 
                             // Table model)
+Render_Table = 1;
 
 Table_Len = 63.75;                // Length of Table
 Table_Wid = 36;                   // Width of Table
@@ -70,10 +71,11 @@ LR3_OverallWidth = LR3_InsideWidth + (100 / 25.4);
 // LR3 overall Machine dimension along X Axis
 CNC_Len = LR3_InsideWidth;
 
-echo(str("CNC_WorkLen = ", CNC_WorkLen,
+echo(str("Table_Len = ", Table_Len, 
+  ", LR3_OverallWidth = ", LR3_OverallWidth,
   ", CNC_Len = ", CNC_Len,
-  ", LR3_OverallWidth = ", LR3_OverallWidth));
-
+  ", CNC_WorkLen = ", CNC_WorkLen));
+  
 
 //   including Y-Rail length
 CNC_Depth = CNC_WorkDepth + (295 / 25.4);          // LR3 overall Machine dimension along Y Axis, 
@@ -268,7 +270,7 @@ module Shelf()
 }
 module MpcncCornerBlocks()
 {
-    translate([CNC_X_Loc,CNC_Y_Loc,Ht+EdgeWd_Thk])
+    translate([CNC_X_Loc,CNC_Y_Loc,0])
     color("blue")
     {
         translate([0,0,0])
@@ -283,7 +285,7 @@ module MpcncCornerBlocks()
 }
 module MpcncEmt()
 {
-    translate([CNC_X_Loc,CNC_Y_Loc,Ht+EdgeWd_Thk])
+    translate([CNC_X_Loc,CNC_Y_Loc,0])
     color("silver")
     {
         // Y Pipes
@@ -318,8 +320,8 @@ module Lr3CornerBlocks()
         translate([Y_Block_Len_Offset+CNC_Len,CNC_Depth - CNC_Corner_Length,0])
           cube([CNC_Corner_Width,CNC_Corner_Length,CNC_Corner_Ht]);
 
-        translate([-Y_Block_Len_Offset,-1,0])
-          cube([LR3_OverallWidth,1,1]);
+//        translate([-Y_Block_Len_Offset,-1,0])
+//          cube([LR3_OverallWidth,1,1]);
         
 
         for ( i = [0 : 8 : 32]){
@@ -457,14 +459,14 @@ module ShelfLedges()
 module Lr3()
 {
   // LR3 Rigid structures
-  translate([CNC_X_Loc,CNC_Y_Loc,Ht+EdgeWd_Thk])
+  translate([CNC_X_Loc,CNC_Y_Loc, 0])
   {
     Lr3CornerBlocks();
     Lr3EmtYAxis();
   }
 
   // LR3 Mobile gantry
-  translate([CNC_X_Loc, CNC_Y_Loc + CNC_Y_Pos,Ht+EdgeWd_Thk])
+  translate([CNC_X_Loc, CNC_Y_Loc + CNC_Y_Pos, 0])
   {
     Lr3EmtXAxis();
     
@@ -484,85 +486,121 @@ module Lr3()
 }
 scale([ScaleFactor,ScaleFactor,ScaleFactor])
 {
-    if (Render_CNC == 1)
+    translate([0,0,Ht+(2*EdgeWd_Thk)])
     {
-      if (CNC_Model == "MPCNC")
+      if (Render_CNC == 1)
       {
-        MpcncCornerBlocks();    //Draw 4 corner blocks
-        MpcncEmt();             //Draw the EMT
-      }
-      else if (CNC_Model == "LR3")
-      {
-        Lr3();
+        if (CNC_Model == "MPCNC")
+        {
+          MpcncCornerBlocks();    //Draw 4 corner blocks
+          MpcncEmt();             //Draw the EMT
+        }
+        else if (CNC_Model == "LR3")
+        {
+          Lr3();
+        }
       }
     }
     
-    // Draw Usable Work Area
-    translate([Work_Y_Loc,Work_X_Loc,Ht+EdgeWd_Thk])
-    color("red",.5)
-  %cube([CNC_WorkLen,CNC_WorkDepth,.25]);   
+    if (Render_Table == 1)
+    {
+      translate([0,0,Ht])
+      //%TopEdge();         
+      color("Peru",.7)
+      cube([Table_Len,Table_Wid,EdgeWd_Thk]);  
 
-    // Draw Left Y-axis surface "the 1st Top Edge"
-    translate([0,0,Ht])
-    //%TopEdge();         
-    color("#c0c0c0",.7)
-  %cube([EdgeWd_Wid,Table_Wid,EdgeWd_Thk]);  
-    
-    // Draw Right Y-axis surface, "the 2nd Top Edge"
-    translate([Table_Len-EdgeWd_Wid,0,Ht])
-    //%TopEdge();         
-    color("#c0c0c0",.7)
-  %cube([EdgeWd_Wid,Table_Wid,EdgeWd_Thk]);  
-    
-    // Draw the Top Middle (Spoilboard)
-    translate([EdgeWd_Wid,0,Ht])
-    color("Peru",.7)
-  %cube([Table_Len-(EdgeWd_Wid*2),Table_Wid,EdgeWd_Thk]);       
+      translate([0,0,EdgeWd_Thk])
+      {
+        
+        // Draw Usable Work Area
+        translate([Work_Y_Loc,Work_X_Loc,Ht+EdgeWd_Thk])
+        color("red",.5)
+      %cube([CNC_WorkLen,CNC_WorkDepth,.25]);   
+
+        // Draw Left Y-axis surface "the 1st Top Edge"
+        translate([0,0,Ht])
+        //%TopEdge();         
+        color("#c0c0c0",.7)
+      cube([EdgeWd_Wid,Table_Wid,EdgeWd_Thk]);  
+        
+        // Draw Right Y-axis surface, "the 2nd Top Edge"
+        translate([Table_Len-EdgeWd_Wid,0,Ht])
+        //%TopEdge();         
+        color("#c0c0c0",.7)
+      cube([EdgeWd_Wid,Table_Wid,EdgeWd_Thk]);  
+     
+      // Draw Front surface no-cut zone
+        translate([EdgeWd_Wid,0,Ht])
+        //%TopEdge();         
+        color("Peru",.7)
+        cube([Table_Len-(2 * EdgeWd_Wid),EdgeWd_Wid,EdgeWd_Thk]);  
+
+        translate([EdgeWd_Wid,Table_Wid - EdgeWd_Wid,Ht])
+        //%TopEdge();         
+        color("Peru",.7)
+        cube([Table_Len-(2 * EdgeWd_Wid),EdgeWd_Wid,EdgeWd_Thk]);  
+        
+        // Draw the Top Middle (Spoilboard)
+    //    translate([EdgeWd_Wid,0,Ht])
+    //    color("Peru",.7)
+    //  %cube([Table_Len-(EdgeWd_Wid*2),Table_Wid,EdgeWd_Thk]);       
+      }
   
-    translate([Table_OverHang,Table_OverHang,0])
-    {
-      Leg();              //Draw 1st Leg
-      translate([0,Legs_Wid-LegWd24_Thk,0])
-      Leg();              //Draw 2nd Leg
-      translate([Legs_Len-LegWd24_Wid,0,0])
-      Leg();              //Draw 3rd Leg
-      translate([Legs_Len-LegWd24_Wid,Legs_Wid-LegWd24_Thk,0])
-      Leg();              //Draw 4th Leg
+      translate([Table_OverHang,Table_OverHang,0])
+      {
+        Leg();              //Draw 1st Leg
+        translate([0,Legs_Wid-LegWd24_Thk,0])
+        Leg();              //Draw 2nd Leg
+        translate([Legs_Len-LegWd24_Wid,0,0])
+        Leg();              //Draw 3rd Leg
+        translate([Legs_Len-LegWd24_Wid,Legs_Wid-LegWd24_Thk,0])
+        Leg();              //Draw 4th Leg
 
-      // Mid span Internal rail(s) supporting table top
-      if (MidTopLedgeQty == 1)
-      {
-          translate([TopLedgeWd24_Thk,Table_Wid/2-(LegWd24_Thk/2),Ht-TopLedgeWd24_Wid])
-          cube([WdTopLedgeLen,TopLedgeWd24_Thk,TopLedgeWd24_Wid]);
-      } else
-      {
-          translate([TopLedgeWd24_Thk,(Table_Wid/2-(LegWd24_Thk/2))+6,Ht-TopLedgeWd24_Wid])
-          cube([WdTopLedgeLen,TopLedgeWd24_Thk,TopLedgeWd24_Wid]);
-          translate([TopLedgeWd24_Thk,(Table_Wid/2-(LegWd24_Thk/2))-6,Ht-TopLedgeWd24_Wid])
-          cube([WdTopLedgeLen,TopLedgeWd24_Thk,TopLedgeWd24_Wid]);
-      }
+        // Mid span Internal rail(s) supporting table top
+        if (MidTopLedgeQty == 1)
+        {
+            translate([TopLedgeWd24_Thk,Table_Wid/2-(LegWd24_Thk/2),Ht-TopLedgeWd24_Wid])
+            cube([WdTopLedgeLen,TopLedgeWd24_Thk,TopLedgeWd24_Wid]);
+        } else
+        {
+            translate([TopLedgeWd24_Thk,(Legs_Wid/2-(LegWd24_Thk/2))+6,Ht-TopLedgeWd24_Wid])
+            cube([WdTopLedgeLen,TopLedgeWd24_Thk,TopLedgeWd24_Wid]);
+            translate([TopLedgeWd24_Thk,(Legs_Wid/2-(LegWd24_Thk/2))-6,Ht-TopLedgeWd24_Wid])
+            cube([WdTopLedgeLen,TopLedgeWd24_Thk,TopLedgeWd24_Wid]);
+        }
 
-      // Shelf 1 (Bottom)
-      if (Shelf_Qty > 0)
-      {
-          translate([0,0,Shelf1_Ht-ShelfLedgeWd24_Wid])
-          ShelfLedges();
-          translate([0,LegWd24_Thk,Shelf1_Ht])
-          Shelf();
+        // Shelf 1 (Bottom)
+        if (Shelf_Qty > 0)
+        {
+            translate([0,0,Shelf1_Ht-ShelfLedgeWd24_Wid])
+            ShelfLedges();
+            translate([0,LegWd24_Thk,Shelf1_Ht])
+            Shelf();
+        }
+        
+        // Shelf 2 (Middle)
+        if (Shelf_Qty > 1)
+        {
+            translate([0,0,Shelf2_Ht-ShelfLedgeWd24_Wid])
+            ShelfLedges();
+            translate([0,LegWd24_Thk,Shelf2_Ht])
+            Shelf();
+        }
+
+        // Draw the 4 top outside box apron/rails that top rests on
+        translate([0,0,Ht-TopLedgeWd24_Wid])
+        TopLedges();
       }
       
-      // Shelf 2 (Middle)
-      if (Shelf_Qty > 1)
-      {
-          translate([0,0,Shelf2_Ht-ShelfLedgeWd24_Wid])
-          ShelfLedges();
-          translate([0,LegWd24_Thk,Shelf2_Ht])
-          Shelf();
-      }
-
-      // Draw the 4 top outside box apron/rails that top rests on
-      translate([0,0,Ht-TopLedgeWd24_Wid])
-      TopLedges();
-    }
+      VAC_Diameter = 20;
+      VAC_Height = 20;
       
+      color("orange")
+      translate([
+        Table_OverHang + VAC_Diameter/2,
+        Table_OverHang + Legs_Wid/2,
+        Shelf1_Ht])
+      rotate([0,0,0])
+      cylinder(d=VAC_Diameter,h=VAC_Height,$fn=32);
+  }
 }
