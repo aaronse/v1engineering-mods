@@ -13,6 +13,8 @@ Enables using reusable zip ties to secure 2-1/2" vac hose.
 
 ## Files 
 [makita-tool-mount_2.5in_xl-zip_aza_v1.stl](makita-tool-mount_2.5in_xl-zip_aza_v1.stl)<br/>
+[makita-tool-mount_2.5in_xl-zip_aza_v1.step](makita-tool-mount_2.5in_xl-zip_aza_v1.step)<br/>
+
 
 ## Usage
 Use this Mod when following [LR3 build docs](https://docs.v1engineering.com/lowrider) to mount Makita to LR3 core when using 2-1/2" VAC Hose, with reusable zipties.
