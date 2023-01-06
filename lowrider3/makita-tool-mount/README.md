@@ -1,6 +1,8 @@
 
  # V1E LowRider 3 mod - Mid Belt Y Tensioner Block
 
+![image](makita-tool-mount_2.5in_xl-zip_aza_v1.jpg)
+
 ![image](makita-tool-mount_2.5in_xl-zip_aza_v1.png)
 
 Published to [Printables](https://www.printables.com/model/359322-lowrider-3-cnc-makita-700-series-mount-25-xl-zip-h).
