@@ -1,5 +1,5 @@
 
- # V1E LowRider 3 mod - Mid Belt Y Tensioner Block
+ # V1E LowRider 3 mod - Makita Tool Mount for 2-1/2" Vac Hose and XL zip ties
 
 ![image](makita-tool-mount_2.5in_xl-zip_aza_v1.jpg)
 
