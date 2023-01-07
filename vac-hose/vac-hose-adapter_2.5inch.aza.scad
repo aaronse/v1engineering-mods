@@ -5,24 +5,24 @@
 
 //--Example is ShopVac Nominal 2.5" machine port to 1.5" accessory.  -- For the Lower end, is the measurement the
 //adapter's outside or inside diameter?
-LowerEndMeasured = "outside"; //[outside, inside]
+lowerEndMeasured = "outside"; //[outside, inside]
 // Diameter of Lower End? (mm)
-LowerEndDiameter = 61.5;
+lowerEndDiameter = 61.5;
 // Length of Lower End? (mm)
-LowerEndLength = 14;
+lowerEndLength = 14;
 // For the Upper end, is the measurement the adapter's outside or inside diameter?
-UpperEndMeasured = "inside"; //[outside, inside]
+upperEndMeasured = "inside"; //[outside, inside]
 // Diameter of Upper End? (mm)
-UpperEndDiameter = 70.5;
+upperEndDiameter = 70.5;
 // Length of Upper End? (mm)
-UpperEndLength = 16;
+upperEndLength = 16;
 // Length of Taper Section? (mm)
-TaperLength = 5;
+taperLength = 5;
 // Create an Inside Stop at the lower end of Upperer end of this adapter? (To keep the connected fitting from being
 // sucked in.)
-InsideStop = "no"; //[no,yes]
+insideStop = "no"; //[no,yes]
 // What is the thickness of the adapter's walls?
-WallThickness = 1.8;
+wallThickness = 1.8;
 
 // Flag indicating whether to cutout notch from top
 hasCutout = "yes";
@@ -36,22 +36,22 @@ hasFlange = "no";
 
 $fn = 60 * 1;
 
-WT = WallThickness;
-LL = LowerEndLength;
-SL = UpperEndLength;
-TL = TaperLength;
+WT = wallThickness;
+LL = lowerEndLength;
+SL = upperEndLength;
+TL = taperLength;
 
-LD = LowerEndMeasured == "inside" ? LowerEndDiameter + 2 * WT : LowerEndDiameter;
-SD = UpperEndMeasured == "inside" ? UpperEndDiameter + 2 * WT : UpperEndDiameter;
-LID = LowerEndMeasured == "inside" ? LD : LD - 2 * WT;
-SID = UpperEndMeasured == "inside" ? SD : SD - 2 * WT;
+LD = lowerEndMeasured == "inside" ? lowerEndDiameter + 2 * WT : lowerEndDiameter;
+SD = upperEndMeasured == "inside" ? upperEndDiameter + 2 * WT : upperEndDiameter;
+LID = lowerEndMeasured == "inside" ? LD : LD - 2 * WT;
+SID = upperEndMeasured == "inside" ? SD : SD - 2 * WT;
 LID = LD - 2 * WT;
 SID = SD - 2 * WT;
 DR = LD + 3 * WT;
 
 top = (hasFlange == "yes") ? SL + LL + TL + 2 * WT : SL + LL + TL;
 
-module TransCylinder(D1, D2, H, Z)
+module transCylinder(D1, D2, H, Z)
 {
     translate([ 0, 0, Z ])
     {
@@ -63,34 +63,34 @@ difference()
 {
     union()
     {
-        TransCylinder(LD, LD, LL, 0); // Lower
+        transCylinder(LD, LD, LL, 0); // Lower
 
         if (hasFlange == "yes")
         {
-            TransCylinder(LD, DR, WT, LL);               // Lower to Flange
-            TransCylinder(DR, DR, WT, LL + WT);          // Flange
-            TransCylinder(LD, SD, TL, LL + 2 * WT);      // Flange to Upper
-            TransCylinder(SD, SD, SL, LL + TL + 2 * WT); // Upper
+            transCylinder(LD, DR, WT, LL);               // Lower to Flange
+            transCylinder(DR, DR, WT, LL + WT);          // Flange
+            transCylinder(LD, SD, TL, LL + 2 * WT);      // Flange to Upper
+            transCylinder(SD, SD, SL, LL + TL + 2 * WT); // Upper
         }
         else
         {
-            TransCylinder(LD, SD, TL, LL);      // Transition
-            TransCylinder(SD, SD, SL, LL + TL); // Upper
+            transCylinder(LD, SD, TL, LL);      // Transition
+            transCylinder(SD, SD, SL, LL + TL); // Upper
         }
     }
     union()
     {
-        TransCylinder(LID, LID, LL + 1, 0); // Lower
+        transCylinder(LID, LID, LL + 1, 0); // Lower
         if (hasFlange == "yes")
         {
-            TransCylinder(LID, LID, WT, LL);          // Lower to Flange
-            TransCylinder(LID, LID, WT, LL + WT);     // Flange
-            TransCylinder(LID, SID, TL, LL + 2 * WT); // Flange to Upper
+            transCylinder(LID, LID, WT, LL);          // Lower to Flange
+            transCylinder(LID, LID, WT, LL + WT);     // Flange
+            transCylinder(LID, SID, TL, LL + 2 * WT); // Flange to Upper
         }
         else
         {
-            TransCylinder(LID, SID, TL, LL);      // Lower-to-Upper
-            TransCylinder(SID, SID, SL, LL + TL); // Upper
+            transCylinder(LID, SID, TL, LL);      // Lower-to-Upper
+            transCylinder(SID, SID, SL, LL + TL); // Upper
         }
 
         if (hasCutout == "yes")
@@ -101,14 +101,14 @@ difference()
             }
         }
 
-        if (InsideStop == "yes")
+        if (insideStop == "yes")
         {
-            TransCylinder(SID, SID - (2 * WT), WT, LL + TL + 2 * WT);
-            TransCylinder(SID, SID, SL, LL + TL + 3 * WT);
+            transCylinder(SID, SID - (2 * WT), WT, LL + TL + 2 * WT);
+            transCylinder(SID, SID, SL, LL + TL + 3 * WT);
         }
         else
         {
-            TransCylinder(SID, SID, SL, LL + TL + 2 * WT);
+            transCylinder(SID, SID, SL, LL + TL + 2 * WT);
         }
     }
 }
