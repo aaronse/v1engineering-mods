@@ -25,14 +25,14 @@ insideStop = "no"; //[no,yes]
 wallThickness = 1.8;
 
 // Flag indicating whether to cutout notch from top
-hasCutout = "yes";
+hasCutout = "no";
 
 // Cutout dimensions
 cutOutHeight = 12;
 cutOutWidth = 25;
 
 // [yes,no] Flag indicating whether to generate flange
-hasFlange = "no";
+hasFlange = "yes";
 
 $fn = 60 * 1;
 
