@@ -11,7 +11,7 @@ Some Dev notes on how to build custom firmware using V1E flavored Marlin for my 
 
 - See https://docs.v1engineering.com/electronics/marlin-firmware/
 - Download zip containing binary and sources for LR3 V1E flavored Marlin [V1CNC_SkrPro_DualLR_2209](https://github.com/V1EngineeringInc/MarlinBuilder/releases/download/515/V1CNC_SkrPro_DualLR_2209-2.1.1.zip) currently 2.1.1 / 515.
-- Open and build in VS Code, read [Platform.IO](https://docs.v1engineering.com/learn/platformio/)
+- Open and build in VS Code, read V1E's [Platform.IO](https://docs.v1engineering.com/learn/platformio/) docs.
 
 ## Resources
 
