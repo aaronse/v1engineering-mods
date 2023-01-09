@@ -14,9 +14,23 @@ Some Dev notes on how to build custom firmware using V1E flavored Marlin for my 
 - Open and build in VS Code, read V1E's [Platform.IO](https://docs.v1engineering.com/learn/platformio/) docs.
 
 ## Resources
+- L3R flavored marling is built by scripts/config in https://github.com/V1EngineeringInc/MarlinBuilder/blob/main/src/configs/V1CNC_SkrPro_DualLR_2209
 
-
+- SKR Pro 1.2 Firmware settings https://forum.v1engineering.com/t/skr-pro-v1-2-firmware/29135
 - Gcode docs @ https://marlinfw.org/meta/gcode/
+
+## Code - Some notes..
+- Configuration.h / Configuration_adv.h
+  - Modified by [https://github.com/V1E.../src/configs/V1CNC_SkrPro_DualLR_2209](https://github.com/V1EngineeringInc/MarlinBuilder/blob/97d071d945ef9a451cbfd8467dcc0422f0fe0abb/src/configs/V1CNC_SkrPro_DualLR_2209)
+    - Modified by [https://github.com/V1E.../MarlinBuilder/.../src/configs/common/cnc-config](https://github.com/V1EngineeringInc/MarlinBuilder/blob/97d071d945ef9a451cbfd8467dcc0422f0fe0abb/src/configs/common/cnc-config)
+    - Modified by [https://github.com/V1E.../MarlinBuilder/.../src/configs/.../dual-drivers-on-xy](https://github.com/V1EngineeringInc/MarlinBuilder/blob/97d071d945ef9a451cbfd8467dcc0422f0fe0abb/src/configs/accessories/dual-drivers-on-xy)
+
+  - https://forum.v1engineering.com/t/g00-g01-speed-acceleration-not-jerk-and-marlin-grbl/4905/12?u=aaronse
+    - G0_FEEDRATE mm/m - feerate used for G0, rather than  previous gcode instructions feedrate.
+      - VARIABLE_G0_FEEDRATE use explicitly specified feedrate for G0 commands.
+      - Still subject to the max speeds and accelerations.
+    - DEFAULT_MAX_FEEDRATE
+    - MANUAL_FEEDRATE
 
 
 ## Acknowledgements
