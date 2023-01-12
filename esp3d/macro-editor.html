@@ -48,11 +48,6 @@ G0 X1200 Y600 Z0 F18000   ; xy max, z min
 G0 X0 Y0 Z80 F18000       ; xy min, z max
 `;
 
-    // // Create some FAQ'n hooks
-    // window.on('load', function(){
-    //   setupFAQ();
-    // });
-  
     function setup() {
       document.getElementById("gcode").value = template; 
     }
@@ -67,11 +62,9 @@ G0 X0 Y0 Z80 F18000       ; xy min, z max
           output += cmd + ";";
         } 
       });
-     // console.log(output);
-
-     document.getElementById("output").value = output;
+     
+      document.getElementById("output").value = output;
     }
-//    window.onload = setup();
   
     window.addEventListener('load', setup);
   </script>
