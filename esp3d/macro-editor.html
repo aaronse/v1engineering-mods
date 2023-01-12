@@ -1,0 +1,80 @@
+<html>
+  <head>
+    <style>
+      body {
+        font-family: Consolas;
+      }
+    </style>  
+  </head>
+<body>
+
+<h2>ESP3D Macro editor</h2>
+
+<h3>Purpose:</h3>
+ESP3D's Macro support requires multiline macros to be formatted to fit on single line, with each instruction ; delimited.  Massage gcode scripts into ESP3D compatible macro expressions.
+
+<br/><br/>
+gcode:<br/>
+<textarea id="gcode" cols="100" rows="20" ></textarea>
+<br/><br/>
+<button onclick="generateMacro();">Generate</button>
+<br/><br/>
+ESP3D macro:<br/>
+<input id="output" type="text" style="width:90%" />
+
+
+
+
+<script>
+  let template =
+`; Drag Race
+M203 X18000 Y18000 Z2600  ; Set Max speeds
+G28 Z                     ; home z
+G92 Z80                   ; z max = 80 (instead of 200)
+G28 X Y                   ; home xy
+;M300 S741 P250            ; 3.. 2.. 1..
+;M300 S0 P750
+;M300 S741 P270
+;M300 S0 P750
+;M300 S1500 P1000
+;G4 P2500                  ; Wait for 3sec beeps, minus ~0.5sec for command latency
+G0 Z0 F2600               ; z min
+G0 Z80 F2600              ; z max
+G0 X1200 F18000           ; x max
+G0 X0 F18000              ; x min
+G0 Y600 F18000            ; y max
+G0 Y0 F18000              ; y min
+G0 X1200 Y600 Z0 F18000   ; xy max, z min
+G0 X0 Y0 Z80 F18000       ; xy min, z max
+`;
+
+    // // Create some FAQ'n hooks
+    // window.on('load', function(){
+    //   setupFAQ();
+    // });
+  
+    function setup() {
+      document.getElementById("gcode").value = template; 
+    }
+  
+    function generateMacro() {
+      let gcode = document.getElementById("gcode").value;
+      let gcodeLines = gcode.split(/\r?\n/);
+      let output = "";
+      gcodeLines.forEach(line => {
+        let cmd = line.trim().split(";")[0].trim();
+        if (cmd && cmd.length) {
+          output += cmd + ";";
+        } 
+      });
+     // console.log(output);
+
+     document.getElementById("output").value = output;
+    }
+//    window.onload = setup();
+  
+    window.addEventListener('load', setup);
+  </script>
+
+</body>
+</html>

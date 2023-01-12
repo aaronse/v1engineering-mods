@@ -4,6 +4,9 @@
 # Purpose
 Sharing info about wireless control of my LR3 build.
 
+# Files
+- [macro-editor.html](macro-editor.html)
+
 # Parts
 - Used [ESP-01s - ESP3D / ESPUI Headless](https://shop.v1engineering.com/collections/lowrider-parts/products/esp-01s-esp3d-espui-headless)<br/>
 
@@ -11,7 +14,8 @@ Sharing info about wireless control of my LR3 build.
 # Resources
 - ESP3D repo https://github.com/luc-github/ESP3D-WEBUI
 - V1E topic describing wireless control https://forum.v1engineering.com/t/headless-skr-pro-info/34707
-
+  - configuration.h and platformio.ini files used to build ESP3D firmware https://forum.v1engineering.com/t/headless-skr-pro-info/34707/240?u=aaronse
+- V1E Topic describing how to flash ESP-01S https://forum.v1engineering.com/t/add-wifi-to-skr-pro-step-by-step/35570
 
 
 <!-- ## Usage -->
