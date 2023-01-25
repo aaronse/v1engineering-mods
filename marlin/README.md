@@ -4,6 +4,7 @@
  # Marlin - Dev Notes 
 
 
+
 ## Purpose
 Some Dev notes on how to build custom firmware using V1E flavored Marlin for my LowRider3.
 
@@ -28,10 +29,17 @@ https://github.com/aaronse/marlin_2.1.1_515
 
 
 ## Resources
-- L3R flavored marling is built by scripts/config in https://github.com/V1EngineeringInc/MarlinBuilder/blob/main/src/configs/V1CNC_SkrPro_DualLR_2209
+  - Gcode docs @ https://marlinfw.org/meta/gcode/
 
-- SKR Pro 1.2 Firmware settings https://forum.v1engineering.com/t/skr-pro-v1-2-firmware/29135
-- Gcode docs @ https://marlinfw.org/meta/gcode/
+- Some build resources grouped by Controller Board type.  Reason...  Marlin needs to be specficially compiled for target board processor and build configuration.
+  ### BigTreeTech SKR Pro 1.2
+  - SKR Pro 1.2 L3R flavored Marlin is built by scripts/config in https://github.com/V1EngineeringInc/MarlinBuilder/blob/main/src/configs/V1CNC_SkrPro_DualLR_2209
+  - SKR Pro 1.2 Firmware settings https://forum.v1engineering.com/t/skr-pro-v1-2-firmware/29135
+
+
+  ### BigTreeTech Octopus
+    - https://forum.v1engineering.com/t/bigtreetech-octopus-on-lowrider-v3/34226/4?u=aaronse
+
 
 ## Code - Some notes..
 - Configuration.h / Configuration_adv.h
