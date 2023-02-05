@@ -1,4 +1,4 @@
-# <big><big>DO <b>NOT</b> FOLLOW THESE STEPS</big></big>- this is not finished. 
+# <big><big>DO <b>NOT</b> FOLLOW THESE STEPS</big></big>- this is not complete, or tested. 
 
 
 __Topic Purpose :__ 
@@ -32,6 +32,9 @@ Use an Octopus board if you're intentionally planning to go [off-piste](https://
 - TMC2209 Drivers
 - (Optional) BTT TFT-3.5-V3
 - (Optional) [ESP32U Wifi Module](https://biqu.equipment/products/esp32u-mode-esp32e-mode)
+  - Read [this topic](https://forum.v1e.com/t/firmware-for-bigtreetech-esp32u-esp32e-module-for-octopus-or-skr3-skr-3-ez-skr-2/36403) covering BIQU ESP32U module flashing and config.
+  - Uses esp32-wroom-32u (32Mbits = 4Mb) [specs](https://www.espressif.com/sites/default/files/documentation/esp32-wroom-32d_esp32-wroom-32u_datasheet_en.pdf)
+  - [Info/Resources](../esp3d/README.md) for compiling and deploying ESP3D to BTT ESP32U Wifi Module.
 
 
 ## Resources / Inspiration
@@ -92,12 +95,37 @@ However, IF, developing/experimenting with firmware, then Octopus can be powered
 
 ![image](img/octopus-jumper-usb-power.png)
 
+
+
 ## Firmware
-If new, See _User Guide 7.0, MOTHERBOARD FIRMWARE SUPPORT_ and https://www.youtube.com/watch?v=eq_ygvHF29I
+If new, read _User Guide 7.0, MOTHERBOARD FIRMWARE SUPPORT_ and watch https://www.youtube.com/watch?v=eq_ygvHF29I
 
-### Octopus firmare
 
-### TFT firmware
+### Updating Octopus Board with Marlin firmware
+
+#### Edit Driver Pinout mappings 
+Edit ...\Marlin\src\pins\stm32f4\pins_BTT_OCTOPUS_V1_common.h to match desired driver configuration for your build.
+
+- Find and Update ```// Steppers```
+  - For example to make the following so requires updating #define Z2_ prefixed defines, see Octopus Pinout diagram for Pin Identifiers.
+    ![image](img/octopus-conn.png)
+  - 
+
+
+C:\git\marlin_2.0.9.5\Marlin\Configuration.h
+
+```c++
+// The size of the printable area
+#define X_BED_SIZE 49.5 * 25.4    // AZA
+#define Y_BED_SIZE 25.5 * 25.4    // AZA
+```
+
+### Updating TFT firmware
+
+### Updating ESP32 Wifi Module
+
+https://www.espressif.com/en/support/download/other-tools
+
 
 ### Raspberry Pi
 
