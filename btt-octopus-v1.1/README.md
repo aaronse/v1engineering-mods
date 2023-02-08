@@ -85,10 +85,15 @@ https://forum.v1e.com/t/lowrider-dual-carriage-how-to/35913?u=azab2c
 
 ![image](img/octopus-conn-z-probe.png)
 
-## Dual End Stops, End Stops 
 
 
-## Wiring Power
+### Wiring Drivers
+
+
+### Wiring Dual End Stops
+
+
+### Wiring Power
 Octopus is normally powered with wires connected to the large screw terminals.
 
 However, IF, developing/experimenting with firmware, then Octopus can be powered vaia USB C.   providing power jumper is connected.  See 4.3 MCU POWER JUMPER
@@ -101,7 +106,30 @@ However, IF, developing/experimenting with firmware, then Octopus can be powered
 If new, read _User Guide 7.0, MOTHERBOARD FIRMWARE SUPPORT_ and watch https://www.youtube.com/watch?v=eq_ygvHF29I
 
 
-### Updating Octopus Board with Marlin firmware
+### Configure Marlin firmware for Octopus Board
+
+#### Edit Configuration.h
+- Configure serial/UART connections.  Can configure up to 3 connections via SERIAL_PORT, SERIAL_PORT_2, SERIAL_PORT_3 macros.  From BIGTREETECH%20Octopus%20-%20PIN.pdf<p>
+    -1 = USB<p>
+    1 = TFT = tx1/rx1<p>
+    2 = Pi = tx2/rx2<p>
+    3 = ESP32u = tx3/rx3<p>
+
+```
+/**
+ *                      -------
+ *            GND | 9  |       | 8 | 3.3V
+ *  (ESP-CS) PB12 | 10 |       | 7 | PB15 (ESP-MOSI)
+ *           3.3V | 11 |       | 6 | PB14 (ESP-MISO)
+ * (ESP-IO0)  PD7 | 12 |       | 5 | PB13 (ESP-CLK)
+ * (ESP-IO4) PD10 | 13 |       | 4 | --
+ *             -- | 14 |       | 3 | PE15 (ESP-EN)
+ *  (ESP-RX)  PD8 | 15 |       | 2 | --
+ *  (ESP-TX)  PD9 | 16 |       | 1 | PE14 (ESP-RST)
+ *                      -------
+ *                       WIFI
+ */
+```
 
 #### Edit Driver Pinout mappings 
 Edit ...\Marlin\src\pins\stm32f4\pins_BTT_OCTOPUS_V1_common.h to match desired driver configuration for your build.
@@ -109,8 +137,17 @@ Edit ...\Marlin\src\pins\stm32f4\pins_BTT_OCTOPUS_V1_common.h to match desired d
 - Find and Update ```// Steppers```
   - For example to make the following so requires updating #define Z2_ prefixed defines, see Octopus Pinout diagram for Pin Identifiers.
     ![image](img/octopus-conn.png)
-  - 
+  - ![image](img/octopus-conn-drivers.png)
 
+```c++
+// MOTOR 4
+#define Z2_ENABLE_PIN                       PG2
+#define Z2_STEP_PIN                         PF9
+#define Z2_DIR_PIN                          PF10
+#ifndef Z2_CS_PIN
+  #define Z2_CS_PIN                         PF2
+#endif
+```
 
 C:\git\marlin_2.0.9.5\Marlin\Configuration.h
 
@@ -122,7 +159,9 @@ C:\git\marlin_2.0.9.5\Marlin\Configuration.h
 
 ### Updating TFT firmware
 
-### Updating ESP32 Wifi Module
+### Configure ESP3D firmware for ESP32u Wifi Module
+
+- Edit ESP3D config for serial/UART comms.
 
 https://www.espressif.com/en/support/download/other-tools
 
@@ -148,7 +187,7 @@ J37 (Red) has GND, PB0, 5V
 https://forum.v1e.com/t/bigtreetech-octopus-on-lowrider-v3/34226/13?u=azab2c)
 
 
-<span style="display:none" hidden>
+<span style="display:block" >
 <!-- SCRATCH EDIT WORK INPROGRESS AREA -->
 
 ## Reference
@@ -172,5 +211,12 @@ BTT Octopus 1.1
 
 BTT TFT-3.5-V3
 - https://github.com/bigtreetech/BTT-TFT35-E3-V3.0
+
+### Figuring out which firmware settings to edit
+Digging through MarlinBuilder and configuration files helps with ramping up.  Also helpful is to use a diff tool and eyeball compare Marlin tagged build with a V1E flavored build.  See diffs for Configuration.h, and Configuration_adv.h
+
+windiff C:\git\Marlin_2.0.9.5\Marlin C:\git\marlin_2.1.1_515\Marlin
+windiff C:\git\Marlin\Marlin C:\git\marlin_2.1.1_515
+windiff C:\git\marlin_2.0.9.5\Marlin\src\pins\stm32f4\pins_BTT_OCTOPUS_V1_common.h C:\git\marlin_2.0.9.5\configs\antwan_pedro\pins_BTT_OCTOPUS_V1_common.h
 
 </span>
