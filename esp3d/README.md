@@ -11,6 +11,12 @@ Sharing info about wireless control of my LR3 build.
 - Used [ESP-01s - ESP3D / ESPUI Headless](https://shop.v1engineering.com/collections/lowrider-parts/products/esp-01s-esp3d-espui-headless)<br/>
 
 
+# Dev Setup
+- Clone
+- Generate configuration.h using ESP3D Configurator at https://luc-github.github.io/#/config/features
+- Build
+- Deploy
+
 # Resources
 - ESP3D repo https://github.com/luc-github/ESP3D-WEBUI
 - V1E topic describing wireless control https://forum.v1engineering.com/t/headless-skr-pro-info/34707

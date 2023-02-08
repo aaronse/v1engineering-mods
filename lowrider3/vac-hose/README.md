@@ -10,7 +10,7 @@ Sharing info about the mix of LR3 Vac Hose related parts used in my build.
 - Created/remixed [vac-hose-adapter_2.5inch.stl](vac-hose-adapter_2.5inch.stl)<br/>
   - Created using [vac-hose-adapter_2.5inch.scad](vac-hose-adapter_2.5inch.aza.scad).  Parameterized script can be used to make Vac Adapters with/without flanges.<br/>
 
-- Created/remixed [makita-tool-mount](../makita-tool-mount/README.md)<br/>
+- Created/remixed [makita-tool-mount](../makita-tool-mount/README.md).  Use to attach Makita router to Core, and attach Vac Hose with reusable zipties.<br/>
 
 - Used [Doug Joseph](https://www.youtube.com/@design8studio)'s _makita-vac-lower...stl_ and _makita-vac-upper...stl_ from [Printables](https://www.printables.com/model/212623-lowrider-3-cnc-makita-700-series-mount-removable-d).<br/>
 
