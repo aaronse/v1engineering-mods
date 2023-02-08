@@ -5,15 +5,14 @@ TODO: Create index of Mods within this Repo.  Until then browse the sub folders.
 <br/><br/><br/>
 
 # Milling Feeds, Speeds and Depth of Cut
-@Noobs, read [V1E Docs/Milling Basics](https://docs.v1engineering.com/tools/milling-basics/), [V1E Docs/Milling Metal](https://docs.v1engineering.com/tools/milling-metal/)
+@Noobs like me, MUST read [V1E Docs/Milling Basics](https://docs.v1engineering.com/tools/milling-basics/), [V1E Docs/Milling Metal](https://docs.v1engineering.com/tools/milling-metal/)
+- Baseline Settings
+  - Starter settings...  For materials softer than Metal https://docs.v1engineering.com/tools/milling-basics/#for-the-impatient
+    - { bit: 1/8", feed: 8mm/s, plunge: 3mm/s, doc: 1mm, step-over: 45%, finish: bit-dia/10 } 
+  - Metal settings https://docs.v1engineering.com/tools/milling-metal/#baseline-settings
 
-Baseline Settings
-- Starter settings...  For materials softer than Metal https://docs.v1engineering.com/tools/milling-basics/#for-the-impatient
-  - { bit: 1/8", feed: 8mm/s, plunge: 3mm/s, doc: 1mm, step-over: 45%, finish: bit-dia/10 } 
-- Metal settings https://docs.v1engineering.com/tools/milling-metal/#baseline-settings
 
-
-Actual Observed Settings
+## Actual Observed Settings
 
 |Quality|Material|Bit|DOC|Feed XY|Feed Z|Speed|Coolant|Notes / Source |
 | --- | --- | --- | --- | --- | --- | --- | --- | --- |
