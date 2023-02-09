@@ -4,7 +4,7 @@
 TODO: Create index of Mods within this Repo.  Until then browse the sub folders.</mark>
 <br/><br/><br/>
 
-# Milling Feeds, Speeds and Depth of Cut
+# Milling Settings
 @Noobs like me, MUST read [V1E Docs/Milling Basics](https://docs.v1engineering.com/tools/milling-basics/), [V1E Docs/Milling Metal](https://docs.v1engineering.com/tools/milling-metal/)
 - Baseline Settings
   - Starter settings...  For materials softer than Metal https://docs.v1engineering.com/tools/milling-basics/#for-the-impatient
