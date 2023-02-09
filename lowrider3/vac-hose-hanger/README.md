@@ -21,7 +21,10 @@ Created for my LR build.  My Vac hose is 2.5", stock LR3 hose hangers are for 1.
 - Observed hose contacting and catching on the belt and belt holder blocks.  Noticed during speed "Drag Race" tests.  Reason is wiring is velcro'd to the Vac hose, this ends up slack, dangling and vulnerable to catching on something... 
 
 ## Parts
-Printed in PETG, since that's more flexible and less brittle than PLA.
+Recommend printing in PETG.  Typically, PLA is brittle and less flexible.
+
+- [lr3-aza-hose-hanger-end-2.5.stl](lr3-aza-hose-hanger-end-2.5.stl)
+- [lr3-aza-hose-hanger-mid-2.5.stl](lr3-aza-hose-hanger-mid-2.5.stl)
 
 
 ## Usage
