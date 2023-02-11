@@ -23,8 +23,16 @@ Created for my LR build.  My Vac hose is 2.5", stock LR3 hose hangers are for 1.
 ## Parts
 Recommend printing in PETG.  Typically, PLA is brittle and less flexible.
 
-- [lr3-aza-hose-hanger-end-2.5.stl](lr3-aza-hose-hanger-end-2.5.stl)
-- [lr3-aza-hose-hanger-mid-2.5.stl](lr3-aza-hose-hanger-mid-2.5.stl)
+- 2-1/2"
+  - [lr3-aza-hose-hanger-end-2.5.stl](lr3-aza-hose-hanger-end-2.5.stl)
+  - [lr3-aza-hose-hanger-mid-2.5.stl](lr3-aza-hose-hanger-mid-2.5.stl)
+  - [lr3-aza-hose-hanger-2.5.step](lr3-aza-hose-hanger-2.5.step)
+
+<br/><br/>
+- 2"
+  - [lr3-aza-hose-hanger-end-2in.stl](lr3-aza-hose-hanger-end-2in.stl)
+  - [lr3-aza-hose-hanger-mid-2in.stl](lr3-aza-hose-hanger-mid-2in.stl)
+  - [lr3-aza-hose-hanger-2in.step](lr3-aza-hose-hanger-2in.step)
 
 
 ## Usage
