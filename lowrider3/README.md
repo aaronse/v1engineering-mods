@@ -13,6 +13,7 @@ TODO: Create index of Mods within this Repo.  Until then browse the sub folders.
 
 
 ## Actual Observed Settings
+Machine capability depends on the design, build materials, assembly quality, and maintenance.  With that in mind, here's what people have been able to achieve.  They show  what's possible, and what to strive for :
 
 |Quality|Material|Bit|DOC|Plunge Angle|Feed XY|Feed Z|Speed|Coolant|Notes / Source |
 | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- |
