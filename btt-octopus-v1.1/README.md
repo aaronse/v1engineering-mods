@@ -77,14 +77,13 @@ Similar to https://docs.v1engineering.com/electronics/skrpro/#molex-and-jst-conn
 
 ## Touch Plate
 
-Use PB7
+~~Use PB7~~  PG11 Diag 3, context at (https://forum.v1e.com/t/bigtreetech-octopus-on-lowrider-v3/34226/40?u=azab2c) 
 
-See Octopus User Guide "2.3 BL TOUCH WIRING" for info.
+~~See Octopus User Guide "2.3 BL TOUCH WIRING" for info.~~
+~~https://forum.v1e.com/t/lowrider-dual-carriage-how-to/35913?u=azab2c
 
-https://forum.v1e.com/t/lowrider-dual-carriage-how-to/35913?u=azab2c
-
-![image](img/octopus-conn-z-probe.png)
-
+<mark>TODO:  Delete/Update (img/octopus-conn-z-probe.png)~~
+</mark>
 
 
 ### Wiring Drivers
