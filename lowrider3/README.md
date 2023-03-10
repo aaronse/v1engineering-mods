@@ -18,7 +18,9 @@ Machine capability depends on the design, build materials, assembly quality, and
 |Quality|Material|Bit|DOC|Plunge Angle|Feed XY|Feed Z|Speed|Coolant|Notes / Source |
 | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- |
 ||Acrylic|3mm 1 flute upcut|6mm|60deg|20mm/s, finish: 10mm/s|2mm/s|???|???|@Olivier [Acylic on LR2](https://forum.v1e.com/t/acrylic-on-lr2/33034/29?u=azab2c)<br/>- step-over: 30%, trochoidal-stepover : 20%, trochoidal-width: 50%, oscillation: 0.05mm
+||
 ||Polycarbonate|1/8" 2 flute straight cut|3mm|45deg|50mm/s|13mm/s|???||@jjwharris<br/>- Video @ https://www.youtube.com/watch?v=U8_uKYhMN8c<br/>- https://forum.v1e.com/t/cutting-polycarbonate/6869/7?u=azab2c
+||
 |Great|Cast Acyrlic|Carbide 1 flute upcut 3mm<br/><mark>Wirbel 1 Schneider?</mark>|5.5mm|60deg|Troch 25mm/s|Troch 7.5mm/s|10K (Makita Lowest setting)|NA|@Tokoloshe step-over:75%,trochoidal-stepover:20%,trochoidal-width:50%, oscillation:0mm , <br/>- Video @ https://forum.v1e.com/t/control-box-for-the-open-cnc-shield-2/36611?u=azab2c <br/>- https://forum.v1e.com/t/der-froschkonig-lowrider-3-in-oldenburg-germany/35897/91?u=azab2c <br/>- https://forum.v1e.com/t/first-acrylic-cut-advice-please/27712/26?u=azab2c
 ||
 |?|Alu|Carbide 1 flute upcut 6mm|10mm|60deg|Troch 25mm/s|Troch 7.5mm/s|10K (Makita Lowest setting)|NA|@Tokoloshe step-over:<mark>???%</mark>,trochoidal-stepover:<mark>???%</mark>,trochoidal-width:50%, oscillation:0mm, <br/>- https://forum.v1e.com/t/der-froschkonig-lowrider-3-in-oldenburg-germany/35897/91?u=azab2c
