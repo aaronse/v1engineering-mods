@@ -1,5 +1,3 @@
-
-
  # V1E LowRider 3 mod - Y Limit Switch Guard
 
 ![image](render_ortho.png)
