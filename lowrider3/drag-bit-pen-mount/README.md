@@ -15,7 +15,7 @@
 
 Models on [Printables](https://www.printables.com/model/419594-v1e-lowrider-3-pen-drag-knife-mount-and-adaptor), discussion on [V1E Forum](https://forum.v1e.com/t/lr3-mod-pen-drag-bit-knife-mount-and-adaptor/37182)
 
-Mod mounts Pen, Drag bit/knife. Oversized holes for reusable zip ties. No screws/bolts needed. Leverages mount design
+Mod mounts Pen, Drag knife or (RDZ) Drag bit.  Oversized holes for reusable zip ties.  No screws/bolts needed.  Leverages mount design features to increase rigidity.
 
 
 ## Purpose / Problem
@@ -37,8 +37,18 @@ Looked around for existing mounts but couldn't find one that supports reusable z
 
 Included .3mf with parts oriented ready for printing without support.  Print depends on small bridging and couple of small 60deg overhangs.
 
+## Models / Parts
 
-## See also:
+- [aza-pen-mount.stl](aza-pen-mount.stl)
+- [aza-drag-bit-adaptor.stl](aza-drag-bit-adaptor.stl)
+- [aza-pen-mount-and-drag-bit-adaptor.3mf](aza-pen-mount-and-drag-bit-adaptor.3mf)
+<br/><br/>
+- Drag Bit Adaptor specifically designed for RDZ 1/4" spring loaded diamond engraver, 90 degree tip, https://www.amazon.com/gp/product/B07DK1TWKG
+- V1E Shop https://www.v1e.com/collections/parts/products/drag-knife-vinyl-cutter
+- Ali Express https://forum.v1e.com/t/diamond-drag-engraving-tool-design/33614?u=azab2c
+
+
+## See also
 
 - V1E's [V1E's Basic LR3 Pen mount](https://www.printables.com/model/237997-basic-lr3-pen-mount)
 - Doug's [Pen Holder / Drag Knife Holder - designed for LR3 Dust Shoe (v2.0)](https://www.printables.com/model/225516-lowrider-3-cnc-add-on-pen-holder-drag-knife-holder)
@@ -50,14 +60,9 @@ Included .3mf with parts oriented ready for printing without support.  Print dep
 - Could be stiffer in XY. Maybe make triange/wedge with 2 edges coming off the router mount?
 - Could be looser in Z. Maybe make alternative model with thinner/narrower support arms.
 - Lost Z alignment ~25mins into an engraving session, bit seems to have been pushed up somehow, scratches were noticeably lighter. So, could probably be stiffer and/or less play with higher tolerances. Not sure, mentioning as something to look out for.
-
-
-## Parts:
-
-- V1E Shop https://www.v1e.com/collections/parts/products/drag-knife-vinyl-cutter
-- Ali Express https://forum.v1e.com/t/diamond-drag-engraving-tool-design/33614?u=azab2c
+- Adjustable Z alignment, manual, or something smart like pressure sensitive/maintaining device?
 
 
 ## Usage
-
+- TBD - keep an eye out for updates on https://forum.v1e.com/t/drag-knife-and-laser-etched-specular-holograms/36888/55
 - Cutting Vinyl https://www.youtube.com/watch?v=1uBo451z2AM
