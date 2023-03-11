@@ -2,14 +2,14 @@ https://forum.v1e.com/t/mp3dp-v2/37092/3?u=azab2c
 
 # <big>MP3DP V4 (aka Repeat V2) - Mostly Printed 3D Printer, CoreXY designed</big>
 
-<table style=width:100% border=1><tr>
-<td>pre</td>
-<td style=width:33%>
+<table style="width:100%" border=1><tr>
+<td width="*">pre</td>
+<td style="width:33%">
 
 ![image](https://docs.v1e.com/img/mp3dpv4/mp3dpv4_2.jpg)
 
 </td>
-<td>post</td>
+<td width="*">post</td>
 </tr></table>
 
 MP3DP V4 related notes/links.
