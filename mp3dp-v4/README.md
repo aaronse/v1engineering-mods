@@ -3,6 +3,8 @@
 MP3DP V4 == Repeat V2 related notes and resources.  See [MP3DP V4 Docs](https://docs.v1e.com/mp3dp), they reference :
 -  [*Repeat V2* forum thread](https://forum.v1e.com/t/repeat-v2/33330) containing design process/updates/feedback. 
 - [Fusion 360 hosted Design](https://myhub.autodesk360.com/ue29a24ab/g/shares/SH35dfcQT936092f0e43b20f88cb61d3441a), export/download and print these parts for latest greatest design.  Related forum post is [here](https://forum.v1engineering.com/t/repeat-v2/33330/85?u=vicious1).
+  - Can use [export-components.py](https://github.com/aaronse/v1engineering-mods/blob/main/mp3dp-v4/scripts/export-components.py) Python script to export .STL files.  Included a snapshot of exported .STLs in the [/models](https://github.com/aaronse/v1engineering-mods/tree/main/mp3dp-v4/models) subfolder.  
+    - As-is models will need orienting before splicing and printing.
 - ~~[Printable](https://www.printables.com/model/282346-mp3dp-v4)~~ .STL files will be stable, but not latest.
 
 
