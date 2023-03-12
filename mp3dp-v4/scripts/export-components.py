@@ -4,12 +4,23 @@ import adsk.core, adsk.fusion, adsk.cam
 # TODO: Implement support for orienting parts for printing. e.g. parse notes/comment for transform.  Or, maybe only export models explicitly named with export prefix?
 # TODO: Implement nested component search, could use allOccurrences, but would need smarter logic to exclude tiny parts not intended to be printed e.g. Hemera gears and nuts.
 # 
-# Resources:
+# Resources/Docs:
 # - STLExport API Sample https://help.autodesk.com/view/fusion360/ENU/?guid=GUID-ECA8A484-7EDD-427D-B1E3-BD59A646F4FA
 # - UI Logger https://modthemachine.typepad.com/my_weblog/2021/03/log-debug-messages-in-fusion-360.html
+# - Also, have sprinkled code with links to Fusion 360 API reference docs.
 
+# Target folder.  WARNING: Existing files are overwritten.
 targetFolder = "c:\\git\\v1engineering-mods\\mp3dp-v4\\models\\" 
+
+# Filter used to only export parts containing this expression in the Body name.   Usually used when
+# wanting to quickly figure out rotation expression for a specific part, without having to export 
+# everything.
+filter = "Panel Side Left"
+
+# Body names containing these substrings will NOT be exported.
 excludes = [ "(1)", "(2)", "Frame", "MGN12H", "12H Block", "HEMERA" ]
+
+
 maxExportCount = 100
 pi = 3.1415926535897931
 
@@ -60,23 +71,19 @@ def run(context):
 
         comp = occ.component
 
-        # or comp.parentComponent.name.find(exclude) != -1 
         if any(comp.name.find(exclude) != -1 for exclude in excludes):
             continue
 
         exportMgr = design.exportManager
-        #features = rootComp.features
 
         for body in comp.bRepBodies:
 
             bodyName = body.name
             bodyName = bodyName.replace("(1)", "").strip()
 
-            # DEV HACK
-            if bodyName.find("Panel Side Left") == -1:
+            # Skip mismatching files if filter specified
+            if len(filter) > 0 and bodyName.find(filter) == -1:
                 continue
-
-            logger.print("Here!  " + bodyName)
 
             exportBodyName = bodyName
 
@@ -131,14 +138,13 @@ def run(context):
 
             fileName = targetFolder + exportBodyName + ".stl"
             options = exportMgr.createSTLExportOptions(body, fileName)
+            exportMgr.execute(options)
 
             # Want to export .STEP files?
             # stepFileName = targetFolder + comp.name + ".step"
             # options = exportMgr.createSTEPExportOptions(stepFileName, comp)
 
             # Want to export to other formats?  See https://help.autodesk.com/view/fusion360/ENU/?guid=GUID-d1462fe6-fd43-11e4-b6b4-f8b156d7cd97
-
-            exportMgr.execute(options)
 
             # TODO:P0: Undo Transforms...
 #           Maybe track feature count before rotation(s), featuresCount = rootComp.features.count
@@ -148,7 +154,6 @@ def run(context):
             # lastFeature.deleteMe()
 
             logger.print("Exported " + fileName)
-
 
         currExportCount += 1
 
