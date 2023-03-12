@@ -1,13 +1,20 @@
 import adsk.core, adsk.fusion, adsk.cam
+import os
 
-# TODO: Emit Design version number or date as file prefix?
-# TODO: Implement support for orienting parts for printing. e.g. parse notes/comment for transform.  Or, maybe only export models explicitly named with export prefix?
-# TODO: Implement nested component search, could use allOccurrences, but would need smarter logic to exclude tiny parts not intended to be printed e.g. Hemera gears and nuts.
-# 
-# Resources/Docs:
+
+# TASKS/QUESTIONS:
+    # TODO: Auto Center on XY, above Z axis.  Prime for printing...
+    # TODO: Implement support for orienting parts for printing. e.g. parse notes/comment for transform.  Or, maybe only export models explicitly named with export prefix?
+    # TODO: Only searches top level Components/Bodies.  Consider searchin nested component search needed?  Could use allOccurrences, but would then need smarter logic to exclude tiny parts not intended to be printed e.g. Hemera gears and nuts.  Would probably end up needing more complex graph exclusion/filter syntax support...
+
+# RESOURCES:
 # - STLExport API Sample https://help.autodesk.com/view/fusion360/ENU/?guid=GUID-ECA8A484-7EDD-427D-B1E3-BD59A646F4FA
 # - UI Logger https://modthemachine.typepad.com/my_weblog/2021/03/log-debug-messages-in-fusion-360.html
 # - Also, have sprinkled code with links to Fusion 360 API reference docs.
+
+# FUTURES:
+    # TODO: Emit Design version number or date as file prefix? e.g. fileVersion  = app.activeDocument.dataFile.latestVersionNumber
+    # TODO: Write files to versioned subdir? Diff? "c:\\git\\v1engineering-mods\\mp3dp-v4\\models\\v51\\..." 
 
 # Target folder.  WARNING: Existing files are overwritten.
 targetFolder = "c:\\git\\v1engineering-mods\\mp3dp-v4\\models\\" 
@@ -15,13 +22,15 @@ targetFolder = "c:\\git\\v1engineering-mods\\mp3dp-v4\\models\\"
 # Filter used to only export parts containing this expression in the Body name.   Usually used when
 # wanting to quickly figure out rotation expression for a specific part, without having to export 
 # everything.
-filter = "Panel Side Left"
+filter = ""
 
 # Body names containing these substrings will NOT be exported.
 excludes = [ "(1)", "(2)", "Frame", "MGN12H", "12H Block", "HEMERA" ]
 
-
+# Maximum files to export.  Implemented as safe guard, since haven't figured out how to cancel 
+# running script without killing the app.
 maxExportCount = 100
+
 pi = 3.1415926535897931
 
 class UiLogger:
@@ -57,7 +66,7 @@ def run(context):
     # Component https://help.autodesk.com/view/fusion360/ENU/?guid=GUID-GUID-GUID-GUID-GUID-b56b394e-b9c9-4403-a78b-a186b897909c
     rootComp = design.rootComponent
 
-    # Get all the occurrences in the root component.
+    # Get occurrences in the root component.  Immediate children, not all descendants.
     occurrences = rootComp.occurrences 
 
     # Export each component as a STEP file.
@@ -75,6 +84,8 @@ def run(context):
             continue
 
         exportMgr = design.exportManager
+
+        tempTransforms = []
 
         for body in comp.bRepBodies:
 
@@ -95,7 +106,7 @@ def run(context):
                 bodyParts = bodyName.split("(")
                 exportBodyName = bodyParts[0].strip()
                 rotateExprs = bodyParts[1].replace(")","").strip().split(",")
-                logger.print("Rotating " + bodyName + ", transform... x: {rotateExprs[0]}, y: {rotateExprs[1]}, z: {rotateExprs[2]}")
+                logger.print(f"Rotating {bodyName}, transform... x: {rotateExprs[0]}, y: {rotateExprs[1]}, z: {rotateExprs[2]}")
 
                 for iterAxis in range(3):
 
@@ -120,22 +131,29 @@ def run(context):
                     # Create a transform to do move
                     # Matrix3D https://help.autodesk.com/view/fusion360/ENU/?guid=GUID-GUID-b831d9f4-c231-4b9f-9b4d-658614ecdc79
                     # setToRotation https://help.autodesk.com/view/fusion360/ENU/?guid=GUID-d2e83d0b-781c-4faf-91ff-6cd31cc2174d
+                    # yConstructionAxis is ConstructionAxis https://help.autodesk.com/view/fusion360/ENU/?guid=GUID-GUID-ae6c0cf2-2de7-4c57-9a98-0362d80f2b30
+                    # geometry is InfiniteLine3D  https://help.autodesk.com/view/fusion360/ENU/?guid=GUID-GUID-fa75390c-8a5d-4b56-b562-7e3538cb9dbc
+                    # getDate()[2] is direction Vector3D
                     transform = adsk.core.Matrix3D.create()
                     transform.setToRotation(
                         rotationRad,
-                        # yConstructionAxis is ConstructionAxis https://help.autodesk.com/view/fusion360/ENU/?guid=GUID-GUID-ae6c0cf2-2de7-4c57-9a98-0362d80f2b30
-                        # geometry is InfiniteLine3D  https://help.autodesk.com/view/fusion360/ENU/?guid=GUID-GUID-fa75390c-8a5d-4b56-b562-7e3538cb9dbc
-                        # getDate()[2] is direction Vector3D
                         axisVector,
                         rootComp.originConstructionPoint.geometry)
 
                     # Create a move feature
+                    # Features Object https://help.autodesk.com/view/fusion360/ENU/?guid=GUID-GUID-GUID-7bfd8596-4584-48b6-8b9b-1ea63e304d34
+                    # .moveFeatures prop https://help.autodesk.com/view/fusion360/ENU/?guid=GUID-cfe13494-2912-4625-bdce-c182a59ae21a
+                    # MoveFeatures Object https://help.autodesk.com/view/fusion360/ENU/?guid=GUID-GUID-GUID-12b98475-8e53-4427-aa87-05f8c8095ad2
                     moveFeats = comp.features.moveFeatures
 
                     moveFeatureInput = moveFeats.createInput(itemsToMove, transform)
                     
-                    moveFeats.add(moveFeatureInput)
+                    # .add returns MoveFeature https://help.autodesk.com/view/fusion360/ENU/?guid=GUID-GUID-GUID-3e28e5d9-0aaa-46fd-8a80-c118012d3168
+                    newMoveFeature = moveFeats.add(moveFeatureInput)
 
+                    tempTransforms.append(newMoveFeature)
+
+            # Export .STL
             fileName = targetFolder + exportBodyName + ".stl"
             options = exportMgr.createSTLExportOptions(body, fileName)
             exportMgr.execute(options)
@@ -146,14 +164,16 @@ def run(context):
 
             # Want to export to other formats?  See https://help.autodesk.com/view/fusion360/ENU/?guid=GUID-d1462fe6-fd43-11e4-b6b4-f8b156d7cd97
 
-            # TODO:P0: Undo Transforms...
-#           Maybe track feature count before rotation(s), featuresCount = rootComp.features.count
-            # logger.print("moveFeatsCount : " + str(featuresCount))
-            #lastFeature = rootComp.features.item(featuresCount -1)
-            # logger.print("last feature: " + str(lastFeature.name))
-            # lastFeature.deleteMe()
+            # Undo temporary transforms...
+            for transform in reversed(tempTransforms):
+                
+                # deleteMe() https://help.autodesk.com/view/fusion360/ENU/?guid=GUID-850bf987-aa26-42f5-9f16-f31c0a6cd99f
+                transform.deleteMe()
+
+            tempTransforms.clear()
 
             logger.print("Exported " + fileName)
 
         currExportCount += 1
 
+    logger.print("Done!")
