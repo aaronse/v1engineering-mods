@@ -1,6 +1,7 @@
 import adsk.core, adsk.fusion, adsk.cam
 import os
 
+# Bulk export Fusion 360 Body objects as .STL files, optionally changing orientation.
 
 # TASKS/QUESTIONS:
     # TODO: Auto Center on XY, above Z axis.  Prime for printing...
@@ -55,6 +56,7 @@ def run(context):
 
     # Application https://help.autodesk.com/view/fusion360/ENU/?guid=GUID-GUID-GUID-GUID-7209c4c7-bc58-4388-9e20-036410459094
     app = adsk.core.Application.get()
+    ui  = app.userInterface
 
     # app.activeProduct returns Design instance (a subclass, derived from Product)
     # Product https://help.autodesk.com/view/fusion360/ENU/?guid=GUID-GUID-GUID-c1fb15c9-0117-4666-a8c3-2dd305f7f6ac
@@ -177,3 +179,4 @@ def run(context):
         currExportCount += 1
 
     logger.print("Done!")
+    ui.messageBox('Export Done!')
