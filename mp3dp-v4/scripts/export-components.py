@@ -4,9 +4,10 @@ import os
 # Bulk export Fusion 360 Body objects as .STL files, optionally changing orientation.
 
 # TASKS/QUESTIONS:
-    # TODO: Auto Center on XY, above Z axis.  Prime for printing...
-    # TODO: Implement support for orienting parts for printing. e.g. parse notes/comment for transform.  Or, maybe only export models explicitly named with export prefix?
-    # TODO: Only searches top level Components/Bodies.  Consider searchin nested component search needed?  Could use allOccurrences, but would then need smarter logic to exclude tiny parts not intended to be printed e.g. Hemera gears and nuts.  Would probably end up needing more complex graph exclusion/filter syntax support...
+#   TODO: Is Export Components needed?   Current just  searches top level Bodies.  Is nested 
+#       search needed?  Could use allOccurrences, but would then need smarter logic to exclude tiny
+#       parts not intended to be printed e.g. Hemera gears and nuts.  Would probably end up needing 
+#       more complex graph exclusion/filter syntax support...
 
 # RESOURCES:
 # - STLExport API Sample https://help.autodesk.com/view/fusion360/ENU/?guid=GUID-ECA8A484-7EDD-427D-B1E3-BD59A646F4FA
@@ -14,8 +15,12 @@ import os
 # - Also, have sprinkled code with links to Fusion 360 API reference docs.
 
 # FUTURES:
-    # TODO: Emit Design version number or date as file prefix? e.g. fileVersion  = app.activeDocument.dataFile.latestVersionNumber
-    # TODO: Write files to versioned subdir? Diff? "c:\\git\\v1engineering-mods\\mp3dp-v4\\models\\v51\\..." 
+#   TODO: Auto generate .STL filename that includes part count != 1, e.g. "Z Belt Holder (x3).stl"
+#   TODO: Emit Design version number or date as file prefix? e.g. fileVersion  = app.activeDocument.
+#       dataFile.latestVersionNumber
+#   TODO: Write files to versioned subdir? Diff? "c:\\git\\v1engineering-mods\\mp3dp-v4\\models\\v51\\..." 
+#   TODO:P2 Drag-n-drop MP3DP files into Cura 5.0 were automatically OK.  So, may not need to use 
+#       body.boundingBox to autocenter XY, and ensure Z > 0.
 
 # Target folder.  WARNING: Existing files are overwritten.
 targetFolder = "c:\\git\\v1engineering-mods\\mp3dp-v4\\models\\" 
@@ -89,6 +94,7 @@ def run(context):
 
         tempTransforms = []
 
+        # BRepBody https://help.autodesk.com/view/fusion360/ENU/?guid=GUID-GUID-GUID-9910880d-2299-4947-917a-39b5f030eef4
         for body in comp.bRepBodies:
 
             bodyName = body.name
@@ -99,6 +105,10 @@ def run(context):
                 continue
 
             exportBodyName = bodyName
+
+            # Translate to Origin, help avoid exported model being way way off the print plate
+            # .boundingBox BoundingBox3D https://help.autodesk.com/view/fusion360/ENU/?guid=GUID-GUID-9ce5053e-72b6-4a47-8172-e4223fb4caff
+            # body.boundingBox not used until if/when needed.
 
             # Found valid rotation expression in the body name?
             if (bodyName.find("(") > 0 and bodyName.find(")") > 0 and
