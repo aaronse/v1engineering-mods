@@ -7,6 +7,7 @@ Some MP3DP V4 == Repeat V2 related notes and resources.  See Official V1E [MP3DP
     - As-is models will need orienting before splicing and printing.
 - [Printable](https://www.printables.com/model/282346) .STL files will be stable, but not latest.
 
+<mark style=opacity:0.4>&nbsp;**Note:** Until full docs are available, reading through v3 docs (albeit a different design) for general guidance will help.  For example v3 [printed parts docs](https://docs.v1e.com/mp3dp/version3index/#printed-parts) has info that applies to v4 too.</mark>
 
 <table style="width:100%" border=0><tr>
 <td with="33%">
@@ -63,45 +64,53 @@ Ryan/V1E relies on these to run his business, so that says a lot.
 - Ryan prints with PLA, am using PETG (like Dan), may reprint with ASA.
 
 ### PRINTED PARTS
+- Using 3 wall, 35% gyroid infill.  Ryan says [40% is probably really good](https://forum.v1e.com/t/mp3dp-v4-build-plog/36010/82?u=azab2c).
 
 Related posts:
 - [MP3DP v4 BOM](https://forum.v1e.com/t/mp3dp-v4-bom/35315/21?u=azab2c) forum topic
+- [Dan's parts](https://forum.v1e.com/t/mp3dp-v4-build-plog/36010/3?u=azab2c)
 
 
   ```js
-  ───Hemera
-  │       Hemera Fan Shroud.3mf
-  │
-  ├───Misc 2020 clips and parts
-  │       2020 Corner Bracket.3mf
-  │       cable tie Wire Hanger.3mf
-  │       Power supply bracket.3mf
-  │       Wire Clip 90 degree.3mf
-  │       Wire Hanger TapeTrick.3mf
-  │
-  ├───MP3DP V4.1
-  │       Back Corner Left.3mf
-  │       Back Corner Right.3mf
-  │       Bed Washer.3mf
-  │       filament Rev Bowden Holder.3mf
-  │       Left Stepper.3mf
-  │       Rail Aligner.3mf
-  │       Right Stepper.3mf
-  │       2 x Tension Block XY.3mf
-  │       X Carrier.3mf
-  │       XY Left.3mf
-  │       XY Right.3mf
-  │       6 x Z Belt Holder.3mf
-  │       Z Post M.3mf
+
+  // DONE
+
+  // INPROGRESS
   │       2 x Z Post.3mf
-  │
+
+  // TODO
+  ───Hemera
+      Hemera Fan Shroud.3mf
+
+  ├───Misc 2020 clips and parts
+      2020 Corner Bracket.3mf
+      cable tie Wire Hanger.3mf
+      Power supply bracket.3mf
+      Wire Clip 90 degree.3mf
+      Wire Hanger TapeTrick.3mf
+
+  ├───MP3DP V4.1
+      Back Corner Left.3mf
+      Back Corner Right.3mf
+      Bed Washer.3mf
+      filament Rev Bowden Holder.3mf
+      Left Stepper.3mf
+      Rail Aligner.3mf
+      Right Stepper.3mf
+      2 x Tension Block XY.3mf
+      X Carrier.3mf
+      XY Left.3mf
+      XY Right.3mf
+      6 x Z Belt Holder.3mf
+      Z Post M.3mf
+
   ├───SKR Pro
-  │       SKR Pro Cover.3mf
-  │       SKR Pro Wire tie.3mf
-  │
+      SKR Pro Cover.3mf
+      SKR Pro Wire tie.3mf
+
   └───TFT E3 V3
-          TFT CASE V3.STL
-          TFT Holder.3mf
+      TFT CASE V3.STL
+      TFT Holder.3mf
   ```
 
 
