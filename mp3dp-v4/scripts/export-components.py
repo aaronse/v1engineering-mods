@@ -4,7 +4,7 @@ import os
 # Bulk export Fusion 360 Body objects as .STL files, optionally changing orientation.
 
 # TASKS/QUESTIONS:
-#   TODO: Is Export Components needed?   Current just  searches top level Bodies.  Is nested 
+#   TODO: Is Export Components needed?  Currently just searches top level Bodies.  Is nested 
 #       search needed?  Could use allOccurrences, but would then need smarter logic to exclude tiny
 #       parts not intended to be printed e.g. Hemera gears and nuts.  Would probably end up needing 
 #       more complex graph exclusion/filter syntax support...
