@@ -1,4 +1,4 @@
-Sharing notes/questions for my MP3DP v4 build, will periodically update as I make progress.  Appreciate all the info people have been sharing, hoping my aggregated notes here helps others.  This'll be a lagged snapshot of what I'm frequently pushing to [github](https://github.com/aaronse/v1engineering-mods/blob/main/mp3dp-v4/build-log.md).
+Sharing notes/questions for my (likely slow) MP3DP v4 build, will periodically update as I make progress.  Appreciate all the info people have been sharing, hoping my aggregated notes here helps others.  This'll be a lagged snapshot of what I'm frequently pushing to [github](https://github.com/aaronse/v1engineering-mods/blob/main/mp3dp-v4).
 
 
 # <big>MP3DP v4 (aka Repeat v2)</big> <small>— 3D Printed, CNC'd CoreXY 3D Printer</small>
@@ -9,7 +9,7 @@ See Official V1E [MP3DP V4 Docs](https://docs.v1e.com/mp3dp), they reference :
 -  [*Repeat V2* forum thread](https://forum.v1e.com/t/repeat-v2/33330) containing design process/updates/feedback. 
 - [Fusion 360 hosted Design](https://myhub.autodesk360.com/ue29a24ab/g/shares/SH35dfcQT936092f0e43b20f88cb61d3441a), export/download and print these parts for latest greatest design.  Related forum post is [here](https://forum.v1engineering.com/t/repeat-v2/33330/85?u=vicious1).
   - *IF* you open/import the model in Fusion 360 desktop app, you will be looking at a snapshot.  The imported snapshot will not get updated if/when Ryan makes additional updates.  So, you may need to reimport every so often if you're wanting to absorb latest edits, and then make dimension/design changes for your build.
-  - Can use [export-components.py](https://github.com/aaronse/v1engineering-mods/blob/main/mp3dp-v4/scripts/export-components.py) Python script to Bulk Export parts to .STL files.  ~~Included a snapshot of exported .STLs in the [/models](https://github.com/aaronse/v1engineering-mods/tree/main/mp3dp-v4/models) subfolder.~~  
+  - Created [export-components.py](https://github.com/aaronse/v1engineering-mods/blob/main/mp3dp-v4/scripts/export-components.py) Python script, and topic showing [How to Bulk Export parts to .STL files](https://forum.v1e.com/t/fusion-360-bulk-export-parts-to-stl-files-oriented-for-3d-printing-via-python/37217).  ~~Included a snapshot of exported .STLs in the [/models](https://github.com/aaronse/v1engineering-mods/tree/main/mp3dp-v4/models) subfolder.~~  
     - As-is models will need orienting before splicing and printing.
 - [Printable](https://www.printables.com/model/282346) .STL files will be stable, but not latest.
 
@@ -47,7 +47,7 @@ Pics from [V1E.com](https://docs.v1e.com/mp3dp)
 
 
 
-## <big>Why build one?</big>
+## <big>WHY BUILD ONE?</big>
 Mostly Fun, and, maybe profit.  Have an Ender 3 Max, great machine but has limited speed/quality/temps.  Want something faster and capable of other printing other materials, not just higher temp ASA/ABS/PC, TPU will be easier with direct drive instead of bowden.  
 
 Super secret goal, arguably the most important one...  is to inspire and lure the kids into 3D printing, a gateway to becoming a Maker...
@@ -71,9 +71,9 @@ Ryan/V1E relies on these to run his business, so that says a lot.
 - https://us.ratrig.com/3d-printers/v-core.html too $$, $1100
 - https://bambulab.com/en/x1 easy to use $$ + closed bambu x1 carbon
 
-All that said, am biased toward building MP3DP v4 largely because of the V1E community support.  To me, the V1E mindset is focused on getting great quality results for great value.  This resonates with me more than paying a significant premium for best possible results.
+All that said, am biased toward building MP3DP v4 largely because of the V1E community support.  To me, the V1E mindset is focused on getting great quality results for great value.  This resonates with me more than paying a significant premium for something that pushes the limits, and may involve lots of maintenance.  Creating, experimenting and extending is more fun than maintaining.
 
-## Sizing
+## <big>SIZING</big>
 - Default design is for 200mm x 200mm x200mm (not common).
   - Smaller builds like this are more rigid, so better-quality/faster.
 
@@ -110,7 +110,7 @@ All that said, am biased toward building MP3DP v4 largely because of the V1E com
   - B) Change dimensions Use Change [model parameters](https://forum.v1e.com/t/repeat-v2/33330/163?u=azab2c)
 
 
-## <big>BOM / Parts</big>
+## <big>BOM / PARTS</big>
 Related:
 - [MP3DP v4 BOM](https://forum.v1e.com/t/mp3dp-v4-bom/35315/21?u=azab2c) forum topic
 - [Dan's parts](https://forum.v1e.com/t/mp3dp-v4-build-plog/36010/3?u=azab2c)
@@ -161,8 +161,9 @@ MGN9H
 
 #### Panels
 Material options
+- 6mm /1/4" Plywood
+- Acrylic/Polycarbonate
 - [ACM](https://forum.v1e.com/t/mp3dp-v4-bom/35315/52?u=azab2c) (aluminium-plastic-aluminium sandwich) great stable material, but $$$.
-
 
 
 #### BuildPlate
@@ -182,7 +183,8 @@ Material options
   // DONE
 
   // INPROGRESS
-  │       2 x Z Post.3mf
+│     2 x Z Post.3mf    2.3hrs
+      Z Post M.3mf      2.3hrs
 
   // TODO
   ───Hemera
@@ -208,7 +210,6 @@ Material options
       XY Left.3mf
       XY Right.3mf
       6 x Z Belt Holder.3mf
-      Z Post M.3mf
 
   ├───SKR Pro
       SKR Pro Cover.3mf
@@ -225,17 +226,26 @@ Material options
 
 
 
-## MP3DP v4 V1E Community builds / builders
+## <big>MP3DP v4 V1E Community builds / builders</big>
 
-[Community MP3DP Build Logs](https://forum.v1e.com/search?expanded=true&q=%23mostly-printed-3d-printer-mp3dp%3Ayour-builds-mp3dp)
+Some of the [Community MP3DP Build Logs](https://forum.v1e.com/search?expanded=true&q=%23mostly-printed-3d-printer-mp3dp%3Ayour-builds-mp3dp%20order%3Alatest_topic) that helped me.
+
+### <b>v4</b> builds
 
 - @SupraGuy 200/235mm^3 ?? https://forum.v1e.com/t/mp3dp-v4-build-plog/36010?u=azab2c
 - @ Jonathjon ?mm^3 https://forum.v1e.com/t/mp3dp-v4-build/36437
 - @ Kgleason's 235mm^3 https://forum.v1e.com/t/mp3dp-repeat-v2-aka-v4-z-steppers/35967
 - @ aali0101's 250mm^3 https://forum.v1e.com/t/repeat-v2/33330/251?u=azab2c
-- https://forum.v1e.com/u/gpagnozzi
 - @ probrwr's https://forum.v1e.com/t/mp3dp-v4-build-sw-virginia/37238
+- @ OBI's https://forum.v1e.com/t/time-to-start/36783
+- @ Heath_H 300mm^3 https://forum.v1e.com/t/heaths-mp3dp-repeat-akron-oh/34817
+  - 3 in 1 (multicolor, 1 nozzle/hot-end, 3 extruders)
 
+
+### <b>v3</b> builds
+
+- @ RootsMedia's 310x310x280mm https://forum.v1e.com/t/mp3dp-repeat-take-two/33215
+  - Repeat v1 with sweet ACM/PolyCarb enclosure, complete with logo engraved panels.
 
 
 <br/><br/><br/>
