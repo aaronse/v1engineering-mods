@@ -3,6 +3,9 @@
 # TASKS
 
 - TODO:BOM?
+
+BOM Generator? https://forum.v1e.com/t/repeat-v2/33330/160?u=azab2c
+
 - TODO: Print parts, file://C:\Projects(NAS)\Make.V1E_RepeatV2\models\
 
 
