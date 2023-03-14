@@ -122,7 +122,28 @@ Related:
 - Ryan's BOM https://forum.v1e.com/t/repeat-v2/33330/85?u=azab2c
 - Voron part sourcing guide https://vorondesign.com/sourcing_guide?model=V2.4.  Sections below are inspired by [Voron generated BOM](misc/voron_generated_bom.csv).
 
-V1E Shop sells bunch of https://www.v1e.com/collections/3dprinter-parts, will source what I can from Ryan.
+V1E Shop [sells bunch of parts](https://forum.v1e.com/t/mp3dp-v4-bom/35315/72?u=azab2c) at  https://www.v1e.com/collections/3dprinter-parts, will source what I can/need from Ryan.
+
+"
+  Control board
+  Steppers
+  Belt
+  Pulleys
+  Idlers toothed and smooth.
+  Endstops
+  A few wires for extending, stepper and endstops.
+  ptfe tube for reverse bowden
+  maybe some bed springs if you do not have some flexible tubing for the bed mounting. (not used for typical leveling just a soft mount.)
+  Wire sleeve for wire management
+  I have a bit of thicker wire available for power supply to board connection if needed.
+
+  I think that is it.
+  Still need extrusions and connections
+  Extruder
+  Power supply
+  heated bed
+  Screws, nuts, tnuts
+"
 
 
 #### Fasteners
@@ -174,11 +195,19 @@ Material options
 ### 3D PRINTED PARTS
 - Used PETG (like Dan), may reprint with ASA using MP3DP v4.  Ryan prints with PLA.
 - Using Overture Transparent Red PETG](https://www.amazon.com/gp/product/B07YCNCZ5J
-  - Cura Settings: 0.6noz, 3 wall, 35% gyroid infill.  Ryan says [40% is probably really good](https://forum.v1e.com/t/mp3dp-v4-build-plog/36010/82?u=azab2c).
+  - My Cura Settings: 0.6noz, 3 wall, 35% gyroid infill.
+  - Ryan says [40% is probably really good](https://forum.v1e.com/t/mp3dp-v4-build-plog/36010/82?u=azab2c).
+  - Dan's used [0.5mm Noz, 2 walls, 30% adaptive cubic infill](https://forum.v1e.com/t/mp3dp-v4-build-plog/36010/83?u=azab2c)
 
 
 ## <big>Assembly</big>
 <mark>TODO:</mark>
+
+
+
+
+### Squaring/Aligning rails
+https://forum.v1e.com/t/matts-mp3dp-repeat-build/30859/153?u=azab2c
 
 
 ## <big>MP3DP v4 V1E Community builds / builders</big>
@@ -188,6 +217,7 @@ Some of the [Community MP3DP Build Logs](https://forum.v1e.com/search?expanded=t
 ### <b>v4</b> builds
 
 - @SupraGuy 200/235mm^3 ?? https://forum.v1e.com/t/mp3dp-v4-build-plog/36010?u=azab2c
+- @ MattMed  https://forum.v1e.com/t/matts-mp3dp-repeat-build/30859/142?u=azab2c
 - @ Jonathjon ?mm^3 https://forum.v1e.com/t/mp3dp-v4-build/36437
 - @ Kgleason's 235mm^3 https://forum.v1e.com/t/mp3dp-repeat-v2-aka-v4-z-steppers/35967
 - @ aali0101's 250mm^3 https://forum.v1e.com/t/repeat-v2/33330/251?u=azab2c
@@ -208,10 +238,11 @@ Some of the [Community MP3DP Build Logs](https://forum.v1e.com/search?expanded=t
   ```js
 
   // DONE
-│     2 x Z Post.3mf    2.3hrs
 
   // INPROGRESS
+│     2 x Z Post.3mf    2.3hrs
       Z Post M.3mf      2.3hrs
+      0 / 6 x Z Belt Holder.3mf  6 x 0.5hr, 3hrs
       XY Left.3mf       2.3hrs
 
   // TODO
@@ -233,10 +264,9 @@ Some of the [Community MP3DP Build Logs](https://forum.v1e.com/search?expanded=t
       Left Stepper.3mf
       Rail Aligner.3mf
       Right Stepper.3mf
-      2 x Tension Block XY.3mf
-      X Carrier.3mf
-      XY Right.3mf
-      6 x Z Belt Holder.3mf
+      2 x Tension Block XY.3mf  
+      X Carrier.3mf 4.25
+      XY Right.3mf   2.5
 
   ├───SKR Pro
       SKR Pro Cover.3mf

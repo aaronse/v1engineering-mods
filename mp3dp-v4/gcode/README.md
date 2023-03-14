@@ -1,1 +1,1 @@
-MP3DP v4.1 2023-03-13 GCODE files.  Models downloaded from https://www.printables.com/model/282346/files
+MP3DP v4.1 2023-03-13 (https://www.printables.com/model/282346/files) GCODE files for my Ender 3 Max, printing Overture PETG Transparent Red.

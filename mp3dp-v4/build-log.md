@@ -32,3 +32,8 @@ BOM Generator? https://forum.v1e.com/t/repeat-v2/33330/160?u=azab2c
 23-03-13
   - Downloaded current models https://www.printables.com/model/282346-mp3dp-v41/files
 
+
+23-03-14
+  - Ugh. After feeling smug about using Teaching Tech’s Calibration Tool to tune your settings; Do remember to uncheck “Remove All Holes”, before you print ~8hrs worth of parts :man_facepalming:
+  ![image](img/2023-03-14-don't-forget-to-revert-calibration-only-settings.png)
+  - Switched infill from gyroid to cubic.  Didn't like how much gyroid infill pattern was rattling and slinging the bed around (Ender 3 Max).  Cubic worked great for my LR3 build.  Will try gyroid again on a CoreXY printer.
