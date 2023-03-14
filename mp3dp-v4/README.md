@@ -176,54 +176,9 @@ Material options
 - Using Overture Transparent Red PETG](https://www.amazon.com/gp/product/B07YCNCZ5J
   - Cura Settings: 0.6noz, 3 wall, 35% gyroid infill.  Ryan says [40% is probably really good](https://forum.v1e.com/t/mp3dp-v4-build-plog/36010/82?u=azab2c).
 
-#### STATUS
-
-  ```js
-
-  // DONE
-
-  // INPROGRESS
-│     2 x Z Post.3mf    2.3hrs
-      Z Post M.3mf      2.3hrs
-
-  // TODO
-  ───Hemera
-      Hemera Fan Shroud.3mf
-
-  ├───Misc 2020 clips and parts
-      2020 Corner Bracket.3mf
-      cable tie Wire Hanger.3mf
-      Power supply bracket.3mf
-      Wire Clip 90 degree.3mf
-      Wire Hanger TapeTrick.3mf
-
-  ├───MP3DP V4.1
-      Back Corner Left.3mf
-      Back Corner Right.3mf
-      Bed Washer.3mf
-      filament Rev Bowden Holder.3mf
-      Left Stepper.3mf
-      Rail Aligner.3mf
-      Right Stepper.3mf
-      2 x Tension Block XY.3mf
-      X Carrier.3mf
-      XY Left.3mf
-      XY Right.3mf
-      6 x Z Belt Holder.3mf
-
-  ├───SKR Pro
-      SKR Pro Cover.3mf
-      SKR Pro Wire tie.3mf
-
-  └───TFT E3 V3
-      TFT CASE V3.STL
-      TFT Holder.3mf
-  ```
-
-
 
 ## <big>Assembly</big>
-
+<mark>TODO:</mark>
 
 
 ## <big>MP3DP v4 V1E Community builds / builders</big>
@@ -248,4 +203,47 @@ Some of the [Community MP3DP Build Logs](https://forum.v1e.com/search?expanded=t
   - Repeat v1 with sweet ACM/PolyCarb enclosure, complete with logo engraved panels.
 
 
-<br/><br/><br/>
+#### STATUS
+
+  ```js
+
+  // DONE
+│     2 x Z Post.3mf    2.3hrs
+
+  // INPROGRESS
+      Z Post M.3mf      2.3hrs
+      XY Left.3mf       2.3hrs
+
+  // TODO
+  ───Hemera
+      Hemera Fan Shroud.3mf
+
+  ├───Misc 2020 clips and parts
+      2020 Corner Bracket.3mf
+      cable tie Wire Hanger.3mf
+      Power supply bracket.3mf
+      Wire Clip 90 degree.3mf
+      Wire Hanger TapeTrick.3mf
+
+  ├───MP3DP V4.1
+      Back Corner Left.3mf
+      Back Corner Right.3mf
+      Bed Washer.3mf
+      filament Rev Bowden Holder.3mf
+      Left Stepper.3mf
+      Rail Aligner.3mf
+      Right Stepper.3mf
+      2 x Tension Block XY.3mf
+      X Carrier.3mf
+      XY Right.3mf
+      6 x Z Belt Holder.3mf
+
+  ├───SKR Pro
+      SKR Pro Cover.3mf
+      SKR Pro Wire tie.3mf
+
+  └───TFT E3 V3
+      TFT CASE V3.STL
+      TFT Holder.3mf
+  ```
+
