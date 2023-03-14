@@ -122,28 +122,28 @@ Related:
 - Ryan's BOM https://forum.v1e.com/t/repeat-v2/33330/85?u=azab2c
 - Voron part sourcing guide https://vorondesign.com/sourcing_guide?model=V2.4.  Sections below are inspired by [Voron generated BOM](misc/voron_generated_bom.csv).
 
-V1E Shop [sells bunch of parts](https://forum.v1e.com/t/mp3dp-v4-bom/35315/72?u=azab2c) at  https://www.v1e.com/collections/3dprinter-parts, will source what I can/need from Ryan.
+V1E Shop [sells bunch of parts](https://forum.v1e.com/t/mp3dp-v4-bom/35315/72?u=azab2c) at  https://www.v1e.com/collections/3dprinter-parts, will source what I can/need from Ryan.  MP3DP Parts currently list on V1E Shop (no kit/bundle for now...):
 
-"
-  Control board
-  Steppers
-  Belt
-  Pulleys
-  Idlers toothed and smooth.
-  Endstops
-  A few wires for extending, stepper and endstops.
-  ptfe tube for reverse bowden
-  maybe some bed springs if you do not have some flexible tubing for the bed mounting. (not used for typical leveling just a soft mount.)
-  Wire sleeve for wire management
-  I have a bit of thicker wire available for power supply to board connection if needed.
+- Control board
+- Steppers
+- Belt
+- Pulleys
+- Idlers toothed and smooth.
+- Endstops
+- A few wires for extending, stepper and endstops.
+- Ptfe tube for reverse bowden
+- Bed springs if you do not have some flexible tubing for the bed mounting. (not used for typical leveling just a soft mount.)
+- Wire sleeve for wire management
+- ???AWG Thicker wire for power supply to board connection if needed.
 
-  I think that is it.
-  Still need extrusions and connections
-  Extruder
-  Power supply
-  heated bed
-  Screws, nuts, tnuts
-"
+Not available from V1E:
+- Extrusions
+- Connections
+- Extruder
+- Power supply
+- Heated bed
+- Screws, nuts, tnuts
+
 
 
 #### Fasteners
@@ -207,7 +207,7 @@ Material options
 
 
 ### Squaring/Aligning rails
-https://forum.v1e.com/t/matts-mp3dp-repeat-build/30859/153?u=azab2c
+- See Matt's build @ https://forum.v1e.com/t/matts-mp3dp-repeat-build/30859/153?u=azab2c
 
 
 ## <big>MP3DP v4 V1E Community builds / builders</big>
