@@ -48,7 +48,7 @@ Pics from [V1E.com](https://docs.v1e.com/mp3dp)
 
 
 ## <big>WHY BUILD ONE?</big>
-Mostly Fun, and, maybe profit.  Have an Ender 3 Max, great machine but has limited speed/quality/temps.  Want something faster and capable of other printing other materials, not just higher temp ASA/ABS/PC, TPU will be easier with direct drive instead of bowden.  
+Mostly Fun, and, maybe profit.  Have an Ender 3 Max, great machine but has limited speed/quality/temps.  Want something faster and capable of other printing other materials, not just higher temp ASA/ABS/PC, but TPU will be easier with direct drive instead of bowden.  CoreXY frame/motion has [misc benefits](https://www.google.com/search?q=cartesian+versus+corexy+3d+printer) over my Cartesian Ender 3 design.
 
 Super secret goal, arguably the most important one...  is to inspire and lure the kids into 3D printing, a gateway to becoming a Maker...
 
@@ -101,6 +101,14 @@ All that said, am biased toward building MP3DP v4 largely because of the V1E com
       3 x Extrusion Frame Length X
       8 x Extrusion Frame Length Y
       3 x Extrusion Frame Length Z
+
+      Belt Cut List...
+
+      e.g. Buy 5m for Usable 300mm^3
+  
+      3 x (Usable Z + 150mm ) +
+      1 x (4 x (Usable X + 200mm)) + (4 x (Usable X + 50))
+
       ```
 
       (**) Z dimension is approximate, can vary depending on bed mounting thickness.
@@ -110,9 +118,41 @@ All that said, am biased toward building MP3DP v4 largely because of the V1E com
   - B) Change dimensions Use Change [model parameters](https://forum.v1e.com/t/repeat-v2/33330/163?u=azab2c)
 
 
+
+
+USER PARAMETERS:
+    Usable_Width = 20.0 
+    Usable_Depth = 20.0 
+    Usable_Height = 20.0 
+
+PARTS:
+    Frame X Back Bottom , length: 37.0
+    Frame X Back Top , length: 37.0
+    Frame X Front Bottom , length: 37.0
+    Frame Y Rail Bottom Left , length: 34.5
+    Frame Y Rail Bottom Right , length: 34.5
+    Frame Y Rail Top Left , length: 34.5
+    Frame Y Rail Top Right , length: 34.5
+    Frame Z Back Left , length: 34.5
+    Frame Z Back Right , length: 34.5
+    Frame Z Front Left , length: 34.5
+    Frame Z Front Right , length: 34.5
+    Frame Z Mid Left , length: 30.5
+    Frame Z Mid Right , length: 30.5
+    MGN12 X Rail , length: 30.0
+    MGN12 Y Rail , length: 25.0
+    MGN12 Y Rail , length: 25.0
+    MGN12 Z Rail , length: 25.0
+    MGN12 Z Rail , length: 25.0
+    MGN12 Z Rail , length: 25.0
+
+
 ## <big>BOM / PARTS</big>
+
+**Read:** https://forum.v1e.com/t/mp3dp-v4-bom/35315/79?u=azab2c
+
 Related:
-- [MP3DP v4 BOM](https://forum.v1e.com/t/mp3dp-v4-bom/35315/21?u=azab2c) forum topic
+- [MP3DP v4 BOM](https://forum.v1e.com/t/mp3dp-v4-bom/35315/79) forum topic
 - [Dan's parts](https://forum.v1e.com/t/mp3dp-v4-build-plog/36010/3?u=azab2c)
   - [Dan's rails](https://forum.v1e.com/t/mp3dp-v4-bom/35315/21?u=azab2c), Y = Z = 300mm, X = 350mm
 
@@ -120,6 +160,14 @@ Related:
 ### PARTS
 Related:
 - Ryan's BOM https://forum.v1e.com/t/repeat-v2/33330/85?u=azab2c
+  - M3x8
+    - Linear rails all use M3x8 (
+    - One stepper mount marked with an "8"
+  - M2.5x12 
+    - Endstops
+  - M3x10mm ...
+  - M5x30mm ...
+
 - Voron part sourcing guide https://vorondesign.com/sourcing_guide?model=V2.4.  Sections below are inspired by [Voron generated BOM](misc/voron_generated_bom.csv).
 
 V1E Shop [sells bunch of parts](https://forum.v1e.com/t/mp3dp-v4-bom/35315/72?u=azab2c) at  https://www.v1e.com/collections/3dprinter-parts, will source what I can/need from Ryan.  MP3DP Parts currently list on V1E Shop (no kit/bundle for now...):
@@ -202,12 +250,30 @@ Material options
 
 ## <big>Assembly</big>
 <mark>TODO:</mark>
+Related
+- Until v4 docs available, reading through [v3 Assembly doc](https://docs.v1e.com/mp3dp/version3assm/) will help.
 
 
+### Frame Assembly
+https://forum.v1e.com/t/mp3dp-v4-build-plog/36010/8?u=azab2c
 
+
+###
+https://forum.v1e.com/t/mp3dp-v4-build-plog/36010/9?u=azab2c
+
+#### Z Post Assembly
+
+![image](https://us2.dh-cdn.net/uploads/db5587/optimized/3X/d/9/d902961dcae9c6669ae31f223147fff3fe05a8de_2_666x500.jpeg)
+
+![image](https://us2.dh-cdn.net/uploads/db5587/original/3X/c/2/c25f261c6faacd4306bf5eb2a19b477418a57efc.jpeg)
 
 ### Squaring/Aligning rails
 - See Matt's build @ https://forum.v1e.com/t/matts-mp3dp-repeat-build/30859/153?u=azab2c
+
+### Software
+
+#### GCODE configuration
+Power down and/or resets will cause bed to crash down. So, ["gcode needs to park the z axis at zmax"](https://forum.v1e.com/t/repeat-v2/33330/45?u=azab2c)
 
 
 ## <big>MP3DP v4 V1E Community builds / builders</big>
@@ -217,8 +283,13 @@ Some of the [Community MP3DP Build Logs](https://forum.v1e.com/search?expanded=t
 ### <b>v4</b> builds
 
 - @SupraGuy 200/235mm^3 ?? https://forum.v1e.com/t/mp3dp-v4-build-plog/36010?u=azab2c
+  - Extrusion [Cut List](https://forum.v1e.com/t/mp3dp-v4-build-plog/36010/8?u=azab2c) :
+    - 4x 345mm frame upright pieces
+    - 4x 345mm frame Y axis pieces
+    - 3x 370mm frame X axis pieces
+    - 3x 305mm Z axis upright rails
 - @ MattMed  https://forum.v1e.com/t/matts-mp3dp-repeat-build/30859/142?u=azab2c
-- @ Jonathjon ?mm^3 https://forum.v1e.com/t/mp3dp-v4-build/36437
+- @ Jonathjon 300x300x400mm https://forum.v1e.com/t/mp3dp-v4-build/36437
 - @ Kgleason's 235mm^3 https://forum.v1e.com/t/mp3dp-repeat-v2-aka-v4-z-steppers/35967
 - @ aali0101's 250mm^3 https://forum.v1e.com/t/repeat-v2/33330/251?u=azab2c
 - @ probrwr's https://forum.v1e.com/t/mp3dp-v4-build-sw-virginia/37238
@@ -237,13 +308,20 @@ Some of the [Community MP3DP Build Logs](https://forum.v1e.com/search?expanded=t
 
   ```js
 
-  // DONE
-
-  // INPROGRESS
+  // DONE - sort by print order
 │     2 x Z Post.3mf    2.3hrs
       Z Post M.3mf      2.3hrs
-      0 / 6 x Z Belt Holder.3mf  6 x 0.5hr, 3hrs
       XY Left.3mf       2.3hrs
+      XY Right.3mf      2.3hrs
+      Left Stepper.3mf  2hrs
+      Right Stepper.3mf 2hrs
+      X Carrier.3mf 4.25
+
+  // INPROGRESS
+      Back Corner Left.3mf  1.75hr
+
+      Back Corner Right.3mf 1.75hrs
+      0 / 6 x Z Belt Holder.3mf  6 x 0.5hr, 3hrs
 
   // TODO
   ───Hemera
@@ -257,16 +335,10 @@ Some of the [Community MP3DP Build Logs](https://forum.v1e.com/search?expanded=t
       Wire Hanger TapeTrick.3mf
 
   ├───MP3DP V4.1
-      Back Corner Left.3mf
-      Back Corner Right.3mf
       Bed Washer.3mf
       filament Rev Bowden Holder.3mf
-      Left Stepper.3mf
       Rail Aligner.3mf
-      Right Stepper.3mf
       2 x Tension Block XY.3mf  
-      X Carrier.3mf 4.25
-      XY Right.3mf   2.5
 
   ├───SKR Pro
       SKR Pro Cover.3mf

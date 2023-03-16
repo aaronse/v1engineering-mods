@@ -34,6 +34,13 @@ BOM Generator? https://forum.v1e.com/t/repeat-v2/33330/160?u=azab2c
 
 
 23-03-14
-  - Ugh. After feeling smug about using Teaching Tech’s Calibration Tool to tune your settings; Do remember to uncheck “Remove All Holes”, before you print ~8hrs worth of parts :man_facepalming:
+  - Ugh.  After feeling smug about using Teaching Tech’s Calibration Tool to tune your settings; Do remember to uncheck “Remove All Holes”, before you print ~8hrs worth of parts :man_facepalming:
   ![image](img/2023-03-14-don't-forget-to-revert-calibration-only-settings.png)
   - Switched infill from gyroid to cubic.  Didn't like how much gyroid infill pattern was rattling and slinging the bed around (Ender 3 Max).  Cubic worked great for my LR3 build.  Will try gyroid again on a CoreXY printer.
+
+23-03-15
+  - Ugh.  Ended up printing Left Right Steppers twice.
+  - Given some printing screw ups, not sure if the PETG 1KG will be enough for all parts.  So, now that printer settings/quality are acceptable, am examining Fusion model and prioritizing printing parts most visible first.  Can print minor/smaller parts in black/something.
+
+
+ - FAIL: X Carriage part warped/lifted from bed.  Fixing by reducing "Brim distance" from 0.12mm to 0mm. 
