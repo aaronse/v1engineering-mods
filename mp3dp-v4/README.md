@@ -120,32 +120,6 @@ All that said, am biased toward building MP3DP v4 largely because of the V1E com
 
 
 
-USER PARAMETERS:
-    Usable_Width = 20.0 
-    Usable_Depth = 20.0 
-    Usable_Height = 20.0 
-
-PARTS:
-    Frame X Back Bottom , length: 37.0
-    Frame X Back Top , length: 37.0
-    Frame X Front Bottom , length: 37.0
-    Frame Y Rail Bottom Left , length: 34.5
-    Frame Y Rail Bottom Right , length: 34.5
-    Frame Y Rail Top Left , length: 34.5
-    Frame Y Rail Top Right , length: 34.5
-    Frame Z Back Left , length: 34.5
-    Frame Z Back Right , length: 34.5
-    Frame Z Front Left , length: 34.5
-    Frame Z Front Right , length: 34.5
-    Frame Z Mid Left , length: 30.5
-    Frame Z Mid Right , length: 30.5
-    MGN12 X Rail , length: 30.0
-    MGN12 Y Rail , length: 25.0
-    MGN12 Y Rail , length: 25.0
-    MGN12 Z Rail , length: 25.0
-    MGN12 Z Rail , length: 25.0
-    MGN12 Z Rail , length: 25.0
-
 
 ## <big>BOM / PARTS</big>
 

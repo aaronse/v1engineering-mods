@@ -71,7 +71,7 @@ def run(context):
         if len(paramFilters) > 0 and not any(userParameter.name.find(filter) != -1 for filter in paramFilters):
             continue
 
-        foundParams.append(f"{userParameter.name} = {str(userParameter.value)}")
+        foundParams.append(f"{userParameter.name} = {str(round(userParameter.value * 10))}mm")
 
     foundParams.sort()
     for foundParam in foundParams:
@@ -123,7 +123,7 @@ def run(context):
                 # f", min: {round(minPt.x, 2)}, {round(minPt.y, 2)}, {round(minPt.z, 2)}" +
                 # f", max: {round(maxPt.x, 2)}, {round(maxPt.y, 2)}, {round(maxPt.z, 2)}" +
                 # f", dims: {round(dx, 2)}, {round(dy, 2)}, {round(dz, 2)}"
-                f", length: {round(length, 2)}"
+                f" {round(length * 10)}mm"
             ));
 
     foundItems.sort()
