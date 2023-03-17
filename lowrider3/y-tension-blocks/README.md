@@ -21,7 +21,7 @@ Enables fast swapping of LR3 between different sizes tables, e.g. big 4'x8' and 
   - [y_tension_block_rear_right_top.stl](y_tension_block_rear_right_top.stl)
 - Step/Fusion files if you want to remix/mod:
   - [y_tension_block_rear.f3d](y_tension_block_rear.f3d)
-  - [y_tension_block_rear.step](y_tension_block_rear.f3d)
+  - [y_tension_block_rear.step](y_tension_block_rear.step)
 
 ## Usage
 Mod has top-bottom split Y tensioner blocks enabling clamping to middle of the belt.  So, the original Y tensioner block can always remain attached towards end of the belt.  Meanwhile the mid belt tensioner can be quickly added and removed.  I use wing nuts on my Mid Belt tensioner, ensure your your wiring isn't loose and snags on wing nutes if you decide to use them too.
