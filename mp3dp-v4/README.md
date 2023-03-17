@@ -144,19 +144,102 @@ Related:
 
 - Voron part sourcing guide https://vorondesign.com/sourcing_guide?model=V2.4.  Sections below are inspired by [Voron generated BOM](misc/voron_generated_bom.csv).
 
-V1E Shop [sells bunch of parts](https://forum.v1e.com/t/mp3dp-v4-bom/35315/72?u=azab2c) at  https://www.v1e.com/collections/3dprinter-parts, will source what I can/need from Ryan.  MP3DP Parts currently list on V1E Shop (no kit/bundle for now...):
 
-- Control board
-- Steppers
-- Belt
-- Pulleys
-- Idlers toothed and smooth.
-- Endstops
-- A few wires for extending, stepper and endstops.
-- Ptfe tube for reverse bowden
-- Bed springs if you do not have some flexible tubing for the bed mounting. (not used for typical leveling just a soft mount.)
-- Wire sleeve for wire management
-- ???AWG Thicker wire for power supply to board connection if needed.
+Solved the MP3DP v4 BOM Puzzle thanks to folks in [this Topic](https://forum.v1e.com/t/mp3dp-v4-bom/35315/79?u=azab2c).  Using the following info:
+- MP3DP v4 [Forum Topic](https://forum.v1e.com/t/repeat-v2/33330/121) | [Fusion 360 model](https://myhub.autodesk360.com/ue29a24ab/g/shares/SH35dfcQT936092f0e43b20f88cb61d3441a)
+- [MP3DP v4 Pics of Ryan's builds](https://forum.v1e.com/t/mp3dp-v4-bom/35315/40)
+- [V1E Shop 3D Printer Parts](https://www.v1e.com/collections/3dprinter-parts)
+- [MP3DP v4 community builds](https://forum.v1e.com/t/mp3dp-v4-azas-build/37251#bv4b-builds-24) have stumbled across.
+- MP3DP v3 [Topic](https://forum.v1e.com/t/new-printer-time/28127) | [Fusion 360 model](https://a360.co/381SaiQ) | [Parts](https://docs.v1e.com/mp3dp/version3index/#specialty-parts)
+
+
+## Specialty Parts
+
+
+|QTY  |Description             |Comment                          |Link                        | 
+|-----|------------------------|---------------------------------|----------------------------|
+|1    |** SKR Pro 1.2 Control Board           |6 driver minimum (for 5 motion steppers + 1 direct drive extruder)                |[Shop][sh1] – [Amazon][az1]|
+|5    |Steppers, Nema17 |76OZ/in, e.g. KL17H248-15-4A               |[Shop][sh2] – [Amazon][az2]|
+|1    |Extruder or other tool   |Hemera,example, match voltage, 24V is good.    |[Fila][sh3] – [Amazon][az3]|
+|5    |*** Pulleys 16T 10mm        |10mm GT2 16 Tooth                |[Shop][sh4] – [Amazon][az4]|
+|6    |*** Idlers w/Teeth 20T      |20T w/Teeth 5mm Bore             |[Shop][sh5] – [Amazon][az5]|
+|8    |*** Idlers Smooth 20T       |20T Smooth 5mm Bore              |[Shop][sh6] – [Amazon][az6]|
+|5m for 300m^3</mark>    |**** Belt GT2 10mm           | **No steel** belt |[Shop][sh7] – [Amazon][az7]|
+|2|Omron Limit switch, endstop         |Use Omron or red rollers     |[Shop][sh8] – [Amazon][az8]|
+|1    |Heated Bed              |Style and Size will vary         |[Shop][sh10] – [Amazon][az10]|
+|3|Springs                 |For bed, silicon tube will work  |[Shop][sh11] – [Amazon][az11]|
+|1  | X Linear rail MGN       | Usable X + 100mm MGN12H|[Fila][sh12] – [Amazon][az12] (select correct dimensions)|
+|2  | Y Linear rails MGN       | Usable Y + 50mm MGN12H|[Fila][sh12] – [Amazon][az12] (select correct dimensions)|
+|3  | Z Linear rails MGN       | Usable Z + ~50mm MGN12H|[Fila][sh12] – [Amazon][az12] (select correct dimensions)|
+|1    |Power Supply            |Match voltage                    |[Fila][sh14] – [Amazon][az14]|
+|*    |Thread locker           |Optional for grubs screws        |[Shop][sh15] – [Amazon][az15]|
+|*    |Lube                    |Optional for idlers              |[Shop][sh16] – [Amazon][az16]|
+|*    |PTFE Tube               |Optional Extruder to filament    |[Shop][sh17] – [Amazon][az17]|
+|*    |Print Fan               |Optional fits hemera mount       |[Shop][sh18] – [Amazon][az18]|
+|6|Stick on Stepper temp gauge|Optional| [Shop](https://www.v1e.com/collections/3dprinter-parts/products/stick-on-temp-gauge)
+|1| ESP-01s ESP3D headless|Optional  Wifi dongle for SKR Pro 1.2| [Shop](https://www.v1e.com/collections/3dprinter-parts/products/esp-01s-esp3d-espui-headless)
+|6| 3/8" wire sleeve| Optional| [Shop](https://www.v1e.com/collections/3dprinter-parts/products/wire-sleeve)
+|1| 50mm PTFE liner|Optional, need more if building bowden setup|[Shop](https://www.v1e.com/collections/3dprinter-parts/products/ptfe-liner)
+
+
+[sh1]: https://www.v1e.com/collections/3dprinter-parts/products/skr-pro1-2-6x-2209-drivers-tft35-e3-v3
+[sh2]: https://www.v1e.com/collections/3dprinter-parts/products/nema-17-76oz-in-steppers
+[sh3]: https://www.filastruder.com/collections/e3d-hemera/products/e3d-hemera?variant=39486550507591
+[sh4]: https://www.v1e.com/collections/3dprinter-parts/products/pulley-16-tooth-gt2-10mm
+[sh5]: https://www.v1e.com/products/idler-10mm-20t-5mm-bore
+[sh6]: https://www.v1e.com/collections/3dprinter-parts/products/20t-idler-gt2-10mm
+[sh7]: https://www.v1e.com/collections/3dprinter-parts/products/gt2-10mm-belt
+[sh8]: https://www.v1e.com/products/limit-switch-endstop
+[sh9]: https://www.v1e.com/collections/zenxy/products/v-wheel
+[sh10]: https://www.v1e.com/collections/3dprinter-parts/products/mk3-aluminum-heated-bed
+[sh11]: https://www.v1e.com/collections/3dprinter-parts/products/spring
+[sh12]: https://www.filastruder.com/products/ldo-linear-rails?variant=31796304150599
+[sh13]: https://hobbyking.com/en_us/carbon-fibre-square-tube-20-x-20-x-800mm.html
+[sh14]: https://www.filastruder.com/products/meanwell-lrs-350-24-psu?_pos=3&_sid=4a733ffaa&_ss=r
+[sh15]: https://www.v1e.com/collections/3dprinter-parts/products/0-5ml-threadlocker-242
+[sh16]: https://www.v1e.com/collections/3dprinter-parts/products/super-lube-silicone-lubricating-grease-with-syncolon-ptfe
+[sh17]: https://www.v1e.com/collections/3dprinter-parts/products/ptfe-liner?variant=39521587331187
+[sh18]: https://www.v1e.com/collections/3dprinter-parts/products/5015-12v-fan-blower
+
+[az1]: https://amzn.to/3mp6nOk
+[az2]: https://amzn.to/3FcxGlE
+[az3]: https://amzn.to/3tdtnE9
+[az4]: https://amzn.to/3n9mUGM
+[az5]: https://amzn.to/31HTnwa
+[az6]: https://amzn.to/3JXAXJi
+[az7]: https://amzn.to/3u5imW6
+[az8]: https://amzn.to/396oRzi
+[az9]: https://amzn.to/33WT0yo
+[az10]: https://amzn.to/3FgVRPM
+[az11]: https://amzn.to/3G9HFcG
+[az12]: https://amzn.to/3HLM85I
+[az13]: https://amzn.to/34HCnHL
+[az14]: https://amzn.to/31OsAOY
+[az15]: https://amzn.to/3GhaKmx
+[az16]: https://amzn.to/31H7yS6
+[az17]: https://amzn.to/3f5Ml7E
+[az18]: https://amzn.to/3Fq3Vy1
+
+
+As an Amazon Associate Ryan earns from qualifying purchases.
+
+** Personally, am using Octopus 1.1 instead of SKR 1.2 for my build, will have more Mod options, but will be more work to setup.  SKR 1.2 and Rambo have better Community support.
+
+*** Pulley/Idler break down :
+  - 6 Pulleys 16T 10mm.  
+    - 6 = 6 x 1 per Stepper.
+  - 6 Idlers w/Teeth 20T
+    - 4 = 2 x 2 per Left/Right rear corner
+    - 2 = 2 x 1 per XY Left/Right
+  - 8 Idlers Smooth 20T
+    - 6 = 3 x 2 per Z post
+    - 2 = 2 x 1 per XY Left/Right
+
+**** Belt Calculations, cut list :
+- 3 x (Usable Z + 150mm )
+- 1 x ( (4 x (Usable X + 200mm) ) + (4 x (Usable X + 50) ) )
+
+
 
 Not available from V1E:
 - Extrusions
@@ -178,7 +261,6 @@ Not available from V1E:
   - Use slide-in nuts, [rotating T-Nuts are horrible](https://forum.v1e.com/t/repeat-v2/33330/246?u=azab2c).
 
 #### Motion
-MGN9H
 
 #### Electronics
 - Hemera [amzn](https://www.amazon.com/Genuine-E3D-Hemera-1-75mm-Direct/dp/B0829DHHPK) or BiQU H2 V2 (170g lighter)
@@ -272,7 +354,8 @@ Some of the [Community MP3DP Build Logs](https://forum.v1e.com/search?expanded=t
 - @ Kgleason's 235mm^3 https://forum.v1e.com/t/mp3dp-repeat-v2-aka-v4-z-steppers/35967
   - [E3D Hemera](https://forum.v1e.com/t/mp3dp-repeat-v2-aka-v4-z-steppers/35967/5?u=azab2c)
 - @ aali0101's 250mm^3 https://forum.v1e.com/t/repeat-v2/33330/251?u=azab2c
-- @ probrwr's https://forum.v1e.com/t/mp3dp-v4-build-sw-virginia/37238
+- @ probrwr's 300mm x 300mm x ??? https://forum.v1e.com/t/mp3dp-v4-build-sw-virginia/37238
+  - [ZYLTech Extrusion](https://forum.v1e.com/t/mp3dp-v4-build-sw-virginia/37238/2?u=azab2c)
 - @ OBI's https://forum.v1e.com/t/time-to-start/36783
 - @ Heath_H 300mm^3 https://forum.v1e.com/t/heaths-mp3dp-repeat-akron-oh/34817
   - 3 in 1 (multicolor, 1 nozzle/hot-end, 3 extruders)
@@ -298,11 +381,11 @@ Some of the [Community MP3DP Build Logs](https://forum.v1e.com/search?expanded=t
       X Carrier.3mf 4.25
       Back Corner Left.3mf  1.75hr
       Back Corner Right.3mf 1.75hrs
-      2 x Tension Block XY.3mf  
+      2 x Tension Block XY.3mf   1hr
+      6 x Z Belt Holder.3mf  6 x 0.5hr, 3hrs
 
   // INPROGRESS
 
-      6 x Z Belt Holder.3mf  6 x 0.5hr, 3hrs
 
   // TODO
   ───Hemera
