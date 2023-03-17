@@ -262,15 +262,21 @@ Some of the [Community MP3DP Build Logs](https://forum.v1e.com/search?expanded=t
     - 4x 345mm frame Y axis pieces
     - 3x 370mm frame X axis pieces
     - 3x 305mm Z axis upright rails
+  - [E3D Hemera hotend](https://forum.v1e.com/t/mp3dp-v4-build-plog/36010/33?u=azab2c)
 - @ MattMed  https://forum.v1e.com/t/matts-mp3dp-repeat-build/30859/142?u=azab2c
+  - [E3D Hemera Direct Kit](https://forum.v1e.com/t/matts-mp3dp-repeat-build/30859/213?u=azab2c)
+  - Nice [Prusa slicer settings](https://forum.v1e.com/t/matts-mp3dp-repeat-build/30859/221?u=azab2c) from Ryan 
 - @ Jonathjon 300x300x400mm https://forum.v1e.com/t/mp3dp-v4-build/36437
+  - [E3D Hemera](https://forum.v1e.com/t/mp3dp-v4-build/36437/74?u=azab2c)
+  - [120V 750W hot plate](https://forum.v1e.com/t/mp3dp-v4-build/36437/43?u=azab2c)
 - @ Kgleason's 235mm^3 https://forum.v1e.com/t/mp3dp-repeat-v2-aka-v4-z-steppers/35967
+  - [E3D Hemera](https://forum.v1e.com/t/mp3dp-repeat-v2-aka-v4-z-steppers/35967/5?u=azab2c)
 - @ aali0101's 250mm^3 https://forum.v1e.com/t/repeat-v2/33330/251?u=azab2c
 - @ probrwr's https://forum.v1e.com/t/mp3dp-v4-build-sw-virginia/37238
 - @ OBI's https://forum.v1e.com/t/time-to-start/36783
 - @ Heath_H 300mm^3 https://forum.v1e.com/t/heaths-mp3dp-repeat-akron-oh/34817
   - 3 in 1 (multicolor, 1 nozzle/hot-end, 3 extruders)
-
+  - [Octopus](https://forum.v1e.com/t/heaths-mp3dp-repeat-akron-oh/34817?u=azab2c)
 
 ### <b>v3</b> builds
 
@@ -290,12 +296,13 @@ Some of the [Community MP3DP Build Logs](https://forum.v1e.com/search?expanded=t
       Left Stepper.3mf  2hrs
       Right Stepper.3mf 2hrs
       X Carrier.3mf 4.25
+      Back Corner Left.3mf  1.75hr
+      Back Corner Right.3mf 1.75hrs
+      2 x Tension Block XY.3mf  
 
   // INPROGRESS
-      Back Corner Left.3mf  1.75hr
 
-      Back Corner Right.3mf 1.75hrs
-      0 / 6 x Z Belt Holder.3mf  6 x 0.5hr, 3hrs
+      6 x Z Belt Holder.3mf  6 x 0.5hr, 3hrs
 
   // TODO
   ───Hemera
@@ -312,7 +319,6 @@ Some of the [Community MP3DP Build Logs](https://forum.v1e.com/search?expanded=t
       Bed Washer.3mf
       filament Rev Bowden Holder.3mf
       Rail Aligner.3mf
-      2 x Tension Block XY.3mf  
 
   ├───SKR Pro
       SKR Pro Cover.3mf
