@@ -61,10 +61,11 @@ Super secret goal, arguably the most important one...  is to inspire and lure th
 - Dan's costs https://forum.v1e.com/t/mp3dp-v2/37092/3?u=azab2c
 
 ### Quality / Speed / Reliablity
+Ryan/V1E relies on these to run his business, so that says a lot.
+
 Related:
 - Kirk's speed testing https://forum.v1e.com/t/mp3dp-repeat-v2-aka-v4-z-steppers/35967/7?u=azab2c
 
-Ryan/V1E relies on these to run his business, so that says a lot.
 
 ### Alternatives considered :
 - https://vorondesign.com/ too $$$, $1800-$2000
@@ -150,7 +151,7 @@ Solved the MP3DP v4 BOM Puzzle thanks to folks in [this Topic](https://forum.v1e
 - [MP3DP v4 Pics of Ryan's builds](https://forum.v1e.com/t/mp3dp-v4-bom/35315/40)
 - [V1E Shop 3D Printer Parts](https://www.v1e.com/collections/3dprinter-parts)
 - [MP3DP v4 community builds](https://forum.v1e.com/t/mp3dp-v4-azas-build/37251#bv4b-builds-24) have stumbled across.
-- MP3DP v3 [Topic](https://forum.v1e.com/t/new-printer-time/28127) | [Fusion 360 model](https://a360.co/381SaiQ) | [Parts](https://docs.v1e.com/mp3dp/version3index/#specialty-parts)
+- MP3DP v3 [Forum Topic](https://forum.v1e.com/t/new-printer-time/28127) | [Fusion 360 model](https://a360.co/381SaiQ) | [Docs / Parts](https://docs.v1e.com/mp3dp/version3index/#specialty-parts)
 
 
 ## Specialty Parts
@@ -223,7 +224,7 @@ Solved the MP3DP v4 BOM Puzzle thanks to folks in [this Topic](https://forum.v1e
 
 As an Amazon Associate Ryan earns from qualifying purchases.
 
-** Personally, am using Octopus 1.1 instead of SKR 1.2 for my build, will have more Mod options, but will be more work to setup.  SKR 1.2 and Rambo have better Community support.
+** Personally, am using [Octopus 1.1](https://biqu.equipment/collections/control-board/products/bigtreetech-octopus-pro-v1-0-chip-f446?variant=39585170096226) instead of SKR 1.2 for my build, will have more Mod options, but will be more work to setup.  SKR 1.2 and Rambo have better Community support.
 
 *** Pulley/Idler break down :
   - 6 Pulleys 16T 10mm.  
@@ -263,11 +264,28 @@ Not available from V1E:
 #### Motion
 
 #### Electronics
+
+##### Extruder Options
 - Hemera [amzn](https://www.amazon.com/Genuine-E3D-Hemera-1-75mm-Direct/dp/B0829DHHPK) or BiQU H2 V2 (170g lighter)
- 
+
 - Meanwell ???
 - Octopus 
   - MP3DP needs 6 drivers/steppers, Octopus is oversized with 8 drivers, am using because 1) am familiar with the board already, 2) will have 2 more slots for mods.
+
+  BIQU H2
+  https://www.youtube.com/watch?v=zyKH05bBs4Q
+
+  BIQU H2S Revo
+  https://www.youtube.com/watch?v=4X1F-dLVT3g
+  - Fan Duct https://youtu.be/4X1F-dLVT3g?t=214 by eight_heads
+
+  $120 https://www.aliexpress.us/item/3256804514365855.html
+
+  Octopus
+  https://www.aliexpress.us/item/3256802425039425.html
+
+  TMC2209
+  https://www.aliexpress.us/item/2251832860926249.html
 
  
 
@@ -356,10 +374,17 @@ Some of the [Community MP3DP Build Logs](https://forum.v1e.com/search?expanded=t
 - @ aali0101's 250mm^3 https://forum.v1e.com/t/repeat-v2/33330/251?u=azab2c
 - @ probrwr's 300mm x 300mm x ??? https://forum.v1e.com/t/mp3dp-v4-build-sw-virginia/37238
   - [ZYLTech Extrusion](https://forum.v1e.com/t/mp3dp-v4-build-sw-virginia/37238/2?u=azab2c)
+  - [Manta M8P, EBB36](https://forum.v1e.com/t/mp3dp-v4-build-sw-virginia/37238/25?u=azab2c)
+  - [MP3DP Mod - Adapter Carrier-to-H2, with EBB36 mount](https://forum.v1e.com/t/mp3dp-v4-build-sw-virginia/37238/24?u=azab2c)
 - @ OBI's https://forum.v1e.com/t/time-to-start/36783
 - @ Heath_H 300mm^3 https://forum.v1e.com/t/heaths-mp3dp-repeat-akron-oh/34817
   - 3 in 1 (multicolor, 1 nozzle/hot-end, 3 extruders)
   - [Octopus](https://forum.v1e.com/t/heaths-mp3dp-repeat-akron-oh/34817?u=azab2c)
+- @ gpagnozzi
+  - Manta M8P V1.0 (No CAN) U2C and EBB42 and the H2
+  - [Klipper config](https://forum.v1e.com/t/mp3dp-v4-build-sw-virginia/37238/31?u=azab2c)
+  - [MP3DP Mod - Extruder carrier for H2, 2x 5015 fans, EBB42](https://forum.v1e.com/t/mp3dp-v4-build-sw-virginia/37238/26?u=azab2c)
+  
 
 ### <b>v3</b> builds
 
