@@ -279,6 +279,17 @@ Not available from V1E:
   https://www.youtube.com/watch?v=4X1F-dLVT3g
   - Fan Duct https://youtu.be/4X1F-dLVT3g?t=214 by eight_heads
 
+Sounds like @probrwr has [BiQU H2S Revo](https://biqu.equipment/collections/extruder-hotend-heatsink-j-heat/products/biqu-h2-v2s-revo-extruder) and @gpagnozzi is using [BIQU H2 V2.0](https://biqu.equipment/products/biqu-h2-v2-0-extruder?variant=39821278347362)?
+
+
+
+BIQU H2 V2.0
+![image|409x500](https://us2.dh-cdn.net/uploads/db5587/optimized/3X/0/6/06ad48134f8955406f4b3ceada780895c7ebfb32_2_613x750.jpeg)
+
+BIQU H2 V2S REVO [Manual](https://cdn.shopify.com/s/files/1/1619/4791/files/H2V2S_Revo_User_Manual.pdf?v=1662011632)
+![image|302x500](https://us2.dh-cdn.net/uploads/db5587/optimized/3X/0/7/07315dffa557265e8148a4210a9c14336b913353_2_453x750.jpeg)
+
+
   $120 https://www.aliexpress.us/item/3256804514365855.html
 
   Octopus
