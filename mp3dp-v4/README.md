@@ -146,25 +146,20 @@ Solved the MP3DP v4 BOM Puzzle thanks to folks in [this Topic](https://forum.v1e
 - MP3DP v3 [Forum Topic](https://forum.v1e.com/t/new-printer-time/28127) | [Fusion 360 model](https://a360.co/381SaiQ) | [Docs / Parts](https://docs.v1e.com/mp3dp/version3index/#specialty-parts)
 
 
-## Specialty Parts
-
+## V1E Shop Parts
+Parts listed for purchase from V1E Shop.  Alternative links provided incase parts out of stock, and/or you're purchasing from other place(s).
 
 |QTY  |Description             |Comment                          |Link                        | 
 |-----|------------------------|---------------------------------|----------------------------|
 |1    |** SKR Pro 1.2 Control Board           |6 driver minimum (for 5 motion steppers + 1 direct drive extruder)                |[Shop][sh1] – [Amazon][az1]|
+|6    |TMC 2209|Buy 6 drivers if not supplied with Controller board|[Shop](https://www.v1e.com/products/trinamic-tmc-2209-v1-2-uart-drivers?_pos=2&_sid=5072eafe8&_ss=r)|
 |5    |Steppers, Nema17 |76OZ/in, e.g. KL17H248-15-4A               |[Shop][sh2] – [Amazon][az2]|
-|1    |Extruder or other tool   |Hemera,example, match voltage, 24V is good.    |[Fila][sh3] – [Amazon][az3]|
 |5    |*** Pulleys 16T 10mm        |10mm GT2 16 Tooth                |[Shop][sh4] – [Amazon][az4]|
 |6    |*** Idlers w/Teeth 20T      |20T w/Teeth 5mm Bore             |[Shop][sh5] – [Amazon][az5]|
 |8    |*** Idlers Smooth 20T       |20T Smooth 5mm Bore              |[Shop][sh6] – [Amazon][az6]|
 |5m for 300m^3</mark>    |**** Belt GT2 10mm           | **No steel** belt |[Shop][sh7] – [Amazon][az7]|
 |2|Omron Limit switch, endstop         |Use Omron or red rollers     |[Shop][sh8] – [Amazon][az8]|
-|1    |Heated Bed              |Style and Size will vary         |[Shop][sh10] – [Amazon][az10]|
 |3|Springs                 |For bed, silicon tube will work  |[Shop][sh11] – [Amazon][az11]|
-|1  | X Linear rail MGN       | Usable X + 100mm MGN12H|[Fila][sh12] – [Amazon][az12] (select correct dimensions)|
-|2  | Y Linear rails MGN       | Usable Y + 50mm MGN12H|[Fila][sh12] – [Amazon][az12] (select correct dimensions)|
-|3  | Z Linear rails MGN       | Usable Z + ~50mm MGN12H|[Fila][sh12] – [Amazon][az12] (select correct dimensions)|
-|1    |Power Supply            |Match voltage                    |[Fila][sh14] – [Amazon][az14]|
 |*    |Thread locker           |Optional for grubs screws        |[Shop][sh15] – [Amazon][az15]|
 |*    |Lube                    |Optional for idlers              |[Shop][sh16] – [Amazon][az16]|
 |*    |PTFE Tube               |Optional Extruder to filament    |[Shop][sh17] – [Amazon][az17]|
@@ -193,6 +188,7 @@ Solved the MP3DP v4 BOM Puzzle thanks to folks in [this Topic](https://forum.v1e
 [sh16]: https://www.v1e.com/collections/3dprinter-parts/products/super-lube-silicone-lubricating-grease-with-syncolon-ptfe
 [sh17]: https://www.v1e.com/collections/3dprinter-parts/products/ptfe-liner?variant=39521587331187
 [sh18]: https://www.v1e.com/collections/3dprinter-parts/products/5015-12v-fan-blower
+
 
 [az1]: https://amzn.to/3mp6nOk
 [az2]: https://amzn.to/3FcxGlE
@@ -233,53 +229,73 @@ As an Amazon Associate Ryan earns from qualifying purchases.
 - 1 x ( (4 x (Usable X + 200mm) ) + (4 x (Usable X + 50) ) )
 
 
+## Parts not listed on V1E Shop
 
-Not available from V1E:
-- Extrusions
-- Connections
-- Extruder
-- Power supply
-- Heated bed
-- Fasteners, Screws, nuts, tnuts
+### Fasteners
+
+|QTY  |Description             |Comment                          |Link                        | 
+|-----|------------------------|---------------------------------|----------------------------|
+|
+|???|M3x8|- Linear rails all use M3x8<br/>&nbsp;&nbsp;- (x+100+(2 * (y+ 50) + 3 * (z + 50)) / 25<br/>&nbsp;&nbsp;- Excel...  =(A1+100+2*(B1+50)+3*(C1+50))/25<br/>&nbsp;&nbsp;- e.g. 62 for 200mm^3<br/>- One stepper mount marked with an "8"||
+|
+|???|M2.5x12|- Endstops||
+|
+|???|M3x10mm|||
+|~113|M3 or M5 Button head by 8+ mm|- 4 x 25 Side/Back/Bottom Panels<br/>- 13 Front lower Panel<br/>- [(M5's will have less wiggle room)](https://forum.v1e.com/t/mp3dp-v4-bom/35315/101?u=azab2c)<br/>- 8mm for 1/8" panels, 10mm for 5.5mm+ (e.g. 1/4")<br/>- Measure/check length needed for panel thickness|Panel bolts||
+|???|M5x30mm|||
+|???|M5 Slide in Nuts|- Use slide-in nuts, [rotating T-Nuts are horrible](https://forum.v1e.com/t/repeat-v2/33330/246?u=azab2c)|[amzn](https://www.amazon.com/KOOTANS-Thread-Aluminum-Extrusions-Profiles/dp/B07PNV8SWZ)|
+
+
+### Motion
+
+|QTY  |Description             |Comment                          |Link                        | 
+|-----|------------------------|---------------------------------|----------------------------|
+|1  | X Linear rail MGN       | Usable X + 100mm MGN12H|[Fila][sh12] – [Amazon][az12] (select correct dimensions)|
+|2  | Y Linear rails MGN       | Usable Y + 50mm MGN12H|[Fila][sh12] – [Amazon][az12] (select correct dimensions)|
+|3  | Z Linear rails MGN       | Usable Z + ~50mm MGN12H|[Fila][sh12] – [Amazon][az12] (select correct dimensions)|
+
+### Electronics
+
+|QTY  |Description             |Comment                          |Link                        | 
+|-----|------------------------|---------------------------------|----------------------------|
+|1    |Extruder or other tool   |Hemera,example, match voltage, 24V is good.<br/>BIQU H2 or BIQU H2S REVO    |[Fila][sh3] – [Amazon][az3]|
+|1    |Power Supply            |Match voltage to your setup <br/>e.g. MEANWELL LRS-350-24|[Fila][sh14] – [Amazon][az14]|
+|1    |Heated Bed              |Style and Size will vary         |[Shop][sh10] – [Amazon][az10]
+|1    |BL Touch Probe|||
+|1    |Pi 4 or at least 3+|Klipper/OctoPi controller|Good luck!|
+|1    |Micro SD||
+|1    |Display||
+
+### BuildPlate
+- Alu?
+
+### Frame
+
+- Consider Zyltech, Ryan(and others?) [had bad experience](https://forum.v1e.com/t/repeat-v2/33330/129?u=azab2c) with Amzn extrusion.
+  - https://www.zyltech.com/10x-1m-2020-t-slot-aluminum-extrusion-kit-w-hardware-brackets-screws-nuts/?sku=EXT-2020-REG-COMBO
+
+- Corner Brackets [Forum reco Jeffeb](https://forum.v1e.com/t/mp3dp-v4-bom/35315/46?u=azab2c)
+
+
+### Panels
+- Material options
+  - 6mm /1/4" Plywood
+  - Acrylic/Polycarbonate
+  - [ACM](https://forum.v1e.com/t/mp3dp-v4-bom/35315/52?u=azab2c) (aluminium-plastic-aluminium sandwich) great stable material, but $$$.
+
+#### Vibration Management
+
+### Cables
+
+
+#### Misc
 
 
 
-#### Fasteners
 
-- M3x8
-  - Linear rails all use M3x8 (
-  - One stepper mount marked with an "8"
-- M2.5x12 
-  - Endstops
-- M3x10mm ...
-- M5x30mm ...
-- M5 Slide in Nuts [amzn](https://www.amazon.com/KOOTANS-Thread-Aluminum-Extrusions-Profiles/dp/B07PNV8SWZ)
-  - Use slide-in nuts, [rotating T-Nuts are horrible](https://forum.v1e.com/t/repeat-v2/33330/246?u=azab2c).
-
-#### Motion
-<mark>
-- Belts?
-- Pulleys?
-- Idler?
-- Bearings?
-- Linear Rails?  MGN9H or MGN12H?
-</mark>
-
-#### Electronics
-
-- BL Touch Probe
-- Mean Well LRS-200-24
-- Fan
-- Pi
-- Micro SD
-- SKR 1.2 (am using Octopus)
-- TMC2209
-- Display?
-
-##### Extruder Options
+### Extruder Options
 - Hemera [amzn](https://www.amazon.com/Genuine-E3D-Hemera-1-75mm-Direct/dp/B0829DHHPK) or BiQU H2 V2 (170g lighter)
 
-- Meanwell ???
 - Octopus 
   - MP3DP needs 6 drivers/steppers, Octopus is oversized with 8 drivers, am using because 1) am familiar with the board already, 2) will have 2 more slots for mods.
 
@@ -290,7 +306,7 @@ Not available from V1E:
   https://www.youtube.com/watch?v=4X1F-dLVT3g
   - Fan Duct https://youtu.be/4X1F-dLVT3g?t=214 by eight_heads
 
-Sounds like @probrwr has [BiQU H2S Revo](https://biqu.equipment/collections/extruder-hotend-heatsink-j-heat/products/biqu-h2-v2s-revo-extruder) and @gpagnozzi is using [BIQU H2 V2.0](https://biqu.equipment/products/biqu-h2-v2-0-extruder?variant=39821278347362)?
+  - @probrwr has [BiQU H2S Revo](https://biqu.equipment/collections/extruder-hotend-heatsink-j-heat/products/biqu-h2-v2s-revo-extruder) and @gpagnozzi has [BIQU H2 V2.0](https://biqu.equipment/products/biqu-h2-v2-0-extruder?variant=39821278347362)?
 
 
 
@@ -310,28 +326,6 @@ Sounds like @probrwr has [BiQU H2S Revo](https://biqu.equipment/collections/extr
   https://www.aliexpress.us/item/2251832860926249.html
 
  
-
-#### Vibration Management
-
-#### Frame
-
-- Consider Zyltech, Ryan(and others?) [had bad experience](https://forum.v1e.com/t/repeat-v2/33330/129?u=azab2c) with Amzn extrusion.
-  - https://www.zyltech.com/10x-1m-2020-t-slot-aluminum-extrusion-kit-w-hardware-brackets-screws-nuts/?sku=EXT-2020-REG-COMBO
-
-- Corner Brackets [Forum reco Jeffeb](https://forum.v1e.com/t/mp3dp-v4-bom/35315/46?u=azab2c)
-
-#### Misc
-
-#### Cables
-
-#### Panels
-Material options
-- 6mm /1/4" Plywood
-- Acrylic/Polycarbonate
-- [ACM](https://forum.v1e.com/t/mp3dp-v4-bom/35315/52?u=azab2c) (aluminium-plastic-aluminium sandwich) great stable material, but $$$.
-
-
-#### BuildPlate
 
  
 
