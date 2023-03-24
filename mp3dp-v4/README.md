@@ -135,14 +135,6 @@ Related:
 ### PARTS
 Related:
 - Ryan's BOM https://forum.v1e.com/t/repeat-v2/33330/85?u=azab2c
-  - M3x8
-    - Linear rails all use M3x8 (
-    - One stepper mount marked with an "8"
-  - M2.5x12 
-    - Endstops
-  - M3x10mm ...
-  - M5x30mm ...
-
 - Voron part sourcing guide https://vorondesign.com/sourcing_guide?model=V2.4.  Sections below are inspired by [Voron generated BOM](misc/voron_generated_bom.csv).
 
 
@@ -248,22 +240,41 @@ Not available from V1E:
 - Extruder
 - Power supply
 - Heated bed
-- Screws, nuts, tnuts
+- Fasteners, Screws, nuts, tnuts
 
 
 
 #### Fasteners
 
-- M3x8 (plus the one stepper mount marked with an “8”.) 
-- M2.5x12 for the endstops
-- M3x10 
-- M5x30 
+- M3x8
+  - Linear rails all use M3x8 (
+  - One stepper mount marked with an "8"
+- M2.5x12 
+  - Endstops
+- M3x10mm ...
+- M5x30mm ...
 - M5 Slide in Nuts [amzn](https://www.amazon.com/KOOTANS-Thread-Aluminum-Extrusions-Profiles/dp/B07PNV8SWZ)
   - Use slide-in nuts, [rotating T-Nuts are horrible](https://forum.v1e.com/t/repeat-v2/33330/246?u=azab2c).
 
 #### Motion
+<mark>
+- Belts?
+- Pulleys?
+- Idler?
+- Bearings?
+- Linear Rails?  MGN9H or MGN12H?
+</mark>
 
 #### Electronics
+
+- BL Touch Probe
+- Mean Well LRS-200-24
+- Fan
+- Pi
+- Micro SD
+- SKR 1.2 (am using Octopus)
+- TMC2209
+- Display?
 
 ##### Extruder Options
 - Hemera [amzn](https://www.amazon.com/Genuine-E3D-Hemera-1-75mm-Direct/dp/B0829DHHPK) or BiQU H2 V2 (170g lighter)
@@ -283,10 +294,10 @@ Sounds like @probrwr has [BiQU H2S Revo](https://biqu.equipment/collections/extr
 
 
 
-BIQU H2 V2.0
+#### BIQU H2 V2.0<br/>
 ![image|409x500](https://us2.dh-cdn.net/uploads/db5587/optimized/3X/0/6/06ad48134f8955406f4b3ceada780895c7ebfb32_2_613x750.jpeg)
 
-BIQU H2 V2S REVO [Manual](https://cdn.shopify.com/s/files/1/1619/4791/files/H2V2S_Revo_User_Manual.pdf?v=1662011632)
+#### BIQU H2 V2S REVO [Manual](https://cdn.shopify.com/s/files/1/1619/4791/files/H2V2S_Revo_User_Manual.pdf?v=1662011632)<br/>
 ![image|302x500](https://us2.dh-cdn.net/uploads/db5587/optimized/3X/0/7/07315dffa557265e8148a4210a9c14336b913353_2_453x750.jpeg)
 
 
@@ -387,15 +398,18 @@ Some of the [Community MP3DP Build Logs](https://forum.v1e.com/search?expanded=t
   - [ZYLTech Extrusion](https://forum.v1e.com/t/mp3dp-v4-build-sw-virginia/37238/2?u=azab2c)
   - [Manta M8P, EBB36](https://forum.v1e.com/t/mp3dp-v4-build-sw-virginia/37238/25?u=azab2c)
   - [MP3DP Mod - Adapter Carrier-to-H2, with EBB36 mount](https://forum.v1e.com/t/mp3dp-v4-build-sw-virginia/37238/24?u=azab2c)
+  - [BIQU H2S Revo](https://forum.v1e.com/t/mp3dp-v4-build-sw-virginia/37238/34?u=azab2c)
 - @ OBI's https://forum.v1e.com/t/time-to-start/36783
 - @ Heath_H 300mm^3 https://forum.v1e.com/t/heaths-mp3dp-repeat-akron-oh/34817
   - 3 in 1 (multicolor, 1 nozzle/hot-end, 3 extruders)
   - [Octopus](https://forum.v1e.com/t/heaths-mp3dp-repeat-akron-oh/34817?u=azab2c)
 - @ gpagnozzi
-  - Manta M8P V1.0 (No CAN) U2C and EBB42 and the H2
+  - [Manta M8P V1.0 (No CAN) U2C and EBB42 and the H2 V2.0](https://forum.v1e.com/t/mp3dp-v4-build-sw-virginia/37238/33?u=azab2c)
+  - [BIQU H2 V2.0](https://forum.v1e.com/t/mp3dp-v4-build-sw-virginia/37238/34?u=azab2c)
   - [Klipper config](https://forum.v1e.com/t/mp3dp-v4-build-sw-virginia/37238/31?u=azab2c)
   - [MP3DP Mod - Extruder carrier for H2, 2x 5015 fans, EBB42](https://forum.v1e.com/t/mp3dp-v4-build-sw-virginia/37238/26?u=azab2c)
-  
+- @ niget2002 https://forum.v1e.com/t/not-another-mp3dp-v4/37429  
+
 
 ### <b>v3</b> builds
 
