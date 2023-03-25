@@ -128,9 +128,6 @@ All that said, am biased toward building MP3DP v4 largely because of the V1E com
 
 Related:
 - [MP3DP v4 BOM](https://forum.v1e.com/t/mp3dp-v4-bom/35315/79) forum topic
-- [Dan's parts](https://forum.v1e.com/t/mp3dp-v4-build-plog/36010/3?u=azab2c)
-  - [Dan's rails](https://forum.v1e.com/t/mp3dp-v4-bom/35315/21?u=azab2c), Y = Z = 300mm, X = 350mm
-
 
 ### PARTS
 Related:
@@ -172,18 +169,14 @@ Parts listed for purchase from V1E Shop.  Alternative links provided incase part
 
 [sh1]: https://www.v1e.com/collections/3dprinter-parts/products/skr-pro1-2-6x-2209-drivers-tft35-e3-v3
 [sh2]: https://www.v1e.com/collections/3dprinter-parts/products/nema-17-76oz-in-steppers
-[sh3]: https://www.filastruder.com/collections/e3d-hemera/products/e3d-hemera?variant=39486550507591
 [sh4]: https://www.v1e.com/collections/3dprinter-parts/products/pulley-16-tooth-gt2-10mm
 [sh5]: https://www.v1e.com/products/idler-10mm-20t-5mm-bore
 [sh6]: https://www.v1e.com/collections/3dprinter-parts/products/20t-idler-gt2-10mm
 [sh7]: https://www.v1e.com/collections/3dprinter-parts/products/gt2-10mm-belt
 [sh8]: https://www.v1e.com/products/limit-switch-endstop
 [sh9]: https://www.v1e.com/collections/zenxy/products/v-wheel
-[sh10]: https://www.v1e.com/collections/3dprinter-parts/products/mk3-aluminum-heated-bed
 [sh11]: https://www.v1e.com/collections/3dprinter-parts/products/spring
-[sh12]: https://www.filastruder.com/products/ldo-linear-rails?variant=31796304150599
 [sh13]: https://hobbyking.com/en_us/carbon-fibre-square-tube-20-x-20-x-800mm.html
-[sh14]: https://www.filastruder.com/products/meanwell-lrs-350-24-psu?_pos=3&_sid=4a733ffaa&_ss=r
 [sh15]: https://www.v1e.com/collections/3dprinter-parts/products/0-5ml-threadlocker-242
 [sh16]: https://www.v1e.com/collections/3dprinter-parts/products/super-lube-silicone-lubricating-grease-with-syncolon-ptfe
 [sh17]: https://www.v1e.com/collections/3dprinter-parts/products/ptfe-liner?variant=39521587331187
@@ -192,18 +185,14 @@ Parts listed for purchase from V1E Shop.  Alternative links provided incase part
 
 [az1]: https://amzn.to/3mp6nOk
 [az2]: https://amzn.to/3FcxGlE
-[az3]: https://amzn.to/3tdtnE9
 [az4]: https://amzn.to/3n9mUGM
 [az5]: https://amzn.to/31HTnwa
 [az6]: https://amzn.to/3JXAXJi
 [az7]: https://amzn.to/3u5imW6
 [az8]: https://amzn.to/396oRzi
 [az9]: https://amzn.to/33WT0yo
-[az10]: https://amzn.to/3FgVRPM
 [az11]: https://amzn.to/3G9HFcG
-[az12]: https://amzn.to/3HLM85I
 [az13]: https://amzn.to/34HCnHL
-[az14]: https://amzn.to/31OsAOY
 [az15]: https://amzn.to/3GhaKmx
 [az16]: https://amzn.to/31H7yS6
 [az17]: https://amzn.to/3f5Ml7E
@@ -247,6 +236,10 @@ As an Amazon Associate Ryan earns from qualifying purchases.
 
 
 ### Motion
+Related
+- Ryan/ @ Barry99705 reco [filastruder](https://forum.v1e.com/t/new-printer-time/28127/634?u=azab2c)
+- @ Barry99705 reco [LDO Linear Rails](https://forum.v1e.com/t/new-printer-time/28127/633?u=azab2c)
+
 
 |QTY  |Description             |Comment                          |Link                        | 
 |-----|------------------------|---------------------------------|----------------------------|
@@ -256,6 +249,8 @@ As an Amazon Associate Ryan earns from qualifying purchases.
 
 ### Electronics
 
+- LRS 350-12 https://forum.v1e.com/t/new-printer-time/28127/568
+
 |QTY  |Description             |Comment                          |Link                        | 
 |-----|------------------------|---------------------------------|----------------------------|
 |1    |Extruder or other tool   |Hemera,example, match voltage, 24V is good.<br/>BIQU H2 or BIQU H2S REVO    |[Fila][sh3] – [Amazon][az3]|
@@ -264,14 +259,33 @@ As an Amazon Associate Ryan earns from qualifying purchases.
 |1    |BL Touch Probe|||
 |1    |Pi 4 or at least 3+|Klipper/OctoPi controller|Good luck!|
 |1    |Micro SD||
-|1    |Display||
+|1    |Display|BIGTREETECH TFT35 E3 V3.0.1|[BIQU](https://biqu.equipment/collections/latest-deal/products/btt-tft35-e3-v3-0-display-touch-screen-two-working-modes?variant=40099686318178) – [Amzn](https://www.amazon.com/BIGTREETECH-TFT35-E3-V3-0-1-Motherboard/dp/B08182XHZZ)|
+|1    |Adaptor Board|BigTreeTech EBB 36/42 Can Bus<br/>- [CAN Bus overview by Teaching Tech (YT)](https://www.youtube.com/watch?v=5pLjeQz9pEI) |[BIQU](https://biqu.equipment/products/bigtreetech-ebb-36-42-can-bus-for-connecting-klipper-expansion-device) – 
+
+[sh3]: https://www.filastruder.com/collections/e3d-hemera/products/e3d-hemera?variant=39486550507591
+[sh10]: https://www.v1e.com/collections/3dprinter-parts/products/mk3-aluminum-heated-bed
+[sh12]: https://www.filastruder.com/products/ldo-linear-rails?variant=31796304150599
+[sh14]: https://www.filastruder.com/products/meanwell-lrs-350-24-psu?_pos=3&_sid=4a733ffaa&_ss=r
+
+[az3]: https://amzn.to/3tdtnE9
+[az10]: https://amzn.to/3FgVRPM
+[az12]: https://amzn.to/3HLM85I
+[az14]: https://amzn.to/31OsAOY
+
+
+
 
 ### BuildPlate
-- Alu?
+- Triangle'sh Bed Support Plate is supported by each Z Post,
+  - 1/4" MDF https://forum.v1e.com/t/mp3dp-v4-bom/35315/116?u=azab2c
+Alu?
+https://forum.v1e.com/t/mp3dp-v4-bom/35315/116?u=azab2c
 
 ### Frame
 
+
 - Consider Zyltech, Ryan(and others?) [had bad experience](https://forum.v1e.com/t/repeat-v2/33330/129?u=azab2c) with Amzn extrusion.
+  - Reco for [Zyltech Alu Extrusion kit](https://forum.v1e.com/t/repeat-v2/33330/243?u=azab2c)
   - https://www.zyltech.com/10x-1m-2020-t-slot-aluminum-extrusion-kit-w-hardware-brackets-screws-nuts/?sku=EXT-2020-REG-COMBO
 
 - Corner Brackets [Forum reco Jeffeb](https://forum.v1e.com/t/mp3dp-v4-bom/35315/46?u=azab2c)
@@ -282,15 +296,19 @@ As an Amazon Associate Ryan earns from qualifying purchases.
   - 6mm /1/4" Plywood
   - Acrylic/Polycarbonate
   - [ACM](https://forum.v1e.com/t/mp3dp-v4-bom/35315/52?u=azab2c) (aluminium-plastic-aluminium sandwich) great stable material, but $$$.
-
-#### Vibration Management
+    - [Reco](https://forum.v1e.com/t/mp3dp-v4-bom/35315/109?u=azab2c) for piedmontplastics.com
 
 ### Cables
 
+???
 
-#### Misc
+### Vibration Management
 
+???
 
+### Misc
+
+???
 
 
 ### Extruder Options
@@ -360,6 +378,9 @@ https://forum.v1e.com/t/mp3dp-v4-build-plog/36010/9?u=azab2c
 ### Squaring/Aligning rails
 - See Matt's build @ https://forum.v1e.com/t/matts-mp3dp-repeat-build/30859/153?u=azab2c
 
+### Wiring
+- [Dan recos](https://forum.v1e.com/t/repeat-v2/33330/374?u=azab2c) routing wiring to Z Post M Steppers along the Bed Support Plate, use misc holes in the plate to secure wiring, including providing strain relief for heater bed wiring.
+
 ### Software
 
 #### GCODE configuration
@@ -379,6 +400,8 @@ Some of the [Community MP3DP Build Logs](https://forum.v1e.com/search?expanded=t
     - 3x 370mm frame X axis pieces
     - 3x 305mm Z axis upright rails
   - [E3D Hemera hotend](https://forum.v1e.com/t/mp3dp-v4-build-plog/36010/33?u=azab2c)
+  - [Dan's parts](https://forum.v1e.com/t/mp3dp-v4-build-plog/36010/3?u=azab2c)
+  - [Dan's rails](https://forum.v1e.com/t/mp3dp-v4-bom/35315/21?u=azab2c), Y = Z = 300mm, X = 350mm
 - @ MattMed  https://forum.v1e.com/t/matts-mp3dp-repeat-build/30859/142?u=azab2c
   - [E3D Hemera Direct Kit](https://forum.v1e.com/t/matts-mp3dp-repeat-build/30859/213?u=azab2c)
   - Nice [Prusa slicer settings](https://forum.v1e.com/t/matts-mp3dp-repeat-build/30859/221?u=azab2c) from Ryan 
@@ -393,6 +416,8 @@ Some of the [Community MP3DP Build Logs](https://forum.v1e.com/search?expanded=t
   - [Manta M8P, EBB36](https://forum.v1e.com/t/mp3dp-v4-build-sw-virginia/37238/25?u=azab2c)
   - [MP3DP Mod - Adapter Carrier-to-H2, with EBB36 mount](https://forum.v1e.com/t/mp3dp-v4-build-sw-virginia/37238/24?u=azab2c)
   - [BIQU H2S Revo](https://forum.v1e.com/t/mp3dp-v4-build-sw-virginia/37238/34?u=azab2c)
+  - [Alu plate 6061 1/4" 12"x12" SEUNMUK](https://forum.v1e.com/t/mp3dp-v4-build-sw-virginia/37238/39?u=azab2c) from [Amzn](https://www.amazon.com/dp/B096W1L1WX?ref=ppx_pop_mob_ap_share)
+
 - @ OBI's https://forum.v1e.com/t/time-to-start/36783
 - @ Heath_H 300mm^3 https://forum.v1e.com/t/heaths-mp3dp-repeat-akron-oh/34817
   - 3 in 1 (multicolor, 1 nozzle/hot-end, 3 extruders)
