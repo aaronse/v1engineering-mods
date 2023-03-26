@@ -222,6 +222,9 @@ As an Amazon Associate Ryan earns from qualifying purchases.
 ## Parts not listed on V1E Shop
 
 ### Fasteners
+Related
+- Dan's Frame Assembly [describes bolts/nuts/corners used](https://forum.v1e.com/t/mp3dp-v4-build-plog/36010/8?u=azab2c)
+
 
 |QTY  |Description             |Comment                          |Link                        | 
 |-----|------------------------|---------------------------------|----------------------------|
@@ -295,6 +298,9 @@ https://forum.v1e.com/t/mp3dp-v4-bom/35315/116?u=azab2c
 
 
 ### Panels
+Related
+- Matt reco [overcut finger joint corners for snug fit](https://forum.v1e.com/t/matts-mp3dp-repeat-build/30859/5?u=azab2c)
+
 - Material options
   - 6mm /1/4" Plywood
   - Acrylic/Polycarbonate
@@ -364,10 +370,11 @@ https://forum.v1e.com/t/mp3dp-v4-bom/35315/116?u=azab2c
 <mark>TODO:</mark>
 Related
 - Until v4 docs available, reading through [v3 Assembly doc](https://docs.v1e.com/mp3dp/version3assm/) will help.
-
+- Ryan ["Backplate is the reference"](https://forum.v1e.com/t/matts-mp3dp-repeat-build/30859/149?u=azab2c)
 
 ### Frame Assembly
-https://forum.v1e.com/t/mp3dp-v4-build-plog/36010/8?u=azab2c
+- Dan's Frame Assembly [describes bolts/nuts/corners used](https://forum.v1e.com/t/mp3dp-v4-build-plog/36010/8?u=azab2c)
+
 
 
 ###
@@ -398,7 +405,7 @@ Some of the [Community MP3DP Build Logs](https://forum.v1e.com/search?expanded=t
 
 ### <b>v4</b> builds
 
-- @SupraGuy 200/235mm^3 ?? https://forum.v1e.com/t/mp3dp-v4-build-plog/36010?u=azab2c
+- @SupraGuy 200/235mm^3 ??? https://forum.v1e.com/t/mp3dp-v4-build-plog/36010?u=azab2c
   - Extrusion [Cut List](https://forum.v1e.com/t/mp3dp-v4-build-plog/36010/8?u=azab2c) :
     - 4x 345mm frame upright pieces
     - 4x 345mm frame Y axis pieces
@@ -407,8 +414,9 @@ Some of the [Community MP3DP Build Logs](https://forum.v1e.com/search?expanded=t
   - [E3D Hemera hotend](https://forum.v1e.com/t/mp3dp-v4-build-plog/36010/33?u=azab2c)
   - [Dan's parts](https://forum.v1e.com/t/mp3dp-v4-build-plog/36010/3?u=azab2c)
   - [Dan's rails](https://forum.v1e.com/t/mp3dp-v4-bom/35315/21?u=azab2c), Y = Z = 300mm, X = 350mm
-    [5mm plywood Bed Support Plate, 1/2" foam](https://forum.v1e.com/t/mp3dp-v4-bom/35315/117?u=azab2c)
-- @ MattMed  https://forum.v1e.com/t/matts-mp3dp-repeat-build/30859/142?u=azab2c
+  - [5mm plywood Bed Support Plate, 1/2" foam](https://forum.v1e.com/t/mp3dp-v4-bom/35315/117?u=azab2c)
+  - [24V](https://forum.v1e.com/t/matts-mp3dp-repeat-build/30859/11?u=azab2c)
+- @ MattMed 200mm^3 ??? https://forum.v1e.com/t/matts-mp3dp-repeat-build/30859/142?u=azab2c
   - [E3D Hemera Direct Kit](https://forum.v1e.com/t/matts-mp3dp-repeat-build/30859/213?u=azab2c)
   - Nice [Prusa slicer settings](https://forum.v1e.com/t/matts-mp3dp-repeat-build/30859/221?u=azab2c) from Ryan 
 - @ Jonathjon 300x300x400mm https://forum.v1e.com/t/mp3dp-v4-build/36437
@@ -416,10 +424,13 @@ Some of the [Community MP3DP Build Logs](https://forum.v1e.com/search?expanded=t
   - [120V 750W hot plate](https://forum.v1e.com/t/mp3dp-v4-build/36437/43?u=azab2c)
   - [120V 750W Heating Plate/Silicone Mat + Thermistor, Bed Foam foil insulation](https://forum.v1e.com/t/mp3dp-v4-bom/35315/118?u=azab2c)
 - @ Kgleason's 235mm^3 https://forum.v1e.com/t/mp3dp-repeat-v2-aka-v4-z-steppers/35967
+  - Glass on Alu Bed
   - [E3D Hemera](https://forum.v1e.com/t/mp3dp-repeat-v2-aka-v4-z-steppers/35967/5?u=azab2c)
+  - [MP3DP Mod - Z Moto Brake, prevent free fall](https://forum.v1e.com/t/mp3dp-repeat-v2-aka-v4-z-steppers/35967/6?u=azab2c)
 - @ aali0101's 250mm^3 https://forum.v1e.com/t/repeat-v2/33330/251?u=azab2c
 - @ probrwr's 300mm x 300mm x ??? https://forum.v1e.com/t/mp3dp-v4-build-sw-virginia/37238
   - [ZYLTech Extrusion](https://forum.v1e.com/t/mp3dp-v4-build-sw-virginia/37238/2?u=azab2c)
+  - [120v Heat Pad](https://forum.v1e.com/t/mp3dp-v4-build-sw-virginia/37238/6?u=azab2c)
   - [Manta M8P, EBB36](https://forum.v1e.com/t/mp3dp-v4-build-sw-virginia/37238/25?u=azab2c)
   - [MP3DP Mod - Adapter Carrier-to-H2, with EBB36 mount](https://forum.v1e.com/t/mp3dp-v4-build-sw-virginia/37238/24?u=azab2c)
   - [BIQU H2S Revo](https://forum.v1e.com/t/mp3dp-v4-build-sw-virginia/37238/34?u=azab2c)
@@ -434,13 +445,15 @@ Some of the [Community MP3DP Build Logs](https://forum.v1e.com/search?expanded=t
   - [BIQU H2 V2.0](https://forum.v1e.com/t/mp3dp-v4-build-sw-virginia/37238/34?u=azab2c)
   - [Klipper config](https://forum.v1e.com/t/mp3dp-v4-build-sw-virginia/37238/31?u=azab2c)
   - [MP3DP Mod - Extruder carrier for H2, 2x 5015 fans, EBB42](https://forum.v1e.com/t/mp3dp-v4-build-sw-virginia/37238/26?u=azab2c)
-- @ niget2002 https://forum.v1e.com/t/not-another-mp3dp-v4/37429  
+- @ niget2002 300mm^3 https://forum.v1e.com/t/not-another-mp3dp-v4/37429  
 
 
 ### <b>v3</b> builds
 
 - @ RootsMedia's 310x310x280mm https://forum.v1e.com/t/mp3dp-repeat-take-two/33215
   - Repeat v1 with sweet ACM/PolyCarb enclosure, complete with logo engraved panels.
+    - 24v Mean Well
+    - Textured PEI magnetic build plate
 
 ### <b>v2</b> builds
 - Dan's costs https://forum.v1e.com/t/mp3dp-v2/37092/3?u=azab2c
@@ -510,7 +523,7 @@ Some of the [Community MP3DP Build Logs](https://forum.v1e.com/search?expanded=t
   Power Supply: MEAN WELL LRS-350-24, enough/too-many Watts?
 
 ### NEED TO DECIDE:
-  Heater Bed: 
+  Heater Bed with Thermistor : 
   Fasteners:  Need to rummage thru existing piles and figure out what's required.
   Wiring: Same as above.
 
