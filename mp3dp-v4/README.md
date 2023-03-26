@@ -18,7 +18,7 @@ See Official V1E [MP3DP V4 Docs](https://docs.v1e.com/mp3dp), they reference :
 <table style="width:100%" border=0><tr>
 <td with="33%">
 
-![image](https://docs.v1e.com/img/mp3dpv4/mp3dpv4_2.jpg)
+![image](upload://sKmcR0DILU7sQ4IPn4FrIQifLq0.jpeg)
 
 </td>
 <td width="33%">
@@ -58,7 +58,7 @@ Super secret goal, arguably the most important one...  is to inspire and lure th
 
 ### Low Cost (Parts, not labor...)
 
-- Dan's costs https://forum.v1e.com/t/mp3dp-v2/37092/3?u=azab2c
+TBD...
 
 ### Quality / Speed / Reliablity
 Ryan/V1E relies on these to run his business, so that says a lot.
@@ -70,7 +70,8 @@ Related:
 ### Alternatives considered :
 - https://vorondesign.com/ too $$$, $1800-$2000
 - https://us.ratrig.com/3d-printers/v-core.html too $$, $1100
-- https://bambulab.com/en/x1 easy to use $$ + closed bambu x1 carbon
+- [https://bambulab.com/en/x1](https://bambulab.com/en/x1) easy to use $$ + closed bambu x1 carbon
+
 
 All that said, am biased toward building MP3DP v4 largely because of the V1E community support.  To me, the V1E mindset is focused on getting great quality results for great value.  This resonates with me more than paying a significant premium for something that pushes the limits, and may involve lots of maintenance.  Creating, experimenting and extending is more fun than maintaining.
 
@@ -239,7 +240,10 @@ As an Amazon Associate Ryan earns from qualifying purchases.
 Related
 - Ryan/ @ Barry99705 reco [filastruder](https://forum.v1e.com/t/new-printer-time/28127/634?u=azab2c)
 - @ Barry99705 reco [LDO Linear Rails](https://forum.v1e.com/t/new-printer-time/28127/633?u=azab2c)
-
+- MP3DP v3 reco [Amazon](https://amzn.to/3HLM85I)
+- Ryan reco [CHUANGNENG MGN12H](https://forum.v1e.com/t/mp3dp-v4-bom/35315/123?u=azab2c)
+  - Dimensions:
+  ![Image](https://m.media-amazon.com/images/I/71ey3qJw1tL._SL1500_.jpg)
 
 |QTY  |Description             |Comment                          |Link                        | 
 |-----|------------------------|---------------------------------|----------------------------|
@@ -247,10 +251,11 @@ Related
 |2  | Y Linear rails MGN       | Usable Y + 50mm MGN12H|[Fila][sh12] – [Amazon][az12] (select correct dimensions)|
 |3  | Z Linear rails MGN       | Usable Z + ~50mm MGN12H|[Fila][sh12] – [Amazon][az12] (select correct dimensions)|
 
+[sh12]: https://www.filastruder.com/products/ldo-linear-rails?variant=31796304150599
+[az12]: https://amzn.to/3FSNAoj
+
+
 ### Electronics
-
-- LRS 350-12 https://forum.v1e.com/t/new-printer-time/28127/568
-
 |QTY  |Description             |Comment                          |Link                        | 
 |-----|------------------------|---------------------------------|----------------------------|
 |1    |Extruder or other tool   |Hemera,example, match voltage, 24V is good.<br/>BIQU H2 or BIQU H2S REVO    |[Fila][sh3] – [Amazon][az3]|
@@ -264,12 +269,10 @@ Related
 
 [sh3]: https://www.filastruder.com/collections/e3d-hemera/products/e3d-hemera?variant=39486550507591
 [sh10]: https://www.v1e.com/collections/3dprinter-parts/products/mk3-aluminum-heated-bed
-[sh12]: https://www.filastruder.com/products/ldo-linear-rails?variant=31796304150599
 [sh14]: https://www.filastruder.com/products/meanwell-lrs-350-24-psu?_pos=3&_sid=4a733ffaa&_ss=r
 
 [az3]: https://amzn.to/3tdtnE9
 [az10]: https://amzn.to/3FgVRPM
-[az12]: https://amzn.to/3HLM85I
 [az14]: https://amzn.to/31OsAOY
 
 
@@ -329,10 +332,11 @@ https://forum.v1e.com/t/mp3dp-v4-bom/35315/116?u=azab2c
 
 
 #### BIQU H2 V2.0<br/>
-![image|409x500](https://us2.dh-cdn.net/uploads/db5587/optimized/3X/0/6/06ad48134f8955406f4b3ceada780895c7ebfb32_2_613x750.jpeg)
+![image|409x500](upload://u0wf0tdH6X2pHFKVAgbQxwT2hNE.jpeg)
+
 
 #### BIQU H2 V2S REVO [Manual](https://cdn.shopify.com/s/files/1/1619/4791/files/H2V2S_Revo_User_Manual.pdf?v=1662011632)<br/>
-![image|302x500](https://us2.dh-cdn.net/uploads/db5587/optimized/3X/0/7/07315dffa557265e8148a4210a9c14336b913353_2_453x750.jpeg)
+![image|302x500](upload://pPbS6XHgoReTCtmmhyuXGF7SGuk.jpeg)
 
 
   $120 https://www.aliexpress.us/item/3256804514365855.html
@@ -371,9 +375,10 @@ https://forum.v1e.com/t/mp3dp-v4-build-plog/36010/9?u=azab2c
 
 #### Z Post Assembly
 
-![image](https://us2.dh-cdn.net/uploads/db5587/optimized/3X/d/9/d902961dcae9c6669ae31f223147fff3fe05a8de_2_666x500.jpeg)
+![image](upload://wNtXJrqrnPfOYQm5U0xML6a7TkA.jpeg)
 
 ![image](https://us2.dh-cdn.net/uploads/db5587/original/3X/c/2/c25f261c6faacd4306bf5eb2a19b477418a57efc.jpeg)
+
 
 ### Squaring/Aligning rails
 - See Matt's build @ https://forum.v1e.com/t/matts-mp3dp-repeat-build/30859/153?u=azab2c
@@ -402,12 +407,14 @@ Some of the [Community MP3DP Build Logs](https://forum.v1e.com/search?expanded=t
   - [E3D Hemera hotend](https://forum.v1e.com/t/mp3dp-v4-build-plog/36010/33?u=azab2c)
   - [Dan's parts](https://forum.v1e.com/t/mp3dp-v4-build-plog/36010/3?u=azab2c)
   - [Dan's rails](https://forum.v1e.com/t/mp3dp-v4-bom/35315/21?u=azab2c), Y = Z = 300mm, X = 350mm
+    [5mm plywood Bed Support Plate, 1/2" foam](https://forum.v1e.com/t/mp3dp-v4-bom/35315/117?u=azab2c)
 - @ MattMed  https://forum.v1e.com/t/matts-mp3dp-repeat-build/30859/142?u=azab2c
   - [E3D Hemera Direct Kit](https://forum.v1e.com/t/matts-mp3dp-repeat-build/30859/213?u=azab2c)
   - Nice [Prusa slicer settings](https://forum.v1e.com/t/matts-mp3dp-repeat-build/30859/221?u=azab2c) from Ryan 
 - @ Jonathjon 300x300x400mm https://forum.v1e.com/t/mp3dp-v4-build/36437
   - [E3D Hemera](https://forum.v1e.com/t/mp3dp-v4-build/36437/74?u=azab2c)
   - [120V 750W hot plate](https://forum.v1e.com/t/mp3dp-v4-build/36437/43?u=azab2c)
+  - [120V 750W Heating Plate/Silicone Mat + Thermistor, Bed Foam foil insulation](https://forum.v1e.com/t/mp3dp-v4-bom/35315/118?u=azab2c)
 - @ Kgleason's 235mm^3 https://forum.v1e.com/t/mp3dp-repeat-v2-aka-v4-z-steppers/35967
   - [E3D Hemera](https://forum.v1e.com/t/mp3dp-repeat-v2-aka-v4-z-steppers/35967/5?u=azab2c)
 - @ aali0101's 250mm^3 https://forum.v1e.com/t/repeat-v2/33330/251?u=azab2c
@@ -435,49 +442,75 @@ Some of the [Community MP3DP Build Logs](https://forum.v1e.com/search?expanded=t
 - @ RootsMedia's 310x310x280mm https://forum.v1e.com/t/mp3dp-repeat-take-two/33215
   - Repeat v1 with sweet ACM/PolyCarb enclosure, complete with logo engraved panels.
 
+### <b>v2</b> builds
+- Dan's costs https://forum.v1e.com/t/mp3dp-v2/37092/3?u=azab2c
+
 
 #### STATUS
 
-  ```js
+  ```javascript
 
-  // DONE - sort by print order
-│     2 x Z Post.3mf    2.3hrs
-      Z Post M.3mf      2.3hrs
-      XY Left.3mf       2.3hrs
-      XY Right.3mf      2.3hrs
-      Left Stepper.3mf  2hrs
-      Right Stepper.3mf 2hrs
-      X Carrier.3mf 4.25
-      Back Corner Left.3mf  1.75hr
-      Back Corner Right.3mf 1.75hrs
-      2 x Tension Block XY.3mf   1hr
-      6 x Z Belt Holder.3mf  6 x 0.5hr, 3hrs
+// PRINT PARTS...
+    // DONE - sort by print order
+  │     2 x Z Post.3mf    2.3hrs
+        Z Post M.3mf      2.3hrs
+        XY Left.3mf       2.3hrs
+        XY Right.3mf      2.3hrs
+        Left Stepper.3mf  2hrs
+        Right Stepper.3mf 2hrs
+        X Carrier.3mf 4.25
+        Back Corner Left.3mf  1.75hr
+        Back Corner Right.3mf 1.75hrs
+        2 x Tension Block XY.3mf   1hr
+        6 x Z Belt Holder.3mf  6 x 0.5hr, 3hrs
 
-  // INPROGRESS
+    // INPROGRESS
 
 
-  // TODO
-  ───Hemera
-      Hemera Fan Shroud.3mf
+    // TODO
+    ───Hemera
+        Hemera Fan Shroud.3mf
 
-  ├───Misc 2020 clips and parts
-      2020 Corner Bracket.3mf
-      cable tie Wire Hanger.3mf
-      Power supply bracket.3mf
-      Wire Clip 90 degree.3mf
-      Wire Hanger TapeTrick.3mf
+    ├───Misc 2020 clips and parts
+        2020 Corner Bracket.3mf
+        cable tie Wire Hanger.3mf
+        Power supply bracket.3mf
+        Wire Clip 90 degree.3mf
+        Wire Hanger TapeTrick.3mf
 
-  ├───MP3DP V4.1
-      Bed Washer.3mf
-      filament Rev Bowden Holder.3mf
-      Rail Aligner.3mf
+    ├───MP3DP V4.1
+        Bed Washer.3mf
+        filament Rev Bowden Holder.3mf
+        Rail Aligner.3mf
 
-  ├───SKR Pro
-      SKR Pro Cover.3mf
-      SKR Pro Wire tie.3mf
+    ├───SKR Pro
+        SKR Pro Cover.3mf
+        SKR Pro Wire tie.3mf
 
-  └───TFT E3 V3
-      TFT CASE V3.STL
-      TFT Holder.3mf
-  ```
+    └───TFT E3 V3
+        TFT CASE V3.STL
+        TFT Holder.3mf
+```
+
+## PARTS - Decisions and purchases
+
+### HAVE / BOUGHT:
+  Probe : Have unused BL Touch
+  Frame: Have Black/Silver extrusion leftovers
+  Wifi: Have Pi (will Klipper/OctoPi)
+  Controller: Octopus v1.1
+  Drivers: 5+ TMC2209 (EBB 36 has TMC2209 onboard that can drive Nema 14 in BIQU H2S V2 REVO)
+  Display:  Bigtreetech TFT E3 V3.0.1
+  Linear motion:  Iverntech, chose because deliver fastest and best seller...  Wasn't reco'd by forum, so could be mistake, will find out...
+
+### NEED TO BUY:
+  Extruder: BIQU H2S V2 REVO - Paying premium for REVO to reduce effort for kids/me to change nozzle.
+  Nozzle: REVO 0.6mm (for now)
+  CAN Bus controller: EBB 36
+  Power Supply: MEAN WELL LRS-350-24, enough/too-many Watts?
+
+### NEED TO DECIDE:
+  Heater Bed: 
+  Fasteners:  Need to rummage thru existing piles and figure out what's required.
+  Wiring: Same as above.
 
