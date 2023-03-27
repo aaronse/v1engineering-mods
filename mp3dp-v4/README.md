@@ -54,7 +54,7 @@ Super secret goal, arguably the most important one...  is to inspire and lure th
 
 ### Why others built one...
 - Dan/SupraGuy perspective @ https://forum.v1e.com/t/mp3dp-v2/37092/7?u=azab2c
-
+- [Misc perspectives, great Q's from @ orob and others](https://forum.v1e.com/t/v3-vs-v4-3dp-build-part-list/37014)
 
 ### Low Cost (Parts, not labor...)
 
@@ -237,6 +237,8 @@ Related
 |~113|M3 or M5 Button head by 8+ mm|- 4 x 25 Side/Back/Bottom Panels<br/>- 13 Front lower Panel<br/>- [(M5's will have less wiggle room)](https://forum.v1e.com/t/mp3dp-v4-bom/35315/101?u=azab2c)<br/>- 8mm for 1/8" panels, 10mm for 5.5mm+ (e.g. 1/4")<br/>- Measure/check length needed for panel thickness|Panel bolts||
 |???|M5x30mm|||
 |???|M5 Slide in Nuts|- Use slide-in nuts, [rotating T-Nuts are horrible](https://forum.v1e.com/t/repeat-v2/33330/246?u=azab2c)|[amzn](https://www.amazon.com/KOOTANS-Thread-Aluminum-Extrusions-Profiles/dp/B07PNV8SWZ)|
+
+
 
 
 ### Motion
@@ -428,13 +430,14 @@ Some of the [Community MP3DP Build Logs](https://forum.v1e.com/search?expanded=t
   - [E3D Hemera](https://forum.v1e.com/t/mp3dp-repeat-v2-aka-v4-z-steppers/35967/5?u=azab2c)
   - [MP3DP Mod - Z Moto Brake, prevent free fall](https://forum.v1e.com/t/mp3dp-repeat-v2-aka-v4-z-steppers/35967/6?u=azab2c)
 - @ aali0101's 250mm^3 https://forum.v1e.com/t/repeat-v2/33330/251?u=azab2c
-- @ probrwr's 300mm x 300mm x ??? https://forum.v1e.com/t/mp3dp-v4-build-sw-virginia/37238
+- @ probrwr's 235mm x 235mm x ??? https://forum.v1e.com/t/mp3dp-v4-build-sw-virginia/37238
   - [ZYLTech Extrusion](https://forum.v1e.com/t/mp3dp-v4-build-sw-virginia/37238/2?u=azab2c)
   - [120v Heat Pad](https://forum.v1e.com/t/mp3dp-v4-build-sw-virginia/37238/6?u=azab2c)
   - [Manta M8P, EBB36](https://forum.v1e.com/t/mp3dp-v4-build-sw-virginia/37238/25?u=azab2c)
   - [MP3DP Mod - Adapter Carrier-to-H2, with EBB36 mount](https://forum.v1e.com/t/mp3dp-v4-build-sw-virginia/37238/24?u=azab2c)
   - [BIQU H2S Revo](https://forum.v1e.com/t/mp3dp-v4-build-sw-virginia/37238/34?u=azab2c)
   - [Alu plate 6061 1/4" 12"x12" SEUNMUK](https://forum.v1e.com/t/mp3dp-v4-build-sw-virginia/37238/39?u=azab2c) from [Amzn](https://www.amazon.com/dp/B096W1L1WX?ref=ppx_pop_mob_ap_share)
+  - [PEI spring steel 120vac](https://forum.v1e.com/t/mp3dp-v4-build-sw-virginia/37238/42?u=azab2c)
 
 - @ OBI's https://forum.v1e.com/t/time-to-start/36783
 - @ Heath_H 300mm^3 https://forum.v1e.com/t/heaths-mp3dp-repeat-akron-oh/34817
@@ -446,7 +449,8 @@ Some of the [Community MP3DP Build Logs](https://forum.v1e.com/search?expanded=t
   - [Klipper config](https://forum.v1e.com/t/mp3dp-v4-build-sw-virginia/37238/31?u=azab2c)
   - [MP3DP Mod - Extruder carrier for H2, 2x 5015 fans, EBB42](https://forum.v1e.com/t/mp3dp-v4-build-sw-virginia/37238/26?u=azab2c)
 - @ niget2002 300mm^3 https://forum.v1e.com/t/not-another-mp3dp-v4/37429  
-
+- @ orob https://forum.v1e.com/t/v3-vs-v4-3dp-build-part-list/37014
+ - 
 
 ### <b>v3</b> builds
 
@@ -508,22 +512,64 @@ Some of the [Community MP3DP Build Logs](https://forum.v1e.com/search?expanded=t
 ## PARTS - Decisions and purchases
 
 ### HAVE / BOUGHT:
-  Probe : Have unused BL Touch
-  Frame: Have Black/Silver extrusion leftovers
-  Wifi: Have Pi (will Klipper/OctoPi)
-  Controller: Octopus v1.1
-  Drivers: 5+ TMC2209 (EBB 36 has TMC2209 onboard that can drive Nema 14 in BIQU H2S V2 REVO)
-  Display:  Bigtreetech TFT E3 V3.0.1
-  Linear motion:  Iverntech, chose because deliver fastest and best seller...  Wasn't reco'd by forum, so could be mistake, will find out...
+  - Probe : Have unused BL Touch
+  - Frame: Have Black/Silver extrusion leftovers
+  - Wifi: Have Pi (will Klipper/OctoPi)
+  - Controller: Octopus v1.1
+  - Drivers: 5+ TMC2209 (EBB 36 has TMC2209 onboard that can drive Nema 14 in BIQU H2S V2 REVO)
+  - Display:  Bigtreetech TFT E3 V3.0.1
+  - Linear motion:  Iverntech, chose because deliver fastest and best seller...  Wasn't reco'd by forum, so could be mistake, will find out...
+  - Fasteners:  Rummaged, purchased, delivery pending.  Guaranteed to need more parts.
+  - Power Supply: MEAN WELL LRS-350-24, enough/too-many Watts?
 
 ### NEED TO BUY:
-  Extruder: BIQU H2S V2 REVO - Paying premium for REVO to reduce effort for kids/me to change nozzle.
-  Nozzle: REVO 0.6mm (for now)
-  CAN Bus controller: EBB 36
-  Power Supply: MEAN WELL LRS-350-24, enough/too-many Watts?
+  - Extruder: BIQU H2S V2 REVO - Paying premium for REVO to reduce effort for kids/me to change nozzle.
+  - Nozzle: REVO 0.6mm (for now)
+  - CAN Bus controller: EBB 36
 
 ### NEED TO DECIDE:
-  Heater Bed with Thermistor : 
-  Fasteners:  Need to rummage thru existing piles and figure out what's required.
-  Wiring: Same as above.
+  - Heater Bed with Thermistor : 
+    - My current Ender 3 Max has 24v 310mm x 320mm, 4mm thick Carborundum Glass, 3mm Alu, 3mm Foam.
+  - Wiring: Same as above.
+
+
+###  Fastener BOM break down:
+Related:
+- Dan reco [fasteners](https://forum.v1e.com/t/mp3dp-v4-build-plog/36010/8?u=azab2c)
+
+Fastener and mount parts:
+- 4 M2.5 x 12mm Bolts
+  - 4 = 2 x 2 Endstops
+- 40 ??? M3 x 8mm Bolts (8mm for extrusion, maybe 10mm for wood/plastic panels with inserts)
+  - 6 = 6 x 1 per Z Belt Holder
+  - 20 = 5  x 4 per Y and Z Linear Rails (~100mm spacing)
+  - 4 = 2 x 2 per Tension Block
+  - 10 = 5 x 2 per Motor Block
+- 44 M5 x 10mm Bolts 
+  - 12 = 6 x 2 per Right Angle Corners (Z Mid extrusion)
+  - 32 = 4 x 4 corner brackets x 2 nuts per Z Corner extrusion
+- ??? M5 x 30mm Bolts Pan Head (reco Philips)
+  - v3 required 29
+- ??? M5 x Nylock Nuts
+  - v3 required 29
+- 30 M3 Sliding T Nuts [amzn](https://www.amazon.com/gp/product/B07PNV8SWZ)
+  - 6 = 6 x 1 per Z Belt Holder
+  - 20 = 5 x 4 per Y and Z Linear Rails (~100mm spacing)
+  - ?? = X Linear Rails?
+  - 4 = 2 x 2 per Tension Block
+- 44 M5 Slide in Nuts [amzn](https://www.amazon.com/gp/product/B07PQ13LCQ)
+  - 12 = 3 x 2 corner brackets x 2 nuts per Z Mid extrusion
+  - 32 = 4 x 4 corner brackets x 2 nuts per Z Corner extrusion
+- 20 ??? Corner Bracket Right Angle
+  - 6 = 3 x 2 per Z Mid extrusion
+    14 = 7 x 2 per Z Corner extrusion
+
+- TODO:
+  - Stepper?
+  - Board Mount?
+  - Fans?
+  - Hot end?
+  - Cable mounts/brackets?
+  - PSU?
+  - Panels / doors?
 
