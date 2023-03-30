@@ -448,9 +448,11 @@ Some of the [Community MP3DP Build Logs](https://forum.v1e.com/search?expanded=t
   - [BIQU H2 V2.0](https://forum.v1e.com/t/mp3dp-v4-build-sw-virginia/37238/34?u=azab2c)
   - [Klipper config](https://forum.v1e.com/t/mp3dp-v4-build-sw-virginia/37238/31?u=azab2c)
   - [MP3DP Mod - Extruder carrier for H2, 2x 5015 fans, EBB42](https://forum.v1e.com/t/mp3dp-v4-build-sw-virginia/37238/26?u=azab2c)
-- @ niget2002 300mm^3 https://forum.v1e.com/t/not-another-mp3dp-v4/37429  
+- @ niget2002 300mm^3 https://forum.v1e.com/t/not-another-mp3dp-v4/37429 
+  - Hemera, SKR 1.2 + TFT, BLTouch
+  - [Alu 12 x 12 1/4 bed, 310 x 310 120vac 750w heating plate](https://forum.v1e.com/t/what-build-plate-to-get/36216/38?u=azab2c)
+
 - @ orob https://forum.v1e.com/t/v3-vs-v4-3dp-build-part-list/37014
- - 
 
 ### <b>v3</b> builds
 
