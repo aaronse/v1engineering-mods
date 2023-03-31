@@ -71,6 +71,14 @@ Related:
 - https://vorondesign.com/ too $$$, $1800-$2000
 - https://us.ratrig.com/3d-printers/v-core.html too $$, $1100
 - [https://bambulab.com/en/x1](https://bambulab.com/en/x1) easy to use $$ + closed bambu x1 carbon
+  - [Specs](https://us.store.bambulab.com/products/x1-carbon-combo)
+  - Build Volume (W×D×H)
+    256 × 256 × 256 mm³
+  - Physical Dimensions
+    389 × 389 × 457mm
+  - Frame overhead 133 x 133 x 201
+
+
 
 
 All that said, am biased toward building MP3DP v4 largely because of the V1E community support.  To me, the V1E mindset is focused on getting great quality results for great value.  This resonates with me more than paying a significant premium for something that pushes the limits, and may involve lots of maintenance.  Creating, experimenting and extending is more fun than maintaining.
@@ -92,9 +100,9 @@ All that said, am biased toward building MP3DP v4 largely because of the V1E com
       Linear Rail Y = Usable Y + 50mm
       Linear Rail Z = Usable Z + ~50mm (**)
       
-      Extrusion Frame Length X = Linear Rail X + 70mm
-      Extrusion Frame Length Y = Linear Rail Y + 95mm
-      Extrusion Frame Length Z = Linear Rail Z + 95mm
+      Extrusion Frame Length X = Usable X + 170mm
+      Extrusion Frame Length Y = Usable Y + 145mm
+      Extrusion Frame Length Z = Usable Z + ~145mm
 
       Linear Rail Cut list...
 
@@ -338,13 +346,16 @@ Related
   - @probrwr has [BiQU H2S Revo](https://biqu.equipment/collections/extruder-hotend-heatsink-j-heat/products/biqu-h2-v2s-revo-extruder) and @gpagnozzi has [BIQU H2 V2.0](https://biqu.equipment/products/biqu-h2-v2-0-extruder?variant=39821278347362)?
 
 
+#### E3D Hemera<br/>
+![image](https://github.com/aaronse/v1engineering-mods/blob/main/mp3dp-v4/img/e3d-hemera-dimensions.png?raw=true)
 
 #### BIQU H2 V2.0<br/>
-![image|409x500](upload://u0wf0tdH6X2pHFKVAgbQxwT2hNE.jpeg)
+![image|409x500](![image](https://github.com/aaronse/v1engineering-mods/blob/main/mp3dp-v4/img/biqu-h2-v2.jpeg?raw=true)
 
 
 #### BIQU H2 V2S REVO [Manual](https://cdn.shopify.com/s/files/1/1619/4791/files/H2V2S_Revo_User_Manual.pdf?v=1662011632)<br/>
-![image|302x500](upload://pPbS6XHgoReTCtmmhyuXGF7SGuk.jpeg)
+![image|302x500](![image](https://github.com/aaronse/v1engineering-mods/blob/main/mp3dp-v4/img/biqu-h2-v2s-e3d-revo.jpeg?raw=true)
+
 
 
   $120 https://www.aliexpress.us/item/3256804514365855.html
