@@ -77,6 +77,7 @@ Related:
   - Physical Dimensions
     389 × 389 × 457mm
   - Frame overhead 133 x 133 x 201
+- https://www.pantheondesign.com
 
 
 
@@ -316,7 +317,8 @@ Related
   - Acrylic/Polycarbonate
   - [ACM](https://forum.v1e.com/t/mp3dp-v4-bom/35315/52?u=azab2c) (aluminium-plastic-aluminium sandwich) great stable material, but $$$.
     - [Reco](https://forum.v1e.com/t/mp3dp-v4-bom/35315/109?u=azab2c) for piedmontplastics.com
-
+  - [Sheet Metal?](https://forum.v1e.com/t/cutting-sheet-metal/7878/12?u=azab2c)
+  
 ### Cables
 
 ???
@@ -350,11 +352,11 @@ Related
 ![image](https://github.com/aaronse/v1engineering-mods/blob/main/mp3dp-v4/img/e3d-hemera-dimensions.png?raw=true)
 
 #### BIQU H2 V2.0<br/>
-![image|409x500](![image](https://github.com/aaronse/v1engineering-mods/blob/main/mp3dp-v4/img/biqu-h2-v2.jpeg?raw=true)
+![image|409x500](https://github.com/aaronse/v1engineering-mods/blob/main/mp3dp-v4/img/biqu-h2-v2.jpeg?raw=true)
 
 
 #### BIQU H2 V2S REVO [Manual](https://cdn.shopify.com/s/files/1/1619/4791/files/H2V2S_Revo_User_Manual.pdf?v=1662011632)<br/>
-![image|302x500](![image](https://github.com/aaronse/v1engineering-mods/blob/main/mp3dp-v4/img/biqu-h2-v2s-e3d-revo.jpeg?raw=true)
+![image|302x500](https://github.com/aaronse/v1engineering-mods/blob/main/mp3dp-v4/img/biqu-h2-v2s-e3d-revo.jpeg?raw=true)
 
 
 
@@ -449,7 +451,7 @@ Some of the [Community MP3DP Build Logs](https://forum.v1e.com/search?expanded=t
   - [BIQU H2S Revo](https://forum.v1e.com/t/mp3dp-v4-build-sw-virginia/37238/34?u=azab2c)
   - [Alu plate 6061 1/4" 12"x12" SEUNMUK](https://forum.v1e.com/t/mp3dp-v4-build-sw-virginia/37238/39?u=azab2c) from [Amzn](https://www.amazon.com/dp/B096W1L1WX?ref=ppx_pop_mob_ap_share)
   - [PEI spring steel 120vac](https://forum.v1e.com/t/mp3dp-v4-build-sw-virginia/37238/42?u=azab2c)
-
+  - [DIN rails, 40A SSR, 120VAC 500W bed heater](https://forum.v1e.com/t/mp3dp-v4-build-sw-virginia/37238/47?u=azab2c)
 - @ OBI's https://forum.v1e.com/t/time-to-start/36783
 - @ Heath_H 300mm^3 https://forum.v1e.com/t/heaths-mp3dp-repeat-akron-oh/34817
   - 3 in 1 (multicolor, 1 nozzle/hot-end, 3 extruders)
@@ -534,16 +536,17 @@ Some of the [Community MP3DP Build Logs](https://forum.v1e.com/search?expanded=t
   - Linear motion:  Iverntech, chose because deliver fastest and best seller...  Wasn't reco'd by forum, so could be mistake, will find out...
   - Fasteners:  Rummaged, purchased, delivery pending.  Guaranteed to need more parts.
   - Power Supply: MEAN WELL LRS-350-24, enough/too-many Watts?
-
-### NEED TO BUY:
   - Extruder: BIQU H2S V2 REVO - Paying premium for REVO to reduce effort for kids/me to change nozzle.
   - Nozzle: REVO 0.6mm (for now)
   - CAN Bus controller: EBB 36
+
+### NEED TO BUY:
 
 ### NEED TO DECIDE:
   - Heater Bed with Thermistor : 
     - My current Ender 3 Max has 24v 310mm x 320mm, 4mm thick Carborundum Glass, 3mm Alu, 3mm Foam.
   - Wiring: Same as above.
+  - Solid State Relay (SSR) if using 120vac bed heater.
 
 
 ###  Fastener BOM break down:
@@ -586,3 +589,20 @@ Fastener and mount parts:
   - PSU?
   - Panels / doors?
 
+
+
+USER PARAMETERS:
+ - Usable_Depth = 250mm
+ - Usable_Height = 250mm
+ - Usable_Width = 250mm
+
+PARTS:
+ - 4x Frame Z Front|Rear Left|Right 395mm
+ - 4x Frame Y Top|Bottom Left|Right 395mm
+ - 3x Frame Z Mid Left|Rear|Right 355mm
+ - 3x Frame X Front|Rear Top|Bottom 420mm
+ 
+ - 1x MGN12 X Rail  350mm
+ - 2x MGN12 Y Rail  300mm
+ - 3x MGN12 Z Rail  300mm
+ 
