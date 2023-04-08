@@ -78,7 +78,8 @@ Related:
     389 × 389 × 457mm
   - Frame overhead 133 x 133 x 201
 - https://www.pantheondesign.com
-
+- [RailCore](https://railcore.org/) too $$$
+  - [BOM](https://docs.google.com/spreadsheets/d/1sxKl6h23SXfuNM7hNiX35rIrpISw8AruEEcNl2Fvibk/edit)
 
 
 
@@ -318,7 +319,9 @@ Related
   - [ACM](https://forum.v1e.com/t/mp3dp-v4-bom/35315/52?u=azab2c) (aluminium-plastic-aluminium sandwich) great stable material, but $$$.
     - [Reco](https://forum.v1e.com/t/mp3dp-v4-bom/35315/109?u=azab2c) for piedmontplastics.com
   - [Sheet Metal?](https://forum.v1e.com/t/cutting-sheet-metal/7878/12?u=azab2c)
-  
+  - [IPA degrades Acrylic](https://forum.v1e.com/t/first-layer-issues/37289/18?u=azab2c), so consider Polycarbonate.
+
+
 ### Cables
 
 ???
@@ -433,7 +436,8 @@ Some of the [Community MP3DP Build Logs](https://forum.v1e.com/search?expanded=t
   - [24V](https://forum.v1e.com/t/matts-mp3dp-repeat-build/30859/11?u=azab2c)
 - @ MattMed 200mm^3 ??? https://forum.v1e.com/t/matts-mp3dp-repeat-build/30859/142?u=azab2c
   - [E3D Hemera Direct Kit](https://forum.v1e.com/t/matts-mp3dp-repeat-build/30859/213?u=azab2c)
-  - Nice [Prusa slicer settings](https://forum.v1e.com/t/matts-mp3dp-repeat-build/30859/221?u=azab2c) from Ryan 
+  - Nice [Prusa slicer settings](https://forum.v1e.com/t/matts-mp3dp-repeat-build/30859/221?u=azab2c) from Ryan
+  - [Camera mount setup](https://forum.v1e.com/t/matts-mp3dp-repeat-build/30859/231?u=azab2c) 
 - @ Jonathjon 300x300x400mm https://forum.v1e.com/t/mp3dp-v4-build/36437
   - [E3D Hemera](https://forum.v1e.com/t/mp3dp-v4-build/36437/74?u=azab2c)
   - [120V 750W hot plate](https://forum.v1e.com/t/mp3dp-v4-build/36437/43?u=azab2c)
@@ -535,14 +539,16 @@ Some of the [Community MP3DP Build Logs](https://forum.v1e.com/search?expanded=t
   - Display:  Bigtreetech TFT E3 V3.0.1
   - Linear motion:  Iverntech, chose because deliver fastest and best seller...  Wasn't reco'd by forum, so could be mistake, will find out...
   - Fasteners:  Rummaged, purchased, delivery pending.  Guaranteed to need more parts.
-  - Power Supply: MEAN WELL LRS-350-24, enough/too-many Watts?
+  - Power Supply: MEAN WELL LRS-
+  350-24, enough/too-many Watts?
   - Extruder: BIQU H2S V2 REVO - Paying premium for REVO to reduce effort for kids/me to change nozzle.
   - Nozzle: REVO 0.6mm (for now)
   - CAN Bus controller: EBB 36
+- DIN Rail, bought wago 210-504 from local electrical supplier, cheaper/faster than online.
 
 ### NEED TO BUY:
 
-### NEED TO DECIDE:
+### NEED TO DECIDE, THEN BUY:
   - Heater Bed with Thermistor : 
     - My current Ender 3 Max has 24v 310mm x 320mm, 4mm thick Carborundum Glass, 3mm Alu, 3mm Foam.
   - Wiring: Same as above.
@@ -579,6 +585,8 @@ Fastener and mount parts:
 - 20 ??? Corner Bracket Right Angle
   - 6 = 3 x 2 per Z Mid extrusion
     14 = 7 x 2 per Z Corner extrusion
+- Order M5 slide in nuts
+- ??? M3 12mm Button **Flange** for 1/4" (6.35mm) external panels.
 
 - TODO:
   - Stepper?
@@ -587,9 +595,16 @@ Fastener and mount parts:
   - Hot end?
   - Cable mounts/brackets?
   - PSU?
-  - Panels / doors?
+  - Panel design
+    - Add slotted holes for Y Axis extrusion to back X extrusionand front extrusion 
+    - Add perimeter holes to fasten panel
+    - Doc M5 x 10mm if 2mm panel 
+    - Doc M3 x 10mm if 2mm panel
+  - Doors?
+  - LID?
 
-
+- Model changes
+  - Added top|bottom Z Belt Holders to rear, so holes can be projected onto sketch for interior rear panel.
 
 USER PARAMETERS:
  - Usable_Depth = 250mm
@@ -597,7 +612,9 @@ USER PARAMETERS:
  - Usable_Width = 250mm
 
 PARTS:
- - 4x Frame Z Front|Rear Left|Right 395mm
+ - 4x Frame Z corner uprights, Front|Rear Left|Right 395mm
+   - Actually cut 500mm and 600mm for uprights, added 100mm below for all uprights to accomodate wiring, also added 100mm for rear upright to accomodate lid.
+
  - 4x Frame Y Top|Bottom Left|Right 395mm
  - 3x Frame Z Mid Left|Rear|Right 355mm
  - 3x Frame X Front|Rear Top|Bottom 420mm
@@ -606,3 +623,5 @@ PARTS:
  - 2x MGN12 Y Rail  300mm
  - 3x MGN12 Z Rail  300mm
  
+
+
