@@ -44,3 +44,19 @@ BOM Generator? https://forum.v1e.com/t/repeat-v2/33330/160?u=azab2c
 
 
  - FAIL: X Carriage part warped/lifted from bed.  Fixing by reducing "Brim distance" from 0.12mm to 0mm. 
+
+...
+
+Posted misc updates/questions to https://forum.v1e.com/t/not-another-mp3dp-v4/37429/119
+
+...
+
+23-04-05
+- Cut interior side panels from Poly carb
+
+23-04-07
+- Cut exterior rear from Ply
+
+23-04-08
+- Attempting sheet metal for interior...
+   - https://forum.v1e.com/t/cutting-sheet-metal/7878/7?u=azab2c

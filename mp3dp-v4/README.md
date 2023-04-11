@@ -319,6 +319,7 @@ Related
   - [ACM](https://forum.v1e.com/t/mp3dp-v4-bom/35315/52?u=azab2c) (aluminium-plastic-aluminium sandwich) great stable material, but $$$.
     - [Reco](https://forum.v1e.com/t/mp3dp-v4-bom/35315/109?u=azab2c) for piedmontplastics.com
   - [Sheet Metal?](https://forum.v1e.com/t/cutting-sheet-metal/7878/12?u=azab2c)
+    - ~0.2mm thin, so need M3 x 6mm Button Flanged bolts to fasten.
   - [IPA degrades Acrylic](https://forum.v1e.com/t/first-layer-issues/37289/18?u=azab2c), so consider Polycarbonate.
 
 
@@ -410,6 +411,7 @@ https://forum.v1e.com/t/mp3dp-v4-build-plog/36010/9?u=azab2c
 
 ### Wiring
 - [Dan recos](https://forum.v1e.com/t/repeat-v2/33330/374?u=azab2c) routing wiring to Z Post M Steppers along the Bed Support Plate, use misc holes in the plate to secure wiring, including providing strain relief for heater bed wiring.
+- [Stepper motor to driver slots mapping](https://forum.v1e.com/t/not-another-mp3dp-v4/37429/133?u=azab2c)
 
 ### Software
 
@@ -468,6 +470,9 @@ Some of the [Community MP3DP Build Logs](https://forum.v1e.com/search?expanded=t
 - @ niget2002 300mm^3 https://forum.v1e.com/t/not-another-mp3dp-v4/37429 
   - Hemera, SKR 1.2 + TFT, BLTouch
   - [Alu 12 x 12 1/4 bed, 310 x 310 120vac 750w heating plate](https://forum.v1e.com/t/what-build-plate-to-get/36216/38?u=azab2c)
+  - [DIN rail mounted Circuit breaker, Distribution, Bed heater SSR, Enclosure heater SSR, 5V PS, Pi](https://forum.v1e.com/t/not-another-mp3dp-v4/37429/129?u=azab2c)
+  - [Stepper motor to driver slots mapping](https://forum.v1e.com/t/not-another-mp3dp-v4/37429/133?u=azab2c)
+
 
 - @ orob https://forum.v1e.com/t/v3-vs-v4-3dp-build-part-list/37014
 
@@ -544,7 +549,7 @@ Some of the [Community MP3DP Build Logs](https://forum.v1e.com/search?expanded=t
   - Extruder: BIQU H2S V2 REVO - Paying premium for REVO to reduce effort for kids/me to change nozzle.
   - Nozzle: REVO 0.6mm (for now)
   - CAN Bus controller: EBB 36
-- DIN Rail, bought wago 210-504 from local electrical supplier, cheaper/faster than online.
+- DIN Rail, bought wago 210-504 from local electrical supplier (Platt Electric Supply), cheaper/faster than online.
 
 ### NEED TO BUY:
 
@@ -588,6 +593,10 @@ Fastener and mount parts:
 - Order M5 slide in nuts
 - ??? M3 12mm Button **Flange** for 1/4" (6.35mm) external panels.
 
+
+- ??? M3 x 6mm Button Flanged bolts
+  - 20 per Sheet Metal Panel ~0.2mm
+
 - TODO:
   - Stepper?
   - Board Mount?
@@ -596,15 +605,27 @@ Fastener and mount parts:
   - Cable mounts/brackets?
   - PSU?
   - Panel design
-    - Add slotted holes for Y Axis extrusion to back X extrusionand front extrusion 
-    - Add perimeter holes to fasten panel
+    - For builds without bottom panel helping square X and Y extrusion, consider adding slotted holes (dimensioned for 2020 Corner brackets) for where bottom Y Axis extrusion meets back X extrusion.
+    - Review all panels, ensure sufficient number of perimeter holes to securely fasten panel.  Perimeter bolts should be no more than 100mm apart, ideally much closer.
+    - Ensure side panel perimeter holes line up with sheet metal slotted holes.
     - Doc M5 x 10mm if 2mm panel 
     - Doc M3 x 10mm if 2mm panel
   - Doors?
   - LID?
 
+DONE:
 - Model changes
   - Added top|bottom Z Belt Holders to rear, so holes can be projected onto sketch for interior rear panel.
+
+TODO:
+- Model Design changes
+  - Rear panel slotted holes need to move towards center by at least __IntSidePanelsThickness
+  - Front Right Corner
+    - Move hole for fastening to Y axis needs move over by __IntSidePanelsThickness
+    - Remove chamfer/profile following 2020, sharp 90
+    - Reduce Tab depth
+  - Side panel holes for stepper mounts should be slotted.  Stepper mounts need to slide to help enable adjusting belt tension.
+  - 
 
 USER PARAMETERS:
  - Usable_Depth = 250mm
@@ -624,4 +645,39 @@ PARTS:
  - 3x MGN12 Z Rail  300mm
  
 
+## Mods
+
+### Assimilated Voron Parts 
+- [Voron Trident GNU License](https://github.com/VoronDesign/Voron-Trident/blob/main/LICENSE)
+- [Voron Trident Manual](https://github.com/VoronDesign/Voron-Trident/raw/main/Manual/Assembly_Manual_Trident.pdf)
+
+<mark>
+C:\Projects(NAS)\Make.V1E_RepeatV2\alt\Assembly_Manual_Trident.pdf
+</mark>
+
+- DIN Rails assembly, see "DIN RAILS" in manual.
+  - [Voron-Trident > STLs > ElectronicsBay](https://github.com/VoronDesign/Voron-Trident/tree/main/STLs/ElectronicsBay)
+    - DIN_frame_mount_x4.stl
+      - 8 total, M5 x 16mm x 2 per mount
+      - 4 total, M3 x 8mm x 1 per mount
+    
+
+
+
+# Assembly Notes
+Am following misc v4 forum topics, and MP3DP v3 [assembly docs](https://docs.v1e.com/mp3dp/version3assm/) since v4 docs unavailable.
+
+## General Notes
+- M3's bolt heads and nuts are easy to strip during assembly if too little (driver slips/grinds head), or too much, pressure applied (for [example](https://forum.v1e.com/t/not-another-mp3dp-v4/37429/127)).
+
+### Assemble Rear Corners
+- Recommend M3 x 12mm, holds better than 10mm.
+
+
+### Assemble Front Stepper Mounts with Tension Block XY
+- See [v3 Docs](https://docs.v1e.com/mp3dp/version3assm/#stepper-mounts)
+  - Secure the steppers with M3x10 screws.
+
+- Tension Block
+https://forum.v1e.com/t/mp3dp-v4-azas-build/37251/73?u=azab2c
 
