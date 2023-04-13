@@ -471,8 +471,8 @@ Some of the [Community MP3DP Build Logs](https://forum.v1e.com/search?expanded=t
   - Hemera, SKR 1.2 + TFT, BLTouch
   - [Alu 12 x 12 1/4 bed, 310 x 310 120vac 750w heating plate](https://forum.v1e.com/t/what-build-plate-to-get/36216/38?u=azab2c)
   - [DIN rail mounted Circuit breaker, Distribution, Bed heater SSR, Enclosure heater SSR, 5V PS, Pi](https://forum.v1e.com/t/not-another-mp3dp-v4/37429/129?u=azab2c)
-  - [Stepper motor to driver slots mapping](https://forum.v1e.com/t/not-another-mp3dp-v4/37429/133?u=azab2c)
-
+  - [Wiring, Stepper motor to driver slots mapping](https://forum.v1e.com/t/not-another-mp3dp-v4/37429/133?u=azab2c)
+  - [Heated Chamber, with Exhaust fan(s)](https://forum.v1e.com/t/not-another-mp3dp-v4/37429/171?u=azab2c)
 
 - @ orob https://forum.v1e.com/t/v3-vs-v4-3dp-build-part-list/37014
 
@@ -680,4 +680,19 @@ Am following misc v4 forum topics, and MP3DP v3 [assembly docs](https://docs.v1e
 
 - Tension Block
 https://forum.v1e.com/t/mp3dp-v4-azas-build/37251/73?u=azab2c
+
+### Assembling Z Posts/Trucks
+[Related post](https://forum.v1e.com/t/mp3dp-v4-azas-build/37251/81)
+
+### Bed Support Plate — Decide, Cut, Paint and Assemble
+[Related post](https://forum.v1e.com/t/mp3dp-v4-azas-build/37251/83)
+
+### Assemble X Axis and XY Blocks
+[Related post](https://forum.v1e.com/t/mp3dp-v4-azas-build/37251/84)
+
+### Square frame
+
+
+Wiring, mount endstops
+Hotend assembly, ...
 
