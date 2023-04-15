@@ -458,6 +458,7 @@ Some of the [Community MP3DP Build Logs](https://forum.v1e.com/search?expanded=t
   - [Alu plate 6061 1/4" 12"x12" SEUNMUK](https://forum.v1e.com/t/mp3dp-v4-build-sw-virginia/37238/39?u=azab2c) from [Amzn](https://www.amazon.com/dp/B096W1L1WX?ref=ppx_pop_mob_ap_share)
   - [PEI spring steel 120vac](https://forum.v1e.com/t/mp3dp-v4-build-sw-virginia/37238/42?u=azab2c)
   - [DIN rails, 40A SSR, 120VAC 500W bed heater](https://forum.v1e.com/t/mp3dp-v4-build-sw-virginia/37238/47?u=azab2c)
+  - [Parts on Printables](https://forum.v1e.com/t/mp3dp-v4-build-sw-virginia/37238/49?u=azab2c)
 - @ OBI's https://forum.v1e.com/t/time-to-start/36783
 - @ Heath_H 300mm^3 https://forum.v1e.com/t/heaths-mp3dp-repeat-akron-oh/34817
   - 3 in 1 (multicolor, 1 nozzle/hot-end, 3 extruders)
@@ -536,29 +537,29 @@ Some of the [Community MP3DP Build Logs](https://forum.v1e.com/search?expanded=t
 ## PARTS - Decisions and purchases
 
 ### HAVE / BOUGHT:
-  - Probe : Have unused BL Touch
-  - Frame: Have Black/Silver extrusion leftovers
-  - Wifi: Have Pi (will Klipper/OctoPi)
-  - Controller: Octopus v1.1
-  - Drivers: 5+ TMC2209 (EBB 36 has TMC2209 onboard that can drive Nema 14 in BIQU H2S V2 REVO)
-  - Display:  Bigtreetech TFT E3 V3.0.1
-  - Linear motion:  Iverntech, chose because deliver fastest and best seller...  Wasn't reco'd by forum, so could be mistake, will find out...
-  - Fasteners:  Rummaged, purchased, delivery pending.  Guaranteed to need more parts.
-  - Power Supply: MEAN WELL LRS-
-  350-24, enough/too-many Watts?
-  - Extruder: BIQU H2S V2 REVO - Paying premium for REVO to reduce effort for kids/me to change nozzle.
-  - Nozzle: REVO 0.6mm (for now)
-  - CAN Bus controller: EBB 36
+- Probe : Have unused BL Touch
+- Frame: Have Black/Silver extrusion leftovers
+- Wifi: Have Pi (will Klipper/OctoPi)
+- Controller: Octopus v1.1
+- Drivers: 5+ TMC2209 (EBB 36 has TMC2209 onboard that can drive Nema 14 in BIQU H2S V2 REVO)
+- Display:  Bigtreetech TFT E3 V3.0.1
+- Linear motion:  Iverntech, chose because deliver fastest and best seller...  Wasn't reco'd by forum, so could be mistake, will find out...
+- Fasteners:  Rummaged, purchased, delivery pending.  Guaranteed to need more parts.
+- Power Supply: MEAN WELL LRS-
+350-24, enough/too-many Watts?
+- Extruder: BIQU H2S V2 REVO - Paying premium for REVO to reduce effort for kids/me to change nozzle.
+- Nozzle: REVO 0.6mm (for now)
+- CAN Bus controller: EBB 36
 - DIN Rail, bought wago 210-504 from local electrical supplier (Platt Electric Supply), cheaper/faster than online.
+  - Solid State Relay (SSR) if using 120vac bed heater.
 
 ### NEED TO BUY:
 
 ### NEED TO DECIDE, THEN BUY:
-  - Heater Bed with Thermistor : 
-    - My current Ender 3 Max has 24v 310mm x 320mm, 4mm thick Carborundum Glass, 3mm Alu, 3mm Foam.
+- Heater Bed with Thermistor : 
+  - My current Ender 3 Max has 24v 310mm x 320mm, 4mm thick Carborundum Glass, 3mm Alu, 3mm Foam.
   - Wiring: Same as above.
-  - Solid State Relay (SSR) if using 120vac bed heater.
-
+- Chamber fan?
 
 ###  Fastener BOM break down:
 Related:
@@ -695,4 +696,8 @@ https://forum.v1e.com/t/mp3dp-v4-azas-build/37251/73?u=azab2c
 
 Wiring, mount endstops
 Hotend assembly, ...
+
+[Dan, how to tension Z belts?](https://forum.v1e.com/t/mp3dp-v4-build-plog/36010/18?u=azab2c)
+
+[Matt, reco feet to square and avoid scratches](https://forum.v1e.com/t/mp3dp-v4-build-plog/36010/20?u=azab2c)
 
