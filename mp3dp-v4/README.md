@@ -459,6 +459,7 @@ Some of the [Community MP3DP Build Logs](https://forum.v1e.com/search?expanded=t
   - [PEI spring steel 120vac](https://forum.v1e.com/t/mp3dp-v4-build-sw-virginia/37238/42?u=azab2c)
   - [DIN rails, 40A SSR, 120VAC 500W bed heater](https://forum.v1e.com/t/mp3dp-v4-build-sw-virginia/37238/47?u=azab2c)
   - [Parts on Printables](https://forum.v1e.com/t/mp3dp-v4-build-sw-virginia/37238/49?u=azab2c)
+  - [Hemera to H2 Mount](https://forum.v1e.com/t/mp3dp-v4-extruder-hot-ends-combos-and-heated-bed-options/37331/9?u=azab2c)
 - @ OBI's https://forum.v1e.com/t/time-to-start/36783
 - @ Heath_H 300mm^3 https://forum.v1e.com/t/heaths-mp3dp-repeat-akron-oh/34817
   - 3 in 1 (multicolor, 1 nozzle/hot-end, 3 extruders)
@@ -508,6 +509,8 @@ Some of the [Community MP3DP Build Logs](https://forum.v1e.com/search?expanded=t
 
     // INPROGRESS
 
+C:\git\v1engineering-mods\mp3dp-v4\mods\probrwr-h2-mount\BIQU H2 BLTouch Mount V2.3mf
+C:\git\v1engineering-mods\mp3dp-v4\mods\probrwr-h2-mount\H2 to Hemera Adapter v7.3mf
 
     // TODO
     ───Hemera
@@ -554,6 +557,7 @@ Some of the [Community MP3DP Build Logs](https://forum.v1e.com/search?expanded=t
   - Solid State Relay (SSR) if using 120vac bed heater.
 
 ### NEED TO BUY:
+- M10 PTFE Fittings?  Check stock?
 
 ### NEED TO DECIDE, THEN BUY:
 - Heater Bed with Thermistor : 
@@ -701,3 +705,76 @@ Hotend assembly, ...
 
 [Matt, reco feet to square and avoid scratches](https://forum.v1e.com/t/mp3dp-v4-build-plog/36010/20?u=azab2c)
 
+
+- https://en.wikipedia.org/wiki/19-inch_rack
+  -  https://en.wikipedia.org/wiki/19-inch_rack#/media/File:19_inch_rack_dimensions.svg
+
+## Enclosure Box
+
+Features:
+- Exhaust Heat pumped into chamber
+- Reuse/Lower TCO for  Encapsulated Compute, PSU, auxilary components, Reusable
+- Fast build/replacement, integration into other projects
+
+### Enclosure Frame Assembly
+
+Parts:
+- M5 6mm grub screws
+- 2020 Internal corners, M5 holes
+
+
+### Din Rail
+
+Parts:
+- 8x M5x16mm Button Bolt, 4 DIN mounts, 2 per DIN mount    
+
+Parts:
+ - Mean Well RS-25-5
+ - 2x M3x6mm, see Voron Trident p211
+
+
+### Assembly, Mount PSU to enclosurepn
+
+- Created 2080-brace-mean-well-hlg-240h
+  - 4x M5x10mm Bolts, 2 per brace
+  - 2x M4x12mm Bolts, 1 per brace
+  - 2x M4 Nyloc Nut, 1 per brace
+
+
+WAGO 221 415 Lever Nuts (3x housing)
+- 2x M5x10mm Button Bolts
+
+
+<span style=display:none>
+TODO:
+
+  - What components are needed?
+ - Power distribution
+ - M10 PTFE Fittings?  Check stock?
+ -  80mm exhaust fan?
+ - Thermal Fuse ???
+ - PI Cam?  ESP32 Cam
+ - Power plug and distribution block? https://us2.dh-cdn.net/uploads/db5587/original/3X/b/2/b2d14f84805cf260d9c1c2208ad2db44043677e6.jpeg
+
+
+Couldn't figure out slim PSU-Controller-Components in one box layout with LRS-350-24 oriented in a way where fan extracted heat can be dissipated.  This is 250x250 usable, would've been easier to layout in a 300x300 build.
+
+![image|690x411](upload://GhRE8HWHCYEmJI8s1tQPNvJZ7O.jpeg)
+
+Found an unused slimmer 240W PSU among my scraps, so trying that out.
+
+PSU Options
+- Mean Well HLG-240H-24
+  - Spec https://www.meanwell.com/Upload/PDF/HLG-240H/HLG-240H-SPEC.PDF
+  - Temp -40c to 90c
+- Mean Well LRS-350-24
+  - Spec https://www.meanwell.com/productPdf.aspx?i=459
+  - Temp -25c to 70c 
+
+</span>
+
+
+
+# Cost
+
+~$60 TAP Plastics, panels, adhesive
