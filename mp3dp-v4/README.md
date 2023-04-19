@@ -695,6 +695,8 @@ https://forum.v1e.com/t/mp3dp-v4-azas-build/37251/73?u=azab2c
 ### Assemble X Axis and XY Blocks
 [Related post](https://forum.v1e.com/t/mp3dp-v4-azas-build/37251/84)
 
+Do not mount X Core to X linear rail carriage just yet.  Wait until frame is fully built.  Reason is the hotend is fragile, and it's easier to mount a fully assembled Core to the linear rail carriage.
+
 ### Square frame
 
 
@@ -708,6 +710,13 @@ Hotend assembly, ...
 
 - https://en.wikipedia.org/wiki/19-inch_rack
   -  https://en.wikipedia.org/wiki/19-inch_rack#/media/File:19_inch_rack_dimensions.svg
+
+
+### Assemble Belts to Z Belt Holders
+Related:
+- https://forum.v1e.com/t/repeat-v2/33330/186?u=azab2c
+  - Ensure correct print orientation.
+
 
 ## Enclosure Box
 
@@ -740,13 +749,50 @@ Parts:
   - 2x M4x12mm Bolts, 1 per brace
   - 2x M4 Nyloc Nut, 1 per brace
 
+### Assembly, mount Controller, SSR, 5V PSU, WAGO housings, etc...
 
-WAGO 221 415 Lever Nuts (3x housing)
-- 2x M5x10mm Button Bolts
+- ### Mount Octopus Controller
+  - Used DIN Octopus rail mounts/brackets for Voron Trident.
+  - Alternatives:
+    - M3 bolts based DIN Rail bracket for Octopus
+      - https://github.com/VoronDesign/VoronUsers/tree/master/printer_mods/sse018/Octopus_DIN_Rail_bracket
+
+  - Parts: 
+    - 4x M2x8mm (or 10mm?) self tapping screw
+
+- ### Mount WAGO housing
+  - WAGO 221 415 Lever Nuts (3x housing)
+    - 2x M5x10mm Button Bolts
+
+
+### Assembly, H2 Revo HotEnd
+
+- H2 Revo comes with 2x M3x16mm for attaching 35x35x10 Fan to HotEnd body, too short imo.  If using the fan, consider 2x M3x20mm instead. 
+
+# Firmware
+
+
+https://forum.v1e.com/t/repeat-v2/33330/172?u=azab2c
+
+# Cost
+
+~$60 TAP Plastics, panels, adhesive
+
 
 
 <span style=display:none>
-TODO:
+TASKS: TODO:
+  - Design Edits:
+    - Frame
+      - Y Panels
+        - Add Slots enabling Z Belt Holder height/tension adjustment.
+        - Add 3.5 holes along bottom Y extrusion to help square frame, and secure panel.
+    - Enclosure Box
+      - 2020 External Bracket
+        - Mod design
+          - Remove 45 angle, allow tight sitting connectors.
+          - Increase thickness for 3mm panels
+        
 
   - What components are needed?
  - Power distribution
@@ -774,7 +820,5 @@ PSU Options
 </span>
 
 
-
-# Cost
-
-~$60 TAP Plastics, panels, adhesive
+TODO:
+- Buy solder
