@@ -436,6 +436,7 @@ Some of the [Community MP3DP Build Logs](https://forum.v1e.com/search?expanded=t
   - [Dan's rails](https://forum.v1e.com/t/mp3dp-v4-bom/35315/21?u=azab2c), Y = Z = 300mm, X = 350mm
   - [5mm plywood Bed Support Plate, 1/2" foam](https://forum.v1e.com/t/mp3dp-v4-bom/35315/117?u=azab2c)
   - [24V](https://forum.v1e.com/t/matts-mp3dp-repeat-build/30859/11?u=azab2c)
+  - [Drag Chain](https://forum.v1e.com/t/mp3dp-v4-build-plog/36010/110?u=azab2c), used 10x10, but recommends 15x10, mount on [Printables](https://www.printables.com/model/395108-drag-chain-mounts-for-mp3dpv4)
 - @ MattMed 200mm^3 ??? https://forum.v1e.com/t/matts-mp3dp-repeat-build/30859/142?u=azab2c
   - [E3D Hemera Direct Kit](https://forum.v1e.com/t/matts-mp3dp-repeat-build/30859/213?u=azab2c)
   - Nice [Prusa slicer settings](https://forum.v1e.com/t/matts-mp3dp-repeat-build/30859/221?u=azab2c) from Ryan
@@ -460,6 +461,7 @@ Some of the [Community MP3DP Build Logs](https://forum.v1e.com/search?expanded=t
   - [DIN rails, 40A SSR, 120VAC 500W bed heater](https://forum.v1e.com/t/mp3dp-v4-build-sw-virginia/37238/47?u=azab2c)
   - [Parts on Printables](https://forum.v1e.com/t/mp3dp-v4-build-sw-virginia/37238/49?u=azab2c)
   - [Hemera to H2 Mount](https://forum.v1e.com/t/mp3dp-v4-extruder-hot-ends-combos-and-heated-bed-options/37331/9?u=azab2c)
+  - [Cat6 flexible stranded for CAN bus](https://forum.v1e.com/t/mp3dp-v4-build-sw-virginia/37238/69?u=azab2c)
 - @ OBI's https://forum.v1e.com/t/time-to-start/36783
 - @ Heath_H 300mm^3 https://forum.v1e.com/t/heaths-mp3dp-repeat-akron-oh/34817
   - 3 in 1 (multicolor, 1 nozzle/hot-end, 3 extruders)
@@ -475,6 +477,13 @@ Some of the [Community MP3DP Build Logs](https://forum.v1e.com/search?expanded=t
   - [DIN rail mounted Circuit breaker, Distribution, Bed heater SSR, Enclosure heater SSR, 5V PS, Pi](https://forum.v1e.com/t/not-another-mp3dp-v4/37429/129?u=azab2c)
   - [Wiring, Stepper motor to driver slots mapping](https://forum.v1e.com/t/not-another-mp3dp-v4/37429/133?u=azab2c)
   - [Heated Chamber, with Exhaust fan(s)](https://forum.v1e.com/t/not-another-mp3dp-v4/37429/171?u=azab2c)
+  - [PTFE Tube Holder](https://forum.v1e.com/t/not-another-mp3dp-v4/37429/218?u=azab2c)
+    - .STL model https://www.thingiverse.com/thing:5968992
+    - Parts: 2x M3x12mm, M6 tube holders.  Will need M6 tap to create threads.
+  - [Interior spool mount](https://forum.v1e.com/t/not-another-mp3dp-v4/37429/218?u=azab2c)
+    - .STL model https://www.thingiverse.com/thing:767317/files
+    - 
+
 
 - @ orob https://forum.v1e.com/t/v3-vs-v4-3dp-build-part-list/37014
 
@@ -780,7 +789,7 @@ https://forum.v1e.com/t/repeat-v2/33330/172?u=azab2c
 
 
 
-<span style=display:none>
+<span style=display:block>
 TASKS: TODO:
   - Design Edits:
     - Frame
@@ -795,10 +804,12 @@ TASKS: TODO:
         
 
   - What components are needed?
- - Power distribution
- - M10 PTFE Fittings?  Check stock?
- -  80mm exhaust fan?
- - Thermal Fuse ???
+- Power distribution
+- M10 PTFE Fittings?  Check stock?
+-  80mm exhaust fan?
+
+
+
  - PI Cam?  ESP32 Cam
  - Power plug and distribution block? https://us2.dh-cdn.net/uploads/db5587/original/3X/b/2/b2d14f84805cf260d9c1c2208ad2db44043677e6.jpeg
 
@@ -822,3 +833,26 @@ PSU Options
 
 TODO:
 - Buy solder
+
+FUTURES:
+- Filament run out sensor
+
+
+### Assembly, mount plate Drag Chain
+
+Parts :
+- https://www.amazon.com/gp/product/B07WJ4CPF5/ref=ppx_yo_dt_b_search_asin_title?ie=UTF8&th=1
+  - Specs :
+  ![](https://m.media-amazon.com/images/I/61gg+al37kL._SX522_.jpg)
+
+- TODO:  Design Updates
+  - Update Z Post Mod Design
+    - Larger hole for idler to fit.
+    - Larger hol for spanner around
+    - Increase clearance for Stepper bolt 1.5mm near middle T-nut
+  - Ensure panels removable, fixed panels make assembly/servicing PITA
+  - Update Rear interior panel design
+    - Add holes for mounting drag chain, + 2x 3.5mm spaced 12mm, or leave cutout to allow misc drag chain dimensions. 
+
+
+

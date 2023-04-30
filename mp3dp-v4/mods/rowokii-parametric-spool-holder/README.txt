@@ -1,0 +1,1 @@
+Parametric universal spool holder by rowokii on Thingiverse: https://www.thingiverse.com/thing:767317
