@@ -69,6 +69,7 @@ Related:
 
 ### Alternatives considered :
 - https://vorondesign.com/ too $$$, $1800-$2000
+  - [Voron Trident Manual](https://raw.githubusercontent.com/VoronDesign/Voron-Trident/main/Manual/Assembly_Manual_Trident.pdf), comprehensive 319 pages!
 - https://us.ratrig.com/3d-printers/v-core.html too $$, $1100
 - [https://bambulab.com/en/x1](https://bambulab.com/en/x1) easy to use $$ + closed bambu x1 carbon
   - [Specs](https://us.store.bambulab.com/products/x1-carbon-combo)
@@ -410,13 +411,56 @@ https://forum.v1e.com/t/mp3dp-v4-build-plog/36010/9?u=azab2c
 - See Matt's build @ https://forum.v1e.com/t/matts-mp3dp-repeat-build/30859/153?u=azab2c
 
 ### Wiring
+Related :
+- [Voron V2 Octopus Wiring guide](https://docs.vorondesign.com/build/electrical/v2_octopus_wiring.html).
+- [Klipper Octopus config template]https://github.com/Klipper3d/klipper/blob/master/config/generic-bigtreetech-octopus.cfg
+
+https://github.com/bigtreetech/BIGTREETECH-OCTOPUS-V1.0/blob/master/Hardware/BIGTREETECH%20Octopus%20-%20PIN.pdf
+
+
+
 - [Dan recos](https://forum.v1e.com/t/repeat-v2/33330/374?u=azab2c) routing wiring to Z Post M Steppers along the Bed Support Plate, use misc holes in the plate to secure wiring, including providing strain relief for heater bed wiring.
 - [Stepper motor to driver slots mapping](https://forum.v1e.com/t/not-another-mp3dp-v4/37429/133?u=azab2c)
 
-### Software
+#### Wiring Raspberry PI
 
-#### GCODE configuration
-Power down and/or resets will cause bed to crash down. So, ["gcode needs to park the z axis at zmax"](https://forum.v1e.com/t/repeat-v2/33330/45?u=azab2c)
+- For my build, am using a small [LCD TFT 3.5" (320x480) Touch Screen](https://www.amazon.com/gp/product/B083C12N57/ref=ppx_yo_dt_b_search_asin_title?ie=UTF8&psc=1), may upgrade to larger higher res later...
+  - [Specs and pinouts](http://www.lcdwiki.com/3.5inch_RPi_Display)
+  - [Driver](https://github.com/goodtft/LCD-show)
+  - Adhere heat sinks with thermal paste.  Check sufficient clearance between heatsink, fan and TFT.
+  - Mount Fan, TFT screen, and standoffs to support TFT screen.
+  - Install/configure driver, see product [page](https://www.amazon.com/gp/product/B083C12N57/ref=ppx_yo_dt_b_search_asin_title?ie=UTF8&psc=1) and/or manual.
+  - Check temp ```vcgencmd measure_temp```
+
+## <big>Software</big>
+
+### Klipper
+Related:
+- [2022/8 Chris Riley YT - Klipper, Mainsail, Fluidd - 2022 - Chris's Basement](https://www.youtube.com/watch?v=FjMZzW_WVQ8)
+  - Follow latest docs, or info in this video if they still apply.  In short, you'll...
+    - Use [Pi imager](https://www.raspberrypi.com/software/) to create MainSail flavored Pi OS image (will contain Klipper snapshot).
+    - Boot up and connect to your Pi, called mine _repeat.local_
+    - Configure Klipper, used ```make menuconfig``` and followed some relevant details in Voron [Build Firmware Image](https://docs.vorondesign.com/build/software/octopus_klipper.html#build-firmware-image).
+      - Example Voron Trident Klipper Octopus v1.1 (STM32F446) [printer.cfg](https://github.com/VoronDesign/Voron-Trident/blob/main/Firmware/Octopus/Trident_Octopus_Config.cfg).
+    - Build klipper firmware via ```make klipper```, copy to built klipper.bin to firmware.bin on SD card for Octopus/Controller
+- [2021/10 Steve Builds (Voron Trident creator) - Voron Trident Build Hang out](https://www.youtube.com/live/zXFGQMVvHrs?feature=share)
+  - [31:15](https://www.youtube.com/live/zXFGQMVvHrs?feature=share&t=1875) KlipperScreen setup/config of TFT mounted to Pi.
+- [Klipper Docs - CANBUS](https://www.klipper3d.org/CANBUS.html?h=menuconfig)
+
+
+#### Pre/Post Print GCODE configuration changes
+
+- Edit Post print config to Power down and/or resets will cause bed to crash down.  See ["gcode needs to park the z axis at zmax"](https://forum.v1e.com/t/repeat-v2/33330/45?u=azab2c)
+
+### Done!
+
+Print something, consider sharing your build details, build journey, and claim a [MP3DP serial number](https://forum.v1e.com/t/mp3dp-repeat-serial-number-log/29525) for posterity's sake.
+
+
+## <big>Troubleshooting Printing Issues</big>
+Some troubleshooting related topics/posts:
+- https://forum.v1e.com/t/mp3dp-v4-build/36437/475?u=azab2c
+
 
 
 ## <big>MP3DP v4 V1E Community builds / builders</big>
@@ -426,73 +470,73 @@ Some of the [Community MP3DP Build Logs](https://forum.v1e.com/search?expanded=t
 ### <b>v4</b> builds
 
 - @SupraGuy 200/235mm^3 ??? https://forum.v1e.com/t/mp3dp-v4-build-plog/36010?u=azab2c
-  - Extrusion [Cut List](https://forum.v1e.com/t/mp3dp-v4-build-plog/36010/8?u=azab2c) :
-    - 4x 345mm frame upright pieces
-    - 4x 345mm frame Y axis pieces
-    - 3x 370mm frame X axis pieces
-    - 3x 305mm Z axis upright rails
-  - [E3D Hemera hotend](https://forum.v1e.com/t/mp3dp-v4-build-plog/36010/33?u=azab2c)
-  - [Dan's parts](https://forum.v1e.com/t/mp3dp-v4-build-plog/36010/3?u=azab2c)
-  - [Dan's rails](https://forum.v1e.com/t/mp3dp-v4-bom/35315/21?u=azab2c), Y = Z = 300mm, X = 350mm
-  - [5mm plywood Bed Support Plate, 1/2" foam](https://forum.v1e.com/t/mp3dp-v4-bom/35315/117?u=azab2c)
-  - [24V](https://forum.v1e.com/t/matts-mp3dp-repeat-build/30859/11?u=azab2c)
-  - [Drag Chain](https://forum.v1e.com/t/mp3dp-v4-build-plog/36010/110?u=azab2c), used 10x10, but recommends 15x10, mount on [Printables](https://www.printables.com/model/395108-drag-chain-mounts-for-mp3dpv4)
+    - Extrusion [Cut List](https://forum.v1e.com/t/mp3dp-v4-build-plog/36010/8?u=azab2c) :
+      - 4x 345mm frame upright pieces
+      - 4x 345mm frame Y axis pieces
+      - 3x 370mm frame X axis pieces
+      - 3x 305mm Z axis upright rails
+    - [E3D Hemera hotend](https://forum.v1e.com/t/mp3dp-v4-build-plog/36010/33?u=azab2c)
+    - [Dan's parts](https://forum.v1e.com/t/mp3dp-v4-build-plog/36010/3?u=azab2c)
+    - [Dan's rails](https://forum.v1e.com/t/mp3dp-v4-bom/35315/21?u=azab2c), Y = Z = 300mm, X = 350mm
+    - [5mm plywood Bed Support Plate, 1/2" foam](https://forum.v1e.com/t/mp3dp-v4-bom/35315/117?u=azab2c)
+    - [24V](https://forum.v1e.com/t/matts-mp3dp-repeat-build/30859/11?u=azab2c)
+    - [Drag Chain](https://forum.v1e.com/t/mp3dp-v4-build-plog/36010/110?u=azab2c), used 10x10, but recommends 15x10, mount on [Printables](https://www.printables.com/model/395108-drag-chain-mounts-for-mp3dpv4)
 - @ MattMed 200mm^3 ??? https://forum.v1e.com/t/matts-mp3dp-repeat-build/30859/142?u=azab2c
-  - [E3D Hemera Direct Kit](https://forum.v1e.com/t/matts-mp3dp-repeat-build/30859/213?u=azab2c)
-  - Nice [Prusa slicer settings](https://forum.v1e.com/t/matts-mp3dp-repeat-build/30859/221?u=azab2c) from Ryan
-  - [Camera mount setup](https://forum.v1e.com/t/matts-mp3dp-repeat-build/30859/231?u=azab2c) 
+    - [E3D Hemera Direct Kit](https://forum.v1e.com/t/matts-mp3dp-repeat-build/30859/213?u=azab2c)
+    - Nice [Prusa slicer settings](https://forum.v1e.com/t/matts-mp3dp-repeat-build/30859/221?u=azab2c) from Ryan
+    - [Camera mount setup](https://forum.v1e.com/t/matts-mp3dp-repeat-build/30859/231?u=azab2c) 
 - @ Jonathjon 300x300x400mm https://forum.v1e.com/t/mp3dp-v4-build/36437
-  - [E3D Hemera](https://forum.v1e.com/t/mp3dp-v4-build/36437/74?u=azab2c)
-  - [120V 750W hot plate](https://forum.v1e.com/t/mp3dp-v4-build/36437/43?u=azab2c)
-  - [120V 750W Heating Plate/Silicone Mat + Thermistor, Bed Foam foil insulation](https://forum.v1e.com/t/mp3dp-v4-bom/35315/118?u=azab2c)
+    - [E3D Hemera](https://forum.v1e.com/t/mp3dp-v4-build/36437/74?u=azab2c)
+    - [120V 750W hot plate](https://forum.v1e.com/t/mp3dp-v4-build/36437/43?u=azab2c)
+    - [120V 750W Heating Plate/Silicone Mat + Thermistor, Bed Foam foil insulation](https://forum.v1e.com/t/mp3dp-v4-bom/35315/118?u=azab2c)
 - @ Kgleason's 235mm^3 https://forum.v1e.com/t/mp3dp-repeat-v2-aka-v4-z-steppers/35967
-  - Glass on Alu Bed
-  - [E3D Hemera](https://forum.v1e.com/t/mp3dp-repeat-v2-aka-v4-z-steppers/35967/5?u=azab2c)
-  - [MP3DP Mod - Z Moto Brake, prevent free fall](https://forum.v1e.com/t/mp3dp-repeat-v2-aka-v4-z-steppers/35967/6?u=azab2c)
+    - Glass on Alu Bed
+    - [E3D Hemera](https://forum.v1e.com/t/mp3dp-repeat-v2-aka-v4-z-steppers/35967/5?u=azab2c)
+    - [MP3DP Mod - Z Moto Brake, prevent free fall](https://forum.v1e.com/t/mp3dp-repeat-v2-aka-v4-z-steppers/35967/6?u=azab2c)
 - @ aali0101's 250mm^3 https://forum.v1e.com/t/repeat-v2/33330/251?u=azab2c
 - @ probrwr's 235mm x 235mm x ??? https://forum.v1e.com/t/mp3dp-v4-build-sw-virginia/37238
-  - [ZYLTech Extrusion](https://forum.v1e.com/t/mp3dp-v4-build-sw-virginia/37238/2?u=azab2c)
-  - [120v Heat Pad](https://forum.v1e.com/t/mp3dp-v4-build-sw-virginia/37238/6?u=azab2c)
-  - [Manta M8P, EBB36](https://forum.v1e.com/t/mp3dp-v4-build-sw-virginia/37238/25?u=azab2c)
-  - [MP3DP Mod - Adapter Carrier-to-H2, with EBB36 mount](https://forum.v1e.com/t/mp3dp-v4-build-sw-virginia/37238/24?u=azab2c)
-  - [BIQU H2S Revo](https://forum.v1e.com/t/mp3dp-v4-build-sw-virginia/37238/34?u=azab2c)
-  - [Alu plate 6061 1/4" 12"x12" SEUNMUK](https://forum.v1e.com/t/mp3dp-v4-build-sw-virginia/37238/39?u=azab2c) from [Amzn](https://www.amazon.com/dp/B096W1L1WX?ref=ppx_pop_mob_ap_share)
-  - [PEI spring steel 120vac](https://forum.v1e.com/t/mp3dp-v4-build-sw-virginia/37238/42?u=azab2c)
-  - [DIN rails, 40A SSR, 120VAC 500W bed heater](https://forum.v1e.com/t/mp3dp-v4-build-sw-virginia/37238/47?u=azab2c)
-  - [Parts on Printables](https://forum.v1e.com/t/mp3dp-v4-build-sw-virginia/37238/49?u=azab2c)
-  - [Hemera to H2 Mount](https://forum.v1e.com/t/mp3dp-v4-extruder-hot-ends-combos-and-heated-bed-options/37331/9?u=azab2c)
-  - [Cat6 flexible stranded for CAN bus](https://forum.v1e.com/t/mp3dp-v4-build-sw-virginia/37238/69?u=azab2c)
+    - [ZYLTech Extrusion](https://forum.v1e.com/t/mp3dp-v4-build-sw-virginia/37238/2?u=azab2c)
+    - [120v Heat Pad](https://forum.v1e.com/t/mp3dp-v4-build-sw-virginia/37238/6?u=azab2c)
+    - [Manta M8P, EBB36](https://forum.v1e.com/t/mp3dp-v4-build-sw-virginia/37238/25?u=azab2c)
+    - [MP3DP Mod - Adapter Carrier-to-H2, with EBB36 mount](https://forum.v1e.com/t/mp3dp-v4-build-sw-virginia/37238/24?u=azab2c)
+    - [BIQU H2S Revo](https://forum.v1e.com/t/mp3dp-v4-build-sw-virginia/37238/34?u=azab2c)
+    - [Alu plate 6061 1/4" 12"x12" SEUNMUK](https://forum.v1e.com/t/mp3dp-v4-build-sw-virginia/37238/39?u=azab2c) from [Amzn](https://www.amazon.com/dp/B096W1L1WX?ref=ppx_pop_mob_ap_share)
+    - [PEI spring steel 120vac](https://forum.v1e.com/t/mp3dp-v4-build-sw-virginia/37238/42?u=azab2c)
+    - [DIN rails, 40A SSR, 120VAC 500W bed heater](https://forum.v1e.com/t/mp3dp-v4-build-sw-virginia/37238/47?u=azab2c)
+    - [Parts on Printables](https://forum.v1e.com/t/mp3dp-v4-build-sw-virginia/37238/49?u=azab2c)
+    - [Hemera to H2 Mount](https://forum.v1e.com/t/mp3dp-v4-extruder-hot-ends-combos-and-heated-bed-options/37331/9?u=azab2c)
+    - [Cat6 flexible stranded for CAN bus](https://forum.v1e.com/t/mp3dp-v4-build-sw-virginia/37238/69?u=azab2c)
+    - [Manta and EBB36 CAN Bus setup](https://forum.v1e.com/t/mp3dp-v4-build-sw-virginia/37238/80?u=azab2c)
 - @ OBI's https://forum.v1e.com/t/time-to-start/36783
 - @ Heath_H 300mm^3 https://forum.v1e.com/t/heaths-mp3dp-repeat-akron-oh/34817
   - 3 in 1 (multicolor, 1 nozzle/hot-end, 3 extruders)
   - [Octopus](https://forum.v1e.com/t/heaths-mp3dp-repeat-akron-oh/34817?u=azab2c)
-- @ gpagnozzi
-  - [Manta M8P V1.0 (No CAN) U2C and EBB42 and the H2 V2.0](https://forum.v1e.com/t/mp3dp-v4-build-sw-virginia/37238/33?u=azab2c)
-  - [BIQU H2 V2.0](https://forum.v1e.com/t/mp3dp-v4-build-sw-virginia/37238/34?u=azab2c)
-  - [Klipper config](https://forum.v1e.com/t/mp3dp-v4-build-sw-virginia/37238/31?u=azab2c)
-  - [MP3DP Mod - Extruder carrier for H2, 2x 5015 fans, EBB42](https://forum.v1e.com/t/mp3dp-v4-build-sw-virginia/37238/26?u=azab2c)
+- @ gpagnozzi https://forum.v1e.com/t/mp3dp-repeat-v3-to-v4-1-upgrade/38096
+    - [Manta M8P V1.0 (No CAN) U2C and EBB42 and the H2 V2.0](https://forum.v1e.com/t/mp3dp-v4-build-sw-virginia/37238/33?u=azab2c)
+    - [BIQU H2 V2.0](https://forum.v1e.com/t/mp3dp-v4-build-sw-virginia/37238/34?u=azab2c)
+    - [Manta M8P Klipper config, printer.cfg](https://forum.v1e.com/t/mp3dp-v4-build-sw-virginia/37238/31?u=azab2c)
+    - [Start gcode with prime line, from printer.cfg](https://forum.v1e.com/t/mp3dp-v2-build/31040/127?u=azab2c)
+    - [MP3DP Mod - Extruder carrier for H2, 2x 5015 fans, EBB42](https://forum.v1e.com/t/mp3dp-v4-build-sw-virginia/37238/26?u=azab2c)
 - @ niget2002 300mm^3 https://forum.v1e.com/t/not-another-mp3dp-v4/37429 
-  - Hemera, SKR 1.2 + TFT, BLTouch
-  - [Alu 12 x 12 1/4 bed, 310 x 310 120vac 750w heating plate](https://forum.v1e.com/t/what-build-plate-to-get/36216/38?u=azab2c)
-  - [DIN rail mounted Circuit breaker, Distribution, Bed heater SSR, Enclosure heater SSR, 5V PS, Pi](https://forum.v1e.com/t/not-another-mp3dp-v4/37429/129?u=azab2c)
-  - [Wiring, Stepper motor to driver slots mapping](https://forum.v1e.com/t/not-another-mp3dp-v4/37429/133?u=azab2c)
-  - [Heated Chamber, with Exhaust fan(s)](https://forum.v1e.com/t/not-another-mp3dp-v4/37429/171?u=azab2c)
-  - [PTFE Tube Holder](https://forum.v1e.com/t/not-another-mp3dp-v4/37429/218?u=azab2c)
-    - .STL model https://www.thingiverse.com/thing:5968992
-    - Parts: 2x M3x12mm, M6 tube holders.  Will need M6 tap to create threads.
-  - [Interior spool mount](https://forum.v1e.com/t/not-another-mp3dp-v4/37429/218?u=azab2c)
-    - .STL model https://www.thingiverse.com/thing:767317/files
-    - 
-
-
+    - Hemera, SKR 1.2 + TFT, BLTouch
+    - [Alu 12 x 12 1/4 bed, 310 x 310 120vac 750w heating plate](https://forum.v1e.com/t/what-build-plate-to-get/36216/38?u=azab2c)
+    - [DIN rail mounted Circuit breaker, Distribution, Bed heater SSR, Enclosure heater SSR, 5V PS, Pi](https://forum.v1e.com/t/not-another-mp3dp-v4/37429/129?u=azab2c)
+    - [Wiring, Stepper motor to driver slots mapping](https://forum.v1e.com/t/not-another-mp3dp-v4/37429/133?u=azab2c)
+    - [Heated Chamber, with Exhaust fan(s)](https://forum.v1e.com/t/not-another-mp3dp-v4/37429/171?u=azab2c)
+    - [PTFE Tube Holder](https://forum.v1e.com/t/not-another-mp3dp-v4/37429/218?u=azab2c)
+      - .STL model https://www.thingiverse.com/thing:5968992
+      - Parts: 2x M3x12mm, M6 tube holders.  Will need M6 tap to create threads.
+    - [Interior spool mount](https://forum.v1e.com/t/not-another-mp3dp-v4/37429/218?u=azab2c)
+      - .STL model https://www.thingiverse.com/thing:767317/files
+      - 
 - @ orob https://forum.v1e.com/t/v3-vs-v4-3dp-build-part-list/37014
 
 ### <b>v3</b> builds
 
 - @ RootsMedia's 310x310x280mm https://forum.v1e.com/t/mp3dp-repeat-take-two/33215
-  - Repeat v1 with sweet ACM/PolyCarb enclosure, complete with logo engraved panels.
-    - 24v Mean Well
-    - Textured PEI magnetic build plate
+    - Repeat v1 with sweet ACM/PolyCarb enclosure, complete with logo engraved panels.
+      - 24v Mean Well
+      - Textured PEI magnetic build plate
 
 ### <b>v2</b> builds
 - Dan's costs https://forum.v1e.com/t/mp3dp-v2/37092/3?u=azab2c
