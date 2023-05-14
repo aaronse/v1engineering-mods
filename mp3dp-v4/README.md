@@ -436,7 +436,7 @@ https://github.com/bigtreetech/BIGTREETECH-OCTOPUS-V1.0/blob/master/Hardware/BIG
 
 Stock MP3DP v4 builds use Marlin and straight forward separate bundle of wiring from the Controller board, to all the hotend components, e.g. Hot End, extruder, Thermister, Fan(s), BL Touch, etc...  
 
-For my build, am instead going use this opportunity to learn about Klipper and CANBus.  I want to benefit from the kinematic support, and reduce wiring/weight to the hotend.  So, am investing significant additional time and effort into digging into those areas.  Given what's involved am sharing details/notes in a separate [klipper-with-canbus](https://www.github.com/aaronse/v1engineering-mods/mp3dp-v4/sw-klipper-with-canbus.md) doc.
+For my build, am instead going use this opportunity to learn about Klipper and CANBus.  I want to benefit from the kinematic support, and reduce wiring/weight to the hotend.  So, am investing significant additional time and effort into digging into those areas.  Given what's involved am sharing details/notes in a separate [klipper-with-canbus](https://github.com/aaronse/v1engineering-mods/blob/main/mp3dp-v4/sw-klipper-with-canbus.md) doc.
 
 
 #### Pre/Post Print GCODE configuration changes
