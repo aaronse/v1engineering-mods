@@ -281,7 +281,7 @@ Related
 |1    |Pi 4 or at least 3+|Klipper/OctoPi controller|Good luck!|
 |1    |Micro SD||
 |1    |Display|BIGTREETECH TFT35 E3 V3.0.1|[BIQU](https://biqu.equipment/collections/latest-deal/products/btt-tft35-e3-v3-0-display-touch-screen-two-working-modes?variant=40099686318178) – [Amzn](https://www.amazon.com/BIGTREETECH-TFT35-E3-V3-0-1-Motherboard/dp/B08182XHZZ)|
-|1    |Adaptor Board|BigTreeTech EBB 36/42 Can Bus<br/>- [CAN Bus overview by Teaching Tech (YT)](https://www.youtube.com/watch?v=5pLjeQz9pEI) |[BIQU](https://biqu.equipment/products/bigtreetech-ebb-36-42-can-bus-for-connecting-klipper-expansion-device) – 
+|1    |Adaptor Board|BigTreeTech EBB 36/42 Can Bus<br/>[BIQU](https://biqu.equipment/products/bigtreetech-ebb-36-42-can-bus-for-connecting-klipper-expansion-device) – 
 
 [sh3]: https://www.filastruder.com/collections/e3d-hemera/products/e3d-hemera?variant=39486550507591
 [sh10]: https://www.v1e.com/collections/3dprinter-parts/products/mk3-aluminum-heated-bed
@@ -434,18 +434,9 @@ https://github.com/bigtreetech/BIGTREETECH-OCTOPUS-V1.0/blob/master/Hardware/BIG
 
 ## <big>Software</big>
 
-### Klipper
-Related:
-- [2022/8 Chris Riley YT - Klipper, Mainsail, Fluidd - 2022 - Chris's Basement](https://www.youtube.com/watch?v=FjMZzW_WVQ8)
-  - Follow latest docs, or info in this video if they still apply.  In short, you'll...
-    - Use [Pi imager](https://www.raspberrypi.com/software/) to create MainSail flavored Pi OS image (will contain Klipper snapshot).
-    - Boot up and connect to your Pi, called mine _repeat.local_
-    - Configure Klipper, used ```make menuconfig``` and followed some relevant details in Voron [Build Firmware Image](https://docs.vorondesign.com/build/software/octopus_klipper.html#build-firmware-image).
-      - Example Voron Trident Klipper Octopus v1.1 (STM32F446) [printer.cfg](https://github.com/VoronDesign/Voron-Trident/blob/main/Firmware/Octopus/Trident_Octopus_Config.cfg).
-    - Build klipper firmware via ```make klipper```, copy to built klipper.bin to firmware.bin on SD card for Octopus/Controller
-- [2021/10 Steve Builds (Voron Trident creator) - Voron Trident Build Hang out](https://www.youtube.com/live/zXFGQMVvHrs?feature=share)
-  - [31:15](https://www.youtube.com/live/zXFGQMVvHrs?feature=share&t=1875) KlipperScreen setup/config of TFT mounted to Pi.
-- [Klipper Docs - CANBUS](https://www.klipper3d.org/CANBUS.html?h=menuconfig)
+Stock MP3DP v4 builds use Marlin and straight forward separate bundle of wiring from the Controller board, to all the hotend components, e.g. Hot End, extruder, Thermister, Fan(s), BL Touch, etc...  
+
+For my build, am instead going use this opportunity to learn about Klipper and CANBus.  I want to benefit from the kinematic support, and reduce wiring/weight to the hotend.  So, am investing significant additional time and effort into digging into those areas.  Given what's involved am sharing details/notes in a separate [klipper-with-canbus](https://www.github.com/aaronse/v1engineering-mods/mp3dp-v4/sw-klipper-with-canbus.md) doc.
 
 
 #### Pre/Post Print GCODE configuration changes
@@ -515,6 +506,7 @@ Some of the [Community MP3DP Build Logs](https://forum.v1e.com/search?expanded=t
     - [Manta M8P V1.0 (No CAN) U2C and EBB42 and the H2 V2.0](https://forum.v1e.com/t/mp3dp-v4-build-sw-virginia/37238/33?u=azab2c)
     - [BIQU H2 V2.0](https://forum.v1e.com/t/mp3dp-v4-build-sw-virginia/37238/34?u=azab2c)
     - [Manta M8P Klipper config, printer.cfg](https://forum.v1e.com/t/mp3dp-v4-build-sw-virginia/37238/31?u=azab2c)
+    - [Klipper print speed config](https://forum.v1e.com/t/mp3dp-repeat-v3-to-v4-1-upgrade/38096/17?u=azab2c)
     - [Start gcode with prime line, from printer.cfg](https://forum.v1e.com/t/mp3dp-v2-build/31040/127?u=azab2c)
     - [MP3DP Mod - Extruder carrier for H2, 2x 5015 fans, EBB42](https://forum.v1e.com/t/mp3dp-v4-build-sw-virginia/37238/26?u=azab2c)
 - @ niget2002 300mm^3 https://forum.v1e.com/t/not-another-mp3dp-v4/37429 
@@ -608,14 +600,16 @@ C:\git\v1engineering-mods\mp3dp-v4\mods\probrwr-h2-mount\H2 to Hemera Adapter v7
 - CAN Bus controller: EBB 36
 - DIN Rail, bought wago 210-504 from local electrical supplier (Platt Electric Supply), cheaper/faster than online.
   - Solid State Relay (SSR) if using 120vac bed heater.
-
-### NEED TO BUY:
 - M10 PTFE Fittings?  Check stock?
-
-### NEED TO DECIDE, THEN BUY:
 - Heater Bed with Thermistor : 
   - My current Ender 3 Max has 24v 310mm x 320mm, 4mm thick Carborundum Glass, 3mm Alu, 3mm Foam.
-  - Wiring: Same as above.
+- Wiring
+
+### NEED TO BUY:
+- Foam gasket for panels
+- Amass xt60H and/or xt30 connectors for quick release of heater bed (xt60) and CAN BUS (xt30) Power?
+
+### NEED TO DECIDE, THEN BUY:
 - Chamber fan?
 
 ###  Fastener BOM break down:
@@ -722,7 +716,7 @@ C:\Projects(NAS)\Make.V1E_RepeatV2\alt\Assembly_Manual_Trident.pdf
 
 
 
-# Assembly Notes
+# <big>Assembly Notes</big>
 Am following misc v4 forum topics, and MP3DP v3 [assembly docs](https://docs.v1e.com/mp3dp/version3assm/) since v4 docs unavailable.
 
 ## General Notes
@@ -822,12 +816,12 @@ Parts:
 
 - H2 Revo comes with 2x M3x16mm for attaching 35x35x10 Fan to HotEnd body, too short imo.  If using the fan, consider 2x M3x20mm instead. 
 
-# Firmware
+# <big>Firmware</big>
 
 
 https://forum.v1e.com/t/repeat-v2/33330/172?u=azab2c
 
-# Cost
+# <big>Cost</big>
 
 ~$60 TAP Plastics, panels, adhesive
 
@@ -875,10 +869,8 @@ PSU Options
 </span>
 
 
-TODO:
-- Buy solder
 
-FUTURES:
+# <big>Future improvements :</big>
 - Filament run out sensor
 
 
@@ -890,7 +882,7 @@ Parts :
   ![](https://m.media-amazon.com/images/I/61gg+al37kL._SX522_.jpg)
 
 - TODO:  Design Updates
-  - Update Z Post Mod Design
+  - Update Design for my Mod of Z Post
     - Larger hole for idler to fit.
     - Larger hol for spanner around
     - Increase clearance for Stepper bolt 1.5mm near middle T-nut
