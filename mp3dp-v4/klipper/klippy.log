@@ -1,0 +1,2346 @@
+===== Config file =====
+[virtual_sdcard]
+path = ~/printer_data/gcodes
+on_error_gcode = CANCEL_PRINT
+
+[pause_resume]
+
+[display_status]
+
+[gcode_macro CANCEL_PRINT]
+description = Cancel the actual running print
+rename_existing = CANCEL_PRINT_BASE
+gcode = 
+	
+	{% set macro_found = True if printer['gcode_macro _CLIENT_VARIABLE'] is defined else False %}
+	{% set client = printer['gcode_macro _CLIENT_VARIABLE'] %}
+	{% set allow_park = False if not macro_found
+	else False if client.park_at_cancel is not defined
+	else True  if client.park_at_cancel|lower == 'true'
+	else False %}
+	{% set retract = 5.0  if not macro_found else client.cancel_retract|default(5.0)|abs %}
+	
+	{% set park_x = ""                                    if not macro_found
+	else ""                                    if client.park_at_cancel_x is not defined
+	else "X=" + client.park_at_cancel_x|string if client.park_at_cancel_x is not none %}
+	{% set park_y = ""                                    if not macro_found
+	else ""                                    if client.park_at_cancel_y is not defined
+	else "Y=" + client.park_at_cancel_y|string if client.park_at_cancel_y is not none %}
+	{% set custom_park = True if (park_x|length > 0 or park_y|length > 0) else False %}
+	
+	{% if (custom_park or not printer.pause_resume.is_paused) and allow_park %} _TOOLHEAD_PARK_PAUSE_CANCEL {park_x} {park_y} {% endif %}
+	_CLIENT_RETRACT LENGTH={retract}
+	TURN_OFF_HEATERS
+	M106 S0
+	
+	SET_PAUSE_NEXT_LAYER ENABLE=0
+	SET_PAUSE_AT_LAYER ENABLE=0 LAYER=0
+	CANCEL_PRINT_BASE
+
+[gcode_macro PAUSE]
+description = Pause the actual running print
+rename_existing = PAUSE_BASE
+gcode = 
+	SET_GCODE_VARIABLE MACRO=RESUME VARIABLE=last_extruder_temp VALUE="{printer[printer.toolhead.extruder].target}"
+	
+	PAUSE_BASE
+	_TOOLHEAD_PARK_PAUSE_CANCEL {rawparams}
+
+[gcode_macro RESUME]
+description = Resume the actual running print
+rename_existing = RESUME_BASE
+variable_last_extruder_temp = 0
+gcode = 
+	
+	{% set macro_found = True if printer['gcode_macro _CLIENT_VARIABLE'] is defined else False %}
+	{% set client = printer['gcode_macro _CLIENT_VARIABLE'] %}
+	{% set velocity = printer.configfile.settings.pause_resume.recover_velocity %}
+	{% set sp_move        = velocity if not macro_found else client.speed_move|default(velocity) %}
+	
+	M109 S{last_extruder_temp}
+	
+	_CLIENT_EXTRUDE
+	RESUME_BASE VELOCITY={params.VELOCITY|default(sp_move)}
+
+[gcode_macro SET_PAUSE_NEXT_LAYER]
+description = Enable a pause if the next layer is reached
+gcode = 
+	{% set pause_next_layer = printer['gcode_macro SET_PRINT_STATS_INFO'].pause_next_layer %}
+	{% set ENABLE = params.ENABLE | default(1) | int != 0 %}
+	{% set MACRO = params.MACRO | default(pause_next_layer.call, True) %}
+	SET_GCODE_VARIABLE MACRO=SET_PRINT_STATS_INFO VARIABLE=pause_next_layer VALUE="{{ 'enable': ENABLE, 'call': MACRO }}"
+
+[gcode_macro SET_PAUSE_AT_LAYER]
+description = Enable/disable a pause if a given layer number is reached
+gcode = 
+	{% set pause_at_layer = printer['gcode_macro SET_PRINT_STATS_INFO'].pause_at_layer %}
+	{% set ENABLE = params.ENABLE | int != 0 if params.ENABLE is defined
+	else params.LAYER is defined %}
+	{% set LAYER = params.LAYER | default(pause_at_layer.layer) | int %}
+	{% set MACRO = params.MACRO | default(pause_at_layer.call, True) %}
+	SET_GCODE_VARIABLE MACRO=SET_PRINT_STATS_INFO VARIABLE=pause_at_layer VALUE="{{ 'enable': ENABLE, 'layer': LAYER, 'call': MACRO }}"
+
+[gcode_macro SET_PRINT_STATS_INFO]
+rename_existing = SET_PRINT_STATS_INFO_BASE
+description = Overwrite, to get pause_next_layer and pause_at_layer feature
+variable_pause_next_layer = { 'enable': False, 'call': "PAUSE" }
+variable_pause_at_layer = { 'enable': False, 'layer': 0, 'call': "PAUSE" }
+gcode = 
+	{% if pause_next_layer.enable %}
+	{action_respond_info("%s, forced by pause_next_layer" % pause_next_layer.call)}
+	{pause_next_layer.call}
+	SET_PAUSE_NEXT_LAYER ENABLE=0
+	{% elif pause_at_layer.enable and params.CURRENT_LAYER is defined and params.CURRENT_LAYER|int == pause_at_layer.layer %}
+	{action_respond_info("%s, forced by pause_at_layer [%d]" % (pause_at_layer.call, pause_at_layer.layer))}
+	{pause_at_layer.call}
+	SET_PAUSE_AT_LAYER ENABLE=0
+	{% endif %}
+	SET_PRINT_STATS_INFO_BASE {rawparams}
+
+[gcode_macro _TOOLHEAD_PARK_PAUSE_CANCEL]
+description = Helper: park toolhead used in PAUSE and CANCEL_PRINT
+gcode = 
+	
+	{% set macro_found = True if printer['gcode_macro _CLIENT_VARIABLE'] is defined else False %}
+	{% set client = printer['gcode_macro _CLIENT_VARIABLE'] %}
+	{% set velocity = printer.configfile.settings.pause_resume.recover_velocity %}
+	{% set use_custom     = False if not macro_found
+	else False if client.use_custom_pos is not defined
+	else True  if client.use_custom_pos|lower == 'true'
+	else False %}
+	{% set custom_park_x  = 0.0 if not macro_found else client.custom_park_x|default(0.0) %}
+	{% set custom_park_y  = 0.0 if not macro_found else client.custom_park_y|default(0.0) %}
+	{% set park_dz        = 2.0 if not macro_found else client.custom_park_dz|default(2.0)|abs %}
+	{% set sp_hop         = 900  if not macro_found else client.speed_hop|default(15) * 60 %}
+	{% set sp_move        = velocity * 60 if not macro_found else client.speed_move|default(velocity) * 60 %}
+	
+	{% set origin    = printer.gcode_move.homing_origin %}
+	{% set act       = printer.gcode_move.gcode_position %}
+	{% set max       = printer.toolhead.axis_maximum %}
+	{% set cone      = printer.toolhead.cone_start_z|default(max.z) %}
+	{% set round_bed = True if printer.configfile.settings.printer.kinematics is in ['delta','polar','rotary_delta','winch']
+	else False %}
+	
+	{% set z_min = params.Z_MIN|default(0)|float %}
+	{% set z_park = [[(act.z + park_dz), z_min]|max, (max.z - origin.z)]|min %}
+	{% set x_park = params.X       if params.X is defined
+	else custom_park_x  if use_custom
+	else 0.0            if round_bed
+	else (max.x - 5.0) %}
+	{% set y_park = params.Y       if params.Y is defined
+	else custom_park_y  if use_custom
+	else (max.y - 5.0)  if round_bed and z_park < cone
+	else 0.0            if round_bed
+	else (max.y - 5.0) %}
+	
+	_CLIENT_RETRACT
+	{% if "xyz" in printer.toolhead.homed_axes %}
+	G90
+	G1 Z{z_park} F{sp_hop}
+	G1 X{x_park} Y{y_park} F{sp_move}
+	{% if not printer.gcode_move.absolute_coordinates %} G91 {% endif %}
+	{% else %}
+	{action_respond_info("Printer not homed")}
+	{% endif %}
+
+[gcode_macro _CLIENT_EXTRUDE]
+description = Extrudes, if the extruder is hot enough
+gcode = 
+	{% set macro_found = True if printer['gcode_macro _CLIENT_VARIABLE'] is defined else False %}
+	{% set client = printer['gcode_macro _CLIENT_VARIABLE'] %}
+	{% set use_fw_retract = False if not macro_found
+	else False if client.use_fw_retract is not defined
+	else True  if client.use_fw_retract|lower == 'true' and printer.firmware_retraction is defined
+	else False %}
+	
+	{% set length = (params.LENGTH|float) if params.LENGTH is defined
+	else 1.0 if not macro_found
+	else client.unretract|default(1.0) %}
+	
+	{% set speed = params.SPEED if params.SPEED is defined
+	else 35 if not macro_found
+	else client.speed_unretract|default(35) %}
+	
+	{% set absolute_extrude = printer.gcode_move.absolute_extrude %}
+	
+	{% if printer.extruder.can_extrude %}
+	{% if use_fw_retract %}
+	{% if length < 0 %}
+	G10
+	{% else %}
+	G11
+	{% endif %}
+	{% else %}
+	M83
+	G1 E{length} F{(speed|float|abs) * 60}
+	{% if absolute_extrude %}
+	M82
+	{% endif %}
+	{% endif %}
+	{% else %}
+	{action_respond_info("Extruder not hot enough")}
+	{% endif %}
+
+[gcode_macro _CLIENT_RETRACT]
+description = Retracts, if the extruder is hot enough
+gcode = 
+	{% set macro_found = True if printer['gcode_macro _CLIENT_VARIABLE'] is defined else False %}
+	{% set client = printer['gcode_macro _CLIENT_VARIABLE'] %}
+	
+	{% set length = (params.LENGTH|float) if params.LENGTH is defined
+	else 1.0 if not macro_found
+	else client.retract|default(1.0) %}
+	
+	{% set speed = params.SPEED if params.SPEED is defined
+	else 35 if not macro_found
+	else client.speed_retract|default(35) %}
+	
+	_CLIENT_EXTRUDE LENGTH=-{length|float|abs} SPEED={speed|float|abs}
+
+[stepper_x]
+step_pin = PF13
+dir_pin = PF12
+enable_pin = !PF14
+microsteps = 16
+rotation_distance = 40
+endstop_pin = PG6
+position_endstop = 0
+position_max = 200
+homing_speed = 50
+
+[stepper_y]
+step_pin = PG0
+dir_pin = PG1
+enable_pin = !PF15
+microsteps = 16
+rotation_distance = 40
+endstop_pin = PG9
+position_endstop = 0
+position_max = 200
+homing_speed = 50
+
+[stepper_z]
+step_pin = PF11
+dir_pin = PG3
+enable_pin = !PG5
+microsteps = 16
+rotation_distance = 8
+endstop_pin = PG10
+position_endstop = 0.5
+position_max = 200
+
+[extruder]
+step_pin = EBBCan: PD0
+dir_pin = !EBBCan: PD1
+enable_pin = !EBBCan: PD2
+microsteps = 16
+rotation_distance = 3.484
+nozzle_diameter = 0.400
+filament_diameter = 1.750
+heater_pin = EBBCan: PB13
+sensor_type = Generic 3950
+sensor_pin = EBBCan: PA3
+control = pid
+pid_kp = 21.527
+pid_ki = 1.063
+pid_kd = 108.982
+min_temp = 0
+max_temp = 270
+pressure_advance = 0.019
+
+[heater_bed]
+heater_pin = PA1
+sensor_pin = PF3
+max_power = 0.6
+sensor_type = EPCOS 100K B57560G104F
+control = watermark
+min_temp = -100
+max_temp = 999
+
+[fan]
+pin = EBBCan: PA0
+
+[mcu]
+canbus_uuid = 642f53509351
+
+[mcu EBBCan]
+canbus_uuid = 127081e7e3c6
+
+[printer]
+kinematics = cartesian
+max_velocity = 300
+max_accel = 3000
+max_z_velocity = 5
+max_z_accel = 100
+
+[board_pins]
+aliases = 
+	
+	EXP1_1=PE8, EXP1_2=PE7,
+	EXP1_3=PE9, EXP1_4=PE10,
+	EXP1_5=PE12, EXP1_6=PE13,
+	EXP1_7=PE14, EXP1_8=PE15,
+	EXP1_9=<GND>, EXP1_10=<5V>,
+	
+	
+	EXP2_1=PA6, EXP2_2=PA5,
+	EXP2_3=PB1, EXP2_4=PA4,
+	EXP2_5=PB2, EXP2_6=PA7,
+	EXP2_7=PC15, EXP2_8=<RST>,
+	EXP2_9=<GND>, EXP2_10=PC5
+=======================
+Args: ['/home/661wls/klipper/klippy/klippy.py', '/home/661wls/printer_data/config/printer.cfg', '-l', '/home/661wls/printer_data/logs/klippy.log', '-I', '/home/661wls/printer_data/comms/klippy.serial', '-a', '/home/661wls/printer_data/comms/klippy.sock']
+Git version: 'v0.11.0-200-g7511151a'
+Branch: master
+Remote: origin
+Tracked URL: https://github.com/Klipper3d/klipper.git
+CPU: 4 core ?
+Python: '3.9.2 (default, Mar 12 2021, 04:06:34) \n[GCC 10.2.1 20210110]'
+webhooks client 4120965760: {'program': 'Moonraker', 'version': 'v0.8.0-40-gb21f177'}
+=============== Log rollover at Wed May 17 08:52:13 2023 ===============
+mcu 'EBBCan': Timeout on connect
+Created a socket
+mcu 'EBBCan': Wait for identify_response
+Traceback (most recent call last):
+  File "/home/661wls/klipper/klippy/serialhdl.py", line 68, in _get_identify_data
+    params = self.send_with_response(msg, 'identify_response')
+  File "/home/661wls/klipper/klippy/serialhdl.py", line 261, in send_with_response
+    return src.get_response([cmd], self.default_cmd_queue)
+  File "/home/661wls/klipper/klippy/serialhdl.py", line 318, in get_response
+    self.serial.raw_send_wait_ack(cmds[-1], minclock, reqclock,
+  File "/home/661wls/klipper/klippy/serialhdl.py", line 253, in raw_send_wait_ack
+    self._error("Serial connection closed")
+  File "/home/661wls/klipper/klippy/serialhdl.py", line 61, in _error
+    raise error(self.warn_prefix + (msg % params))
+serialhdl.error: mcu 'EBBCan': Serial connection closed
+mcu 'EBBCan': Timeout on connect
+Created a socket
+mcu 'EBBCan': Wait for identify_response
+Traceback (most recent call last):
+  File "/home/661wls/klipper/klippy/serialhdl.py", line 68, in _get_identify_data
+    params = self.send_with_response(msg, 'identify_response')
+  File "/home/661wls/klipper/klippy/serialhdl.py", line 261, in send_with_response
+    return src.get_response([cmd], self.default_cmd_queue)
+  File "/home/661wls/klipper/klippy/serialhdl.py", line 318, in get_response
+    self.serial.raw_send_wait_ack(cmds[-1], minclock, reqclock,
+  File "/home/661wls/klipper/klippy/serialhdl.py", line 253, in raw_send_wait_ack
+    self._error("Serial connection closed")
+  File "/home/661wls/klipper/klippy/serialhdl.py", line 61, in _error
+    raise error(self.warn_prefix + (msg % params))
+serialhdl.error: mcu 'EBBCan': Serial connection closed
+mcu 'EBBCan': Timeout on connect
+Created a socket
+mcu 'EBBCan': Wait for identify_response
+Traceback (most recent call last):
+  File "/home/661wls/klipper/klippy/serialhdl.py", line 68, in _get_identify_data
+    params = self.send_with_response(msg, 'identify_response')
+  File "/home/661wls/klipper/klippy/serialhdl.py", line 261, in send_with_response
+    return src.get_response([cmd], self.default_cmd_queue)
+  File "/home/661wls/klipper/klippy/serialhdl.py", line 318, in get_response
+    self.serial.raw_send_wait_ack(cmds[-1], minclock, reqclock,
+  File "/home/661wls/klipper/klippy/serialhdl.py", line 253, in raw_send_wait_ack
+    self._error("Serial connection closed")
+  File "/home/661wls/klipper/klippy/serialhdl.py", line 61, in _error
+    raise error(self.warn_prefix + (msg % params))
+serialhdl.error: mcu 'EBBCan': Serial connection closed
+mcu 'EBBCan': Timeout on connect
+Created a socket
+mcu 'EBBCan': Wait for identify_response
+Traceback (most recent call last):
+  File "/home/661wls/klipper/klippy/serialhdl.py", line 68, in _get_identify_data
+    params = self.send_with_response(msg, 'identify_response')
+  File "/home/661wls/klipper/klippy/serialhdl.py", line 261, in send_with_response
+    return src.get_response([cmd], self.default_cmd_queue)
+  File "/home/661wls/klipper/klippy/serialhdl.py", line 318, in get_response
+    self.serial.raw_send_wait_ack(cmds[-1], minclock, reqclock,
+  File "/home/661wls/klipper/klippy/serialhdl.py", line 253, in raw_send_wait_ack
+    self._error("Serial connection closed")
+  File "/home/661wls/klipper/klippy/serialhdl.py", line 61, in _error
+    raise error(self.warn_prefix + (msg % params))
+serialhdl.error: mcu 'EBBCan': Serial connection closed
+mcu 'EBBCan': Timeout on connect
+Created a socket
+mcu 'EBBCan': Wait for identify_response
+Traceback (most recent call last):
+  File "/home/661wls/klipper/klippy/serialhdl.py", line 68, in _get_identify_data
+    params = self.send_with_response(msg, 'identify_response')
+  File "/home/661wls/klipper/klippy/serialhdl.py", line 261, in send_with_response
+    return src.get_response([cmd], self.default_cmd_queue)
+  File "/home/661wls/klipper/klippy/serialhdl.py", line 318, in get_response
+    self.serial.raw_send_wait_ack(cmds[-1], minclock, reqclock,
+  File "/home/661wls/klipper/klippy/serialhdl.py", line 253, in raw_send_wait_ack
+    self._error("Serial connection closed")
+  File "/home/661wls/klipper/klippy/serialhdl.py", line 61, in _error
+    raise error(self.warn_prefix + (msg % params))
+serialhdl.error: mcu 'EBBCan': Serial connection closed
+mcu 'EBBCan': Timeout on connect
+Created a socket
+mcu 'EBBCan': Wait for identify_response
+Traceback (most recent call last):
+  File "/home/661wls/klipper/klippy/serialhdl.py", line 68, in _get_identify_data
+    params = self.send_with_response(msg, 'identify_response')
+  File "/home/661wls/klipper/klippy/serialhdl.py", line 261, in send_with_response
+    return src.get_response([cmd], self.default_cmd_queue)
+  File "/home/661wls/klipper/klippy/serialhdl.py", line 318, in get_response
+    self.serial.raw_send_wait_ack(cmds[-1], minclock, reqclock,
+  File "/home/661wls/klipper/klippy/serialhdl.py", line 253, in raw_send_wait_ack
+    self._error("Serial connection closed")
+  File "/home/661wls/klipper/klippy/serialhdl.py", line 61, in _error
+    raise error(self.warn_prefix + (msg % params))
+serialhdl.error: mcu 'EBBCan': Serial connection closed
+mcu 'EBBCan': Timeout on connect
+Created a socket
+mcu 'EBBCan': Wait for identify_response
+Traceback (most recent call last):
+  File "/home/661wls/klipper/klippy/serialhdl.py", line 68, in _get_identify_data
+    params = self.send_with_response(msg, 'identify_response')
+  File "/home/661wls/klipper/klippy/serialhdl.py", line 261, in send_with_response
+    return src.get_response([cmd], self.default_cmd_queue)
+  File "/home/661wls/klipper/klippy/serialhdl.py", line 318, in get_response
+    self.serial.raw_send_wait_ack(cmds[-1], minclock, reqclock,
+  File "/home/661wls/klipper/klippy/serialhdl.py", line 253, in raw_send_wait_ack
+    self._error("Serial connection closed")
+  File "/home/661wls/klipper/klippy/serialhdl.py", line 61, in _error
+    raise error(self.warn_prefix + (msg % params))
+serialhdl.error: mcu 'EBBCan': Serial connection closed
+mcu 'EBBCan': Timeout on connect
+Created a socket
+mcu 'EBBCan': Unable to open CAN port: Failed to transmit: [Errno 105] No buffer space available
+mcu 'EBBCan': Wait for identify_response
+Traceback (most recent call last):
+  File "/home/661wls/klipper/klippy/serialhdl.py", line 68, in _get_identify_data
+    params = self.send_with_response(msg, 'identify_response')
+  File "/home/661wls/klipper/klippy/serialhdl.py", line 261, in send_with_response
+    return src.get_response([cmd], self.default_cmd_queue)
+  File "/home/661wls/klipper/klippy/serialhdl.py", line 318, in get_response
+    self.serial.raw_send_wait_ack(cmds[-1], minclock, reqclock,
+  File "/home/661wls/klipper/klippy/serialhdl.py", line 253, in raw_send_wait_ack
+    self._error("Serial connection closed")
+  File "/home/661wls/klipper/klippy/serialhdl.py", line 61, in _error
+    raise error(self.warn_prefix + (msg % params))
+serialhdl.error: mcu 'EBBCan': Serial connection closed
+b'Got error -1 in can write: (105)No buffer space available'
+Created a socket
+mcu 'EBBCan': Unable to open CAN port: Failed to transmit: [Errno 105] No buffer space available
+b'Got error -1 in can write: (105)No buffer space available'
+Created a socket
+mcu 'EBBCan': Unable to open CAN port: Failed to transmit: [Errno 105] No buffer space available
+b'Got error -1 in can write: (105)No buffer space available'
+Created a socket
+mcu 'EBBCan': Unable to open CAN port: Failed to transmit: [Errno 105] No buffer space available
+b'Got error -1 in can write: (105)No buffer space available'
+Created a socket
+mcu 'EBBCan': Unable to open CAN port: Failed to transmit: [Errno 105] No buffer space available
+b'Got error -1 in can write: (105)No buffer space available'
+Created a socket
+mcu 'EBBCan': Unable to open CAN port: Failed to transmit: [Errno 105] No buffer space available
+b'Got error -1 in can write: (105)No buffer space available'
+Created a socket
+mcu 'EBBCan': Unable to open CAN port: Failed to transmit: [Errno 105] No buffer space available
+b'Got error -1 in can write: (105)No buffer space available'
+Created a socket
+mcu 'EBBCan': Unable to open CAN port: Failed to transmit: [Errno 105] No buffer space available
+b'Got error -1 in can write: (105)No buffer space available'
+MCU error during connect
+Traceback (most recent call last):
+  File "/home/661wls/klipper/klippy/mcu.py", line 792, in _mcu_identify
+    self._serial.connect_canbus(self._serialport, nodeid,
+  File "/home/661wls/klipper/klippy/serialhdl.py", line 133, in connect_canbus
+    self._error("Unable to connect")
+  File "/home/661wls/klipper/klippy/serialhdl.py", line 61, in _error
+    raise error(self.warn_prefix + (msg % params))
+serialhdl.error: mcu 'EBBCan': Unable to connect
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/home/661wls/klipper/klippy/klippy.py", line 176, in _connect
+    self.send_event("klippy:mcu_identify")
+  File "/home/661wls/klipper/klippy/klippy.py", line 263, in send_event
+    return [cb(*params) for cb in self.event_handlers.get(event, [])]
+  File "/home/661wls/klipper/klippy/klippy.py", line 263, in <listcomp>
+    return [cb(*params) for cb in self.event_handlers.get(event, [])]
+  File "/home/661wls/klipper/klippy/mcu.py", line 803, in _mcu_identify
+    raise error(str(e))
+mcu.error: mcu 'EBBCan': Unable to connect
+Build file /home/661wls/klipper/klippy/../.config(3528): Mon May 15 01:22:28 2023
+========= Last MCU build config =========
+CONFIG_LOW_LEVEL_OPTIONS=y
+# CONFIG_MACH_AVR is not set
+# CONFIG_MACH_ATSAM is not set
+# CONFIG_MACH_ATSAMD is not set
+# CONFIG_MACH_LPC176X is not set
+CONFIG_MACH_STM32=y
+# CONFIG_MACH_HC32F460 is not set
+# CONFIG_MACH_RP2040 is not set
+# CONFIG_MACH_PRU is not set
+# CONFIG_MACH_AR100 is not set
+# CONFIG_MACH_LINUX is not set
+# CONFIG_MACH_SIMU is not set
+CONFIG_BOARD_DIRECTORY="stm32"
+CONFIG_MCU="stm32f446xx"
+CONFIG_CLOCK_FREQ=180000000
+CONFIG_FLASH_SIZE=0x80000
+CONFIG_FLASH_BOOT_ADDRESS=0x8000000
+CONFIG_RAM_START=0x20000000
+CONFIG_RAM_SIZE=0x20000
+CONFIG_STACK_SIZE=512
+CONFIG_FLASH_APPLICATION_ADDRESS=0x8008000
+CONFIG_STM32_SELECT=y
+# CONFIG_MACH_STM32F103 is not set
+# CONFIG_MACH_STM32F207 is not set
+# CONFIG_MACH_STM32F401 is not set
+# CONFIG_MACH_STM32F405 is not set
+# CONFIG_MACH_STM32F407 is not set
+# CONFIG_MACH_STM32F429 is not set
+CONFIG_MACH_STM32F446=y
+# CONFIG_MACH_STM32F765 is not set
+# CONFIG_MACH_STM32F031 is not set
+# CONFIG_MACH_STM32F042 is not set
+# CONFIG_MACH_STM32F070 is not set
+# CONFIG_MACH_STM32F072 is not set
+# CONFIG_MACH_STM32G070 is not set
+# CONFIG_MACH_STM32G071 is not set
+# CONFIG_MACH_STM32G0B0 is not set
+# CONFIG_MACH_STM32G0B1 is not set
+# CONFIG_MACH_STM32G431 is not set
+# CONFIG_MACH_STM32H723 is not set
+# CONFIG_MACH_STM32H743 is not set
+# CONFIG_MACH_STM32H750 is not set
+# CONFIG_MACH_STM32L412 is not set
+# CONFIG_MACH_N32G452 is not set
+# CONFIG_MACH_N32G455 is not set
+CONFIG_MACH_STM32F4=y
+CONFIG_HAVE_STM32_USBOTG=y
+CONFIG_HAVE_STM32_CANBUS=y
+CONFIG_HAVE_STM32_USBCANBUS=y
+CONFIG_STM32_DFU_ROM_ADDRESS=0x1fff0000
+CONFIG_STM32_FLASH_START_8000=y
+# CONFIG_STM32_FLASH_START_10000 is not set
+# CONFIG_STM32_FLASH_START_0000 is not set
+# CONFIG_STM32_CLOCK_REF_8M is not set
+CONFIG_STM32_CLOCK_REF_12M=y
+# CONFIG_STM32_CLOCK_REF_16M is not set
+# CONFIG_STM32_CLOCK_REF_20M is not set
+# CONFIG_STM32_CLOCK_REF_24M is not set
+# CONFIG_STM32_CLOCK_REF_25M is not set
+# CONFIG_STM32_CLOCK_REF_INTERNAL is not set
+CONFIG_CLOCK_REF_FREQ=12000000
+CONFIG_STM32F0_TRIM=16
+# CONFIG_STM32_USB_PA11_PA12 is not set
+# CONFIG_STM32_SERIAL_USART1 is not set
+# CONFIG_STM32_SERIAL_USART1_ALT_PB7_PB6 is not set
+# CONFIG_STM32_SERIAL_USART2 is not set
+# CONFIG_STM32_SERIAL_USART2_ALT_PD6_PD5 is not set
+# CONFIG_STM32_SERIAL_USART3 is not set
+# CONFIG_STM32_SERIAL_USART3_ALT_PD9_PD8 is not set
+# CONFIG_STM32_CANBUS_PA11_PA12 is not set
+# CONFIG_STM32_CANBUS_PA11_PB9 is not set
+# CONFIG_STM32_MMENU_CANBUS_PB8_PB9 is not set
+# CONFIG_STM32_MMENU_CANBUS_PI9_PH13 is not set
+# CONFIG_STM32_MMENU_CANBUS_PB5_PB6 is not set
+# CONFIG_STM32_MMENU_CANBUS_PB12_PB13 is not set
+# CONFIG_STM32_MMENU_CANBUS_PD0_PD1 is not set
+CONFIG_STM32_USBCANBUS_PA11_PA12=y
+# CONFIG_STM32_CMENU_CANBUS_PB8_PB9 is not set
+# CONFIG_STM32_CMENU_CANBUS_PI9_PH13 is not set
+# CONFIG_STM32_CMENU_CANBUS_PB5_PB6 is not set
+# CONFIG_STM32_CMENU_CANBUS_PB12_PB13 is not set
+CONFIG_STM32_CMENU_CANBUS_PD0_PD1=y
+CONFIG_STM32_CANBUS_PD0_PD1=y
+CONFIG_USBCANBUS=y
+CONFIG_USB=y
+CONFIG_USB_VENDOR_ID=0x1d50
+CONFIG_USB_DEVICE_ID=0x614e
+CONFIG_USB_SERIAL_NUMBER_CHIPID=y
+CONFIG_USB_SERIAL_NUMBER="12345"
+
+#
+# USB ids
+#
+# end of USB ids
+
+CONFIG_CANBUS=y
+CONFIG_CANBUS_FREQUENCY=500000
+CONFIG_INITIAL_PINS=""
+CONFIG_HAVE_GPIO=y
+CONFIG_HAVE_GPIO_ADC=y
+CONFIG_HAVE_GPIO_SPI=y
+CONFIG_HAVE_GPIO_SDIO=y
+CONFIG_HAVE_GPIO_I2C=y
+CONFIG_HAVE_GPIO_HARD_PWM=y
+CONFIG_HAVE_GPIO_BITBANGING=y
+CONFIG_HAVE_STRICT_TIMING=y
+CONFIG_HAVE_CHIPID=y
+CONFIG_HAVE_STEPPER_BOTH_EDGE=y
+CONFIG_HAVE_BOOTLOADER_REQUEST=y
+CONFIG_INLINE_STEPPER_HACK=y
+=======================
+Build file /home/661wls/klipper/klippy/../out/klipper.dict(8576): Mon May 15 12:08:38 2023
+Last MCU build version: v0.11.0-200-g7511151a
+Last MCU build tools: gcc: (15:8-2019-q3-1+b1) 8.3.1 20190703 (release) [gcc-8-branch revision 273027] binutils: (2.34-4+rpi1+14) 2.34
+Last MCU build config: ADC_MAX=4095 BUS_PINS_i2c1=PB6,PB7 BUS_PINS_i2c1a=PB8,PB9 BUS_PINS_i2c2=PB10,PB11 BUS_PINS_i2c3=PA8,PC9 BUS_PINS_sdio=PC12,PD2,PC8,PC9,PC10,PC11 BUS_PINS_spi1=PA6,PA7,PA5 BUS_PINS_spi1a=PB4,PB5,PB3 BUS_PINS_spi2=PB14,PB15,PB13 BUS_PINS_spi2a=PC2,PC3,PB10 BUS_PINS_spi3=PB4,PB5,PB3 BUS_PINS_spi3a=PC11,PC12,PC10 BUS_PINS_spi4=PE13,PE14,PE12 CANBUS_BRIDGE=1 CLOCK_FREQ=180000000 MCU=stm32f446xx PWM_MAX=255 RECEIVE_WINDOW=192 RESERVE_PINS_CAN=PD0,PD1 RESERVE_PINS_USB=PA11,PA12 RESERVE_PINS_crystal=PH0,PH1 STATS_SUMSQ_BASE=256 STEPPER_BOTH_EDGE=1
+Build file /home/661wls/klipper/klippy/../out/klipper.elf(1313788): Mon May 15 12:09:04 2023
+b'Got error -1 in can write: (105)No buffer space available'
+b'Got error -1 in can write: (105)No buffer space available'
+b'Got error -1 in can write: (105)No buffer space available'
+b'Got error -1 in can write: (105)No buffer space available'
+b'Got error -1 in can write: (105)No buffer space available'
+b'Got error -1 in can write: (105)No buffer space available'
+b'Got error -1 in can write: (105)No buffer space available'
+b'Got error -1 in can write: (105)No buffer space available'
+b'Got error -1 in can write: (105)No buffer space available'
+b'Got error -1 in can write: (105)No buffer space available'
+b'Got error -1 in can write: (105)No buffer space available'
+b'Got error -1 in can write: (105)No buffer space available'
+b'Got error -1 in can write: (105)No buffer space available'
+b'Got error -1 in can write: (105)No buffer space available'
+b'Got error -1 in can write: (105)No buffer space available'
+b'Got error -1 in can write: (105)No buffer space available'
+b'Got error -1 in can write: (105)No buffer space available'
+b'Got error -1 in can write: (105)No buffer space available'
+b'Got error -1 in can write: (105)No buffer space available'
+b'Got error -1 in can write: (105)No buffer space available'
+b'Got error -1 in can write: (105)No buffer space available'
+b'Got error -1 in can write: (105)No buffer space available'
+b'Got error -1 in can write: (105)No buffer space available'
+b'Got error -1 in can write: (105)No buffer space available'
+b'Got error -1 in can write: (105)No buffer space available'
+b'Got error -1 in can write: (105)No buffer space available'
+b'Got error -1 in can write: (105)No buffer space available'
+b'Got error -1 in can write: (105)No buffer space available'
+b'Got error -1 in can write: (105)No buffer space available'
+b'Got error -1 in can write: (105)No buffer space available'
+b'Got error -1 in can write: (105)No buffer space available'
+b'Got error -1 in can write: (105)No buffer space available'
+b'Got error -1 in can write: (105)No buffer space available'
+b'Got error -1 in can write: (105)No buffer space available'
+b'Got error -1 in can write: (105)No buffer space available'
+b'Got error -1 in can write: (105)No buffer space available'
+b'Got error -1 in can write: (105)No buffer space available'
+b'Got error -1 in can write: (105)No buffer space available'
+b'Got error -1 in can write: (105)No buffer space available'
+b'Got error -1 in can write: (105)No buffer space available'
+b'Got error -1 in can write: (105)No buffer space available'
+b'Got error -1 in can write: (105)No buffer space available'
+b'Got error -1 in can write: (105)No buffer space available'
+b'Got error -1 in can write: (105)No buffer space available'
+b'Got error -1 in can write: (105)No buffer space available'
+b'Got error -1 in can write: (105)No buffer space available'
+b'Got error -1 in can write: (105)No buffer space available'
+b'Got error -1 in can write: (105)No buffer space available'
+b'Got error -1 in can write: (105)No buffer space available'
+b'Got error -1 in can write: (105)No buffer space available'
+b'Got error -1 in can write: (105)No buffer space available'
+b'Got error -1 in can write: (105)No buffer space available'
+b'Got error -1 in can write: (105)No buffer space available'
+b'Got error -1 in can write: (105)No buffer space available'
+b'Got error -1 in can write: (105)No buffer space available'
+b'Got error -1 in can write: (105)No buffer space available'
+b'Got error -1 in can write: (105)No buffer space available'
+b'Got error -1 in can write: (105)No buffer space available'
+b'Got error -1 in can write: (105)No buffer space available'
+b'Got error -1 in can write: (105)No buffer space available'
+b'Got error -1 in can write: (105)No buffer space available'
+b'Got error -1 in can write: (105)No buffer space available'
+b'Got error -1 in can write: (105)No buffer space available'
+b'Got error -1 in can write: (105)No buffer space available'
+b'Got error -1 in can write: (105)No buffer space available'
+b'Got error -1 in can write: (105)No buffer space available'
+b'Got error -1 in can write: (105)No buffer space available'
+b'Got error -1 in can write: (105)No buffer space available'
+b'Got error -1 in can write: (105)No buffer space available'
+b'Got error -1 in can write: (105)No buffer space available'
+b'Got error -1 in can write: (105)No buffer space available'
+b'Got error -1 in can write: (105)No buffer space available'
+b'Got error -1 in can write: (105)No buffer space available'
+b'Got error -1 in can write: (105)No buffer space available'
+b'Got error -1 in can write: (105)No buffer space available'
+b'Got error -1 in can write: (105)No buffer space available'
+b'Got error -1 in can write: (105)No buffer space available'
+b'Got error -1 in can write: (105)No buffer space available'
+b'Got error -1 in can write: (105)No buffer space available'
+b'Got error -1 in can write: (105)No buffer space available'
+b'Got error -1 in can write: (105)No buffer space available'
+b'Got error -1 in can write: (105)No buffer space available'
+b'Got error -1 in can write: (105)No buffer space available'
+b'Got error -1 in can write: (105)No buffer space available'
+b'Got error -1 in can write: (105)No buffer space available'
+b'Got error -1 in can write: (105)No buffer space available'
+b'Got error -1 in can write: (105)No buffer space available'
+b'Got error -1 in can write: (105)No buffer space available'
+b'Got error -1 in can write: (105)No buffer space available'
+b'Got error -1 in can write: (105)No buffer space available'
+b'Got error -1 in can write: (105)No buffer space available'
+b'Got error -1 in can write: (105)No buffer space available'
+b'Got error -1 in can write: (105)No buffer space available'
+b'Got error -1 in can write: (105)No buffer space available'
+b'Got error -1 in can write: (105)No buffer space available'
+b'Got error -1 in can write: (105)No buffer space available'
+b'Got error -1 in can write: (105)No buffer space available'
+b'Got error -1 in can write: (105)No buffer space available'
+b'Got error -1 in can write: (105)No buffer space available'
+b'Got error -1 in can write: (105)No buffer space available'
+b'Got error -1 in can write: (105)No buffer space available'
+b'Got error -1 in can write: (105)No buffer space available'
+b'Got error -1 in can write: (105)No buffer space available'
+b'Got error -1 in can write: (105)No buffer space available'
+b'Got error -1 in can write: (105)No buffer space available'
+b'Got error -1 in can write: (105)No buffer space available'
+b'Got error -1 in can write: (105)No buffer space available'
+b'Got error -1 in can write: (105)No buffer space available'
+b'Got error -1 in can write: (105)No buffer space available'
+b'Got error -1 in can write: (105)No buffer space available'
+b'Got error -1 in can write: (105)No buffer space available'
+b'Got error -1 in can write: (105)No buffer space available'
+b'Got error -1 in can write: (105)No buffer space available'
+b'Got error -1 in can read: (100)Network is down'
+Unable to issue reset command on MCU 'EBBCan'
+Unable to issue reset command on MCU 'mcu'
+webhooks client 4120965760: Disconnected
+Restarting printer
+Start printer at Wed May 17 09:21:20 2023 (1684340480.8 1794.2)
+===== Config file =====
+[virtual_sdcard]
+path = ~/printer_data/gcodes
+on_error_gcode = CANCEL_PRINT
+
+[pause_resume]
+
+[display_status]
+
+[gcode_macro CANCEL_PRINT]
+description = Cancel the actual running print
+rename_existing = CANCEL_PRINT_BASE
+gcode = 
+	
+	{% set macro_found = True if printer['gcode_macro _CLIENT_VARIABLE'] is defined else False %}
+	{% set client = printer['gcode_macro _CLIENT_VARIABLE'] %}
+	{% set allow_park = False if not macro_found
+	else False if client.park_at_cancel is not defined
+	else True  if client.park_at_cancel|lower == 'true'
+	else False %}
+	{% set retract = 5.0  if not macro_found else client.cancel_retract|default(5.0)|abs %}
+	
+	{% set park_x = ""                                    if not macro_found
+	else ""                                    if client.park_at_cancel_x is not defined
+	else "X=" + client.park_at_cancel_x|string if client.park_at_cancel_x is not none %}
+	{% set park_y = ""                                    if not macro_found
+	else ""                                    if client.park_at_cancel_y is not defined
+	else "Y=" + client.park_at_cancel_y|string if client.park_at_cancel_y is not none %}
+	{% set custom_park = True if (park_x|length > 0 or park_y|length > 0) else False %}
+	
+	{% if (custom_park or not printer.pause_resume.is_paused) and allow_park %} _TOOLHEAD_PARK_PAUSE_CANCEL {park_x} {park_y} {% endif %}
+	_CLIENT_RETRACT LENGTH={retract}
+	TURN_OFF_HEATERS
+	M106 S0
+	
+	SET_PAUSE_NEXT_LAYER ENABLE=0
+	SET_PAUSE_AT_LAYER ENABLE=0 LAYER=0
+	CANCEL_PRINT_BASE
+
+[gcode_macro PAUSE]
+description = Pause the actual running print
+rename_existing = PAUSE_BASE
+gcode = 
+	SET_GCODE_VARIABLE MACRO=RESUME VARIABLE=last_extruder_temp VALUE="{printer[printer.toolhead.extruder].target}"
+	
+	PAUSE_BASE
+	_TOOLHEAD_PARK_PAUSE_CANCEL {rawparams}
+
+[gcode_macro RESUME]
+description = Resume the actual running print
+rename_existing = RESUME_BASE
+variable_last_extruder_temp = 0
+gcode = 
+	
+	{% set macro_found = True if printer['gcode_macro _CLIENT_VARIABLE'] is defined else False %}
+	{% set client = printer['gcode_macro _CLIENT_VARIABLE'] %}
+	{% set velocity = printer.configfile.settings.pause_resume.recover_velocity %}
+	{% set sp_move        = velocity if not macro_found else client.speed_move|default(velocity) %}
+	
+	M109 S{last_extruder_temp}
+	
+	_CLIENT_EXTRUDE
+	RESUME_BASE VELOCITY={params.VELOCITY|default(sp_move)}
+
+[gcode_macro SET_PAUSE_NEXT_LAYER]
+description = Enable a pause if the next layer is reached
+gcode = 
+	{% set pause_next_layer = printer['gcode_macro SET_PRINT_STATS_INFO'].pause_next_layer %}
+	{% set ENABLE = params.ENABLE | default(1) | int != 0 %}
+	{% set MACRO = params.MACRO | default(pause_next_layer.call, True) %}
+	SET_GCODE_VARIABLE MACRO=SET_PRINT_STATS_INFO VARIABLE=pause_next_layer VALUE="{{ 'enable': ENABLE, 'call': MACRO }}"
+
+[gcode_macro SET_PAUSE_AT_LAYER]
+description = Enable/disable a pause if a given layer number is reached
+gcode = 
+	{% set pause_at_layer = printer['gcode_macro SET_PRINT_STATS_INFO'].pause_at_layer %}
+	{% set ENABLE = params.ENABLE | int != 0 if params.ENABLE is defined
+	else params.LAYER is defined %}
+	{% set LAYER = params.LAYER | default(pause_at_layer.layer) | int %}
+	{% set MACRO = params.MACRO | default(pause_at_layer.call, True) %}
+	SET_GCODE_VARIABLE MACRO=SET_PRINT_STATS_INFO VARIABLE=pause_at_layer VALUE="{{ 'enable': ENABLE, 'layer': LAYER, 'call': MACRO }}"
+
+[gcode_macro SET_PRINT_STATS_INFO]
+rename_existing = SET_PRINT_STATS_INFO_BASE
+description = Overwrite, to get pause_next_layer and pause_at_layer feature
+variable_pause_next_layer = { 'enable': False, 'call': "PAUSE" }
+variable_pause_at_layer = { 'enable': False, 'layer': 0, 'call': "PAUSE" }
+gcode = 
+	{% if pause_next_layer.enable %}
+	{action_respond_info("%s, forced by pause_next_layer" % pause_next_layer.call)}
+	{pause_next_layer.call}
+	SET_PAUSE_NEXT_LAYER ENABLE=0
+	{% elif pause_at_layer.enable and params.CURRENT_LAYER is defined and params.CURRENT_LAYER|int == pause_at_layer.layer %}
+	{action_respond_info("%s, forced by pause_at_layer [%d]" % (pause_at_layer.call, pause_at_layer.layer))}
+	{pause_at_layer.call}
+	SET_PAUSE_AT_LAYER ENABLE=0
+	{% endif %}
+	SET_PRINT_STATS_INFO_BASE {rawparams}
+
+[gcode_macro _TOOLHEAD_PARK_PAUSE_CANCEL]
+description = Helper: park toolhead used in PAUSE and CANCEL_PRINT
+gcode = 
+	
+	{% set macro_found = True if printer['gcode_macro _CLIENT_VARIABLE'] is defined else False %}
+	{% set client = printer['gcode_macro _CLIENT_VARIABLE'] %}
+	{% set velocity = printer.configfile.settings.pause_resume.recover_velocity %}
+	{% set use_custom     = False if not macro_found
+	else False if client.use_custom_pos is not defined
+	else True  if client.use_custom_pos|lower == 'true'
+	else False %}
+	{% set custom_park_x  = 0.0 if not macro_found else client.custom_park_x|default(0.0) %}
+	{% set custom_park_y  = 0.0 if not macro_found else client.custom_park_y|default(0.0) %}
+	{% set park_dz        = 2.0 if not macro_found else client.custom_park_dz|default(2.0)|abs %}
+	{% set sp_hop         = 900  if not macro_found else client.speed_hop|default(15) * 60 %}
+	{% set sp_move        = velocity * 60 if not macro_found else client.speed_move|default(velocity) * 60 %}
+	
+	{% set origin    = printer.gcode_move.homing_origin %}
+	{% set act       = printer.gcode_move.gcode_position %}
+	{% set max       = printer.toolhead.axis_maximum %}
+	{% set cone      = printer.toolhead.cone_start_z|default(max.z) %}
+	{% set round_bed = True if printer.configfile.settings.printer.kinematics is in ['delta','polar','rotary_delta','winch']
+	else False %}
+	
+	{% set z_min = params.Z_MIN|default(0)|float %}
+	{% set z_park = [[(act.z + park_dz), z_min]|max, (max.z - origin.z)]|min %}
+	{% set x_park = params.X       if params.X is defined
+	else custom_park_x  if use_custom
+	else 0.0            if round_bed
+	else (max.x - 5.0) %}
+	{% set y_park = params.Y       if params.Y is defined
+	else custom_park_y  if use_custom
+	else (max.y - 5.0)  if round_bed and z_park < cone
+	else 0.0            if round_bed
+	else (max.y - 5.0) %}
+	
+	_CLIENT_RETRACT
+	{% if "xyz" in printer.toolhead.homed_axes %}
+	G90
+	G1 Z{z_park} F{sp_hop}
+	G1 X{x_park} Y{y_park} F{sp_move}
+	{% if not printer.gcode_move.absolute_coordinates %} G91 {% endif %}
+	{% else %}
+	{action_respond_info("Printer not homed")}
+	{% endif %}
+
+[gcode_macro _CLIENT_EXTRUDE]
+description = Extrudes, if the extruder is hot enough
+gcode = 
+	{% set macro_found = True if printer['gcode_macro _CLIENT_VARIABLE'] is defined else False %}
+	{% set client = printer['gcode_macro _CLIENT_VARIABLE'] %}
+	{% set use_fw_retract = False if not macro_found
+	else False if client.use_fw_retract is not defined
+	else True  if client.use_fw_retract|lower == 'true' and printer.firmware_retraction is defined
+	else False %}
+	
+	{% set length = (params.LENGTH|float) if params.LENGTH is defined
+	else 1.0 if not macro_found
+	else client.unretract|default(1.0) %}
+	
+	{% set speed = params.SPEED if params.SPEED is defined
+	else 35 if not macro_found
+	else client.speed_unretract|default(35) %}
+	
+	{% set absolute_extrude = printer.gcode_move.absolute_extrude %}
+	
+	{% if printer.extruder.can_extrude %}
+	{% if use_fw_retract %}
+	{% if length < 0 %}
+	G10
+	{% else %}
+	G11
+	{% endif %}
+	{% else %}
+	M83
+	G1 E{length} F{(speed|float|abs) * 60}
+	{% if absolute_extrude %}
+	M82
+	{% endif %}
+	{% endif %}
+	{% else %}
+	{action_respond_info("Extruder not hot enough")}
+	{% endif %}
+
+[gcode_macro _CLIENT_RETRACT]
+description = Retracts, if the extruder is hot enough
+gcode = 
+	{% set macro_found = True if printer['gcode_macro _CLIENT_VARIABLE'] is defined else False %}
+	{% set client = printer['gcode_macro _CLIENT_VARIABLE'] %}
+	
+	{% set length = (params.LENGTH|float) if params.LENGTH is defined
+	else 1.0 if not macro_found
+	else client.retract|default(1.0) %}
+	
+	{% set speed = params.SPEED if params.SPEED is defined
+	else 35 if not macro_found
+	else client.speed_retract|default(35) %}
+	
+	_CLIENT_EXTRUDE LENGTH=-{length|float|abs} SPEED={speed|float|abs}
+
+[stepper_x]
+step_pin = PF13
+dir_pin = PF12
+enable_pin = !PF14
+microsteps = 16
+rotation_distance = 40
+endstop_pin = PG6
+position_endstop = 0
+position_max = 200
+homing_speed = 50
+
+[stepper_y]
+step_pin = PG0
+dir_pin = PG1
+enable_pin = !PF15
+microsteps = 16
+rotation_distance = 40
+endstop_pin = PG9
+position_endstop = 0
+position_max = 200
+homing_speed = 50
+
+[stepper_z]
+step_pin = PF11
+dir_pin = PG3
+enable_pin = !PG5
+microsteps = 16
+rotation_distance = 8
+endstop_pin = PG10
+position_endstop = 0.5
+position_max = 200
+
+[extruder]
+step_pin = EBBCan: PD0
+dir_pin = !EBBCan: PD1
+enable_pin = !EBBCan: PD2
+microsteps = 16
+rotation_distance = 3.484
+nozzle_diameter = 0.400
+filament_diameter = 1.750
+heater_pin = EBBCan: PB13
+sensor_type = Generic 3950
+sensor_pin = EBBCan: PA3
+control = pid
+pid_kp = 21.527
+pid_ki = 1.063
+pid_kd = 108.982
+min_temp = 0
+max_temp = 270
+pressure_advance = 0.019
+
+[heater_bed]
+heater_pin = PA1
+sensor_pin = PF3
+max_power = 0.6
+sensor_type = EPCOS 100K B57560G104F
+control = watermark
+min_temp = -100
+max_temp = 999
+
+[fan]
+pin = EBBCan: PA0
+
+[mcu]
+canbus_uuid = 642f53509351
+
+[mcu EBBCan]
+canbus_uuid = 127081e7e3c6
+
+[printer]
+kinematics = cartesian
+max_velocity = 300
+max_accel = 3000
+max_z_velocity = 5
+max_z_accel = 100
+
+[board_pins]
+aliases = 
+	
+	EXP1_1=PE8, EXP1_2=PE7,
+	EXP1_3=PE9, EXP1_4=PE10,
+	EXP1_5=PE12, EXP1_6=PE13,
+	EXP1_7=PE14, EXP1_8=PE15,
+	EXP1_9=<GND>, EXP1_10=<5V>,
+	
+	
+	EXP2_1=PA6, EXP2_2=PA5,
+	EXP2_3=PB1, EXP2_4=PA4,
+	EXP2_5=PB2, EXP2_6=PA7,
+	EXP2_7=PC15, EXP2_8=<RST>,
+	EXP2_9=<GND>, EXP2_10=PC5
+=======================
+Extruder max_extrude_ratio=0.266081
+mcu 'mcu': Starting CAN connect
+Created a socket
+Unhandled exception during connect
+Traceback (most recent call last):
+  File "/home/661wls/klipper/klippy/klippy.py", line 176, in _connect
+    self.send_event("klippy:mcu_identify")
+  File "/home/661wls/klipper/klippy/klippy.py", line 263, in send_event
+    return [cb(*params) for cb in self.event_handlers.get(event, [])]
+  File "/home/661wls/klipper/klippy/klippy.py", line 263, in <listcomp>
+    return [cb(*params) for cb in self.event_handlers.get(event, [])]
+  File "/home/661wls/klipper/klippy/mcu.py", line 792, in _mcu_identify
+    self._serial.connect_canbus(self._serialport, nodeid,
+  File "/home/661wls/klipper/klippy/serialhdl.py", line 135, in connect_canbus
+    bus = can.interface.Bus(channel=canbus_iface,
+  File "/home/661wls/klippy-env/lib/python3.9/site-packages/can/interface.py", line 127, in __new__
+    return cls(channel, *args, **kwargs)
+  File "/home/661wls/klippy-env/lib/python3.9/site-packages/can/interfaces/socketcan/socketcan.py", line 594, in __init__
+    bind_socket(self.socket, channel)
+  File "/home/661wls/klippy-env/lib/python3.9/site-packages/can/interfaces/socketcan/socketcan.py", line 459, in bind_socket
+    sock.bind((channel,))
+OSError: [Errno 19] No such device
+webhooks client 4121224816: New connection
+webhooks client 4121224816: Client info {'program': 'Moonraker', 'version': 'v0.8.0-40-gb21f177'}
+webhooks client 4121224816: Disconnected
+Restarting printer
+Start printer at Wed May 17 09:24:32 2023 (1684340672.5 1985.8)
+===== Config file =====
+[virtual_sdcard]
+path = ~/printer_data/gcodes
+on_error_gcode = CANCEL_PRINT
+
+[pause_resume]
+
+[display_status]
+
+[gcode_macro CANCEL_PRINT]
+description = Cancel the actual running print
+rename_existing = CANCEL_PRINT_BASE
+gcode = 
+	
+	{% set macro_found = True if printer['gcode_macro _CLIENT_VARIABLE'] is defined else False %}
+	{% set client = printer['gcode_macro _CLIENT_VARIABLE'] %}
+	{% set allow_park = False if not macro_found
+	else False if client.park_at_cancel is not defined
+	else True  if client.park_at_cancel|lower == 'true'
+	else False %}
+	{% set retract = 5.0  if not macro_found else client.cancel_retract|default(5.0)|abs %}
+	
+	{% set park_x = ""                                    if not macro_found
+	else ""                                    if client.park_at_cancel_x is not defined
+	else "X=" + client.park_at_cancel_x|string if client.park_at_cancel_x is not none %}
+	{% set park_y = ""                                    if not macro_found
+	else ""                                    if client.park_at_cancel_y is not defined
+	else "Y=" + client.park_at_cancel_y|string if client.park_at_cancel_y is not none %}
+	{% set custom_park = True if (park_x|length > 0 or park_y|length > 0) else False %}
+	
+	{% if (custom_park or not printer.pause_resume.is_paused) and allow_park %} _TOOLHEAD_PARK_PAUSE_CANCEL {park_x} {park_y} {% endif %}
+	_CLIENT_RETRACT LENGTH={retract}
+	TURN_OFF_HEATERS
+	M106 S0
+	
+	SET_PAUSE_NEXT_LAYER ENABLE=0
+	SET_PAUSE_AT_LAYER ENABLE=0 LAYER=0
+	CANCEL_PRINT_BASE
+
+[gcode_macro PAUSE]
+description = Pause the actual running print
+rename_existing = PAUSE_BASE
+gcode = 
+	SET_GCODE_VARIABLE MACRO=RESUME VARIABLE=last_extruder_temp VALUE="{printer[printer.toolhead.extruder].target}"
+	
+	PAUSE_BASE
+	_TOOLHEAD_PARK_PAUSE_CANCEL {rawparams}
+
+[gcode_macro RESUME]
+description = Resume the actual running print
+rename_existing = RESUME_BASE
+variable_last_extruder_temp = 0
+gcode = 
+	
+	{% set macro_found = True if printer['gcode_macro _CLIENT_VARIABLE'] is defined else False %}
+	{% set client = printer['gcode_macro _CLIENT_VARIABLE'] %}
+	{% set velocity = printer.configfile.settings.pause_resume.recover_velocity %}
+	{% set sp_move        = velocity if not macro_found else client.speed_move|default(velocity) %}
+	
+	M109 S{last_extruder_temp}
+	
+	_CLIENT_EXTRUDE
+	RESUME_BASE VELOCITY={params.VELOCITY|default(sp_move)}
+
+[gcode_macro SET_PAUSE_NEXT_LAYER]
+description = Enable a pause if the next layer is reached
+gcode = 
+	{% set pause_next_layer = printer['gcode_macro SET_PRINT_STATS_INFO'].pause_next_layer %}
+	{% set ENABLE = params.ENABLE | default(1) | int != 0 %}
+	{% set MACRO = params.MACRO | default(pause_next_layer.call, True) %}
+	SET_GCODE_VARIABLE MACRO=SET_PRINT_STATS_INFO VARIABLE=pause_next_layer VALUE="{{ 'enable': ENABLE, 'call': MACRO }}"
+
+[gcode_macro SET_PAUSE_AT_LAYER]
+description = Enable/disable a pause if a given layer number is reached
+gcode = 
+	{% set pause_at_layer = printer['gcode_macro SET_PRINT_STATS_INFO'].pause_at_layer %}
+	{% set ENABLE = params.ENABLE | int != 0 if params.ENABLE is defined
+	else params.LAYER is defined %}
+	{% set LAYER = params.LAYER | default(pause_at_layer.layer) | int %}
+	{% set MACRO = params.MACRO | default(pause_at_layer.call, True) %}
+	SET_GCODE_VARIABLE MACRO=SET_PRINT_STATS_INFO VARIABLE=pause_at_layer VALUE="{{ 'enable': ENABLE, 'layer': LAYER, 'call': MACRO }}"
+
+[gcode_macro SET_PRINT_STATS_INFO]
+rename_existing = SET_PRINT_STATS_INFO_BASE
+description = Overwrite, to get pause_next_layer and pause_at_layer feature
+variable_pause_next_layer = { 'enable': False, 'call': "PAUSE" }
+variable_pause_at_layer = { 'enable': False, 'layer': 0, 'call': "PAUSE" }
+gcode = 
+	{% if pause_next_layer.enable %}
+	{action_respond_info("%s, forced by pause_next_layer" % pause_next_layer.call)}
+	{pause_next_layer.call}
+	SET_PAUSE_NEXT_LAYER ENABLE=0
+	{% elif pause_at_layer.enable and params.CURRENT_LAYER is defined and params.CURRENT_LAYER|int == pause_at_layer.layer %}
+	{action_respond_info("%s, forced by pause_at_layer [%d]" % (pause_at_layer.call, pause_at_layer.layer))}
+	{pause_at_layer.call}
+	SET_PAUSE_AT_LAYER ENABLE=0
+	{% endif %}
+	SET_PRINT_STATS_INFO_BASE {rawparams}
+
+[gcode_macro _TOOLHEAD_PARK_PAUSE_CANCEL]
+description = Helper: park toolhead used in PAUSE and CANCEL_PRINT
+gcode = 
+	
+	{% set macro_found = True if printer['gcode_macro _CLIENT_VARIABLE'] is defined else False %}
+	{% set client = printer['gcode_macro _CLIENT_VARIABLE'] %}
+	{% set velocity = printer.configfile.settings.pause_resume.recover_velocity %}
+	{% set use_custom     = False if not macro_found
+	else False if client.use_custom_pos is not defined
+	else True  if client.use_custom_pos|lower == 'true'
+	else False %}
+	{% set custom_park_x  = 0.0 if not macro_found else client.custom_park_x|default(0.0) %}
+	{% set custom_park_y  = 0.0 if not macro_found else client.custom_park_y|default(0.0) %}
+	{% set park_dz        = 2.0 if not macro_found else client.custom_park_dz|default(2.0)|abs %}
+	{% set sp_hop         = 900  if not macro_found else client.speed_hop|default(15) * 60 %}
+	{% set sp_move        = velocity * 60 if not macro_found else client.speed_move|default(velocity) * 60 %}
+	
+	{% set origin    = printer.gcode_move.homing_origin %}
+	{% set act       = printer.gcode_move.gcode_position %}
+	{% set max       = printer.toolhead.axis_maximum %}
+	{% set cone      = printer.toolhead.cone_start_z|default(max.z) %}
+	{% set round_bed = True if printer.configfile.settings.printer.kinematics is in ['delta','polar','rotary_delta','winch']
+	else False %}
+	
+	{% set z_min = params.Z_MIN|default(0)|float %}
+	{% set z_park = [[(act.z + park_dz), z_min]|max, (max.z - origin.z)]|min %}
+	{% set x_park = params.X       if params.X is defined
+	else custom_park_x  if use_custom
+	else 0.0            if round_bed
+	else (max.x - 5.0) %}
+	{% set y_park = params.Y       if params.Y is defined
+	else custom_park_y  if use_custom
+	else (max.y - 5.0)  if round_bed and z_park < cone
+	else 0.0            if round_bed
+	else (max.y - 5.0) %}
+	
+	_CLIENT_RETRACT
+	{% if "xyz" in printer.toolhead.homed_axes %}
+	G90
+	G1 Z{z_park} F{sp_hop}
+	G1 X{x_park} Y{y_park} F{sp_move}
+	{% if not printer.gcode_move.absolute_coordinates %} G91 {% endif %}
+	{% else %}
+	{action_respond_info("Printer not homed")}
+	{% endif %}
+
+[gcode_macro _CLIENT_EXTRUDE]
+description = Extrudes, if the extruder is hot enough
+gcode = 
+	{% set macro_found = True if printer['gcode_macro _CLIENT_VARIABLE'] is defined else False %}
+	{% set client = printer['gcode_macro _CLIENT_VARIABLE'] %}
+	{% set use_fw_retract = False if not macro_found
+	else False if client.use_fw_retract is not defined
+	else True  if client.use_fw_retract|lower == 'true' and printer.firmware_retraction is defined
+	else False %}
+	
+	{% set length = (params.LENGTH|float) if params.LENGTH is defined
+	else 1.0 if not macro_found
+	else client.unretract|default(1.0) %}
+	
+	{% set speed = params.SPEED if params.SPEED is defined
+	else 35 if not macro_found
+	else client.speed_unretract|default(35) %}
+	
+	{% set absolute_extrude = printer.gcode_move.absolute_extrude %}
+	
+	{% if printer.extruder.can_extrude %}
+	{% if use_fw_retract %}
+	{% if length < 0 %}
+	G10
+	{% else %}
+	G11
+	{% endif %}
+	{% else %}
+	M83
+	G1 E{length} F{(speed|float|abs) * 60}
+	{% if absolute_extrude %}
+	M82
+	{% endif %}
+	{% endif %}
+	{% else %}
+	{action_respond_info("Extruder not hot enough")}
+	{% endif %}
+
+[gcode_macro _CLIENT_RETRACT]
+description = Retracts, if the extruder is hot enough
+gcode = 
+	{% set macro_found = True if printer['gcode_macro _CLIENT_VARIABLE'] is defined else False %}
+	{% set client = printer['gcode_macro _CLIENT_VARIABLE'] %}
+	
+	{% set length = (params.LENGTH|float) if params.LENGTH is defined
+	else 1.0 if not macro_found
+	else client.retract|default(1.0) %}
+	
+	{% set speed = params.SPEED if params.SPEED is defined
+	else 35 if not macro_found
+	else client.speed_retract|default(35) %}
+	
+	_CLIENT_EXTRUDE LENGTH=-{length|float|abs} SPEED={speed|float|abs}
+
+[stepper_x]
+step_pin = PF13
+dir_pin = PF12
+enable_pin = !PF14
+microsteps = 16
+rotation_distance = 40
+endstop_pin = PG6
+position_endstop = 0
+position_max = 200
+homing_speed = 50
+
+[stepper_y]
+step_pin = PG0
+dir_pin = PG1
+enable_pin = !PF15
+microsteps = 16
+rotation_distance = 40
+endstop_pin = PG9
+position_endstop = 0
+position_max = 200
+homing_speed = 50
+
+[stepper_z]
+step_pin = PF11
+dir_pin = PG3
+enable_pin = !PG5
+microsteps = 16
+rotation_distance = 8
+endstop_pin = PG10
+position_endstop = 0.5
+position_max = 200
+
+[extruder]
+step_pin = EBBCan: PD0
+dir_pin = !EBBCan: PD1
+enable_pin = !EBBCan: PD2
+microsteps = 16
+rotation_distance = 3.484
+nozzle_diameter = 0.400
+filament_diameter = 1.750
+heater_pin = EBBCan: PB13
+sensor_type = Generic 3950
+sensor_pin = EBBCan: PA3
+control = pid
+pid_kp = 21.527
+pid_ki = 1.063
+pid_kd = 108.982
+min_temp = 0
+max_temp = 270
+pressure_advance = 0.019
+
+[heater_bed]
+heater_pin = PA1
+sensor_pin = PF3
+max_power = 0.6
+sensor_type = EPCOS 100K B57560G104F
+control = watermark
+min_temp = -100
+max_temp = 999
+
+[fan]
+pin = EBBCan: PA0
+
+[mcu]
+canbus_uuid = 642f53509351
+
+[mcu EBBCan]
+canbus_uuid = 127081e7e3c6
+
+[printer]
+kinematics = cartesian
+max_velocity = 300
+max_accel = 3000
+max_z_velocity = 5
+max_z_accel = 100
+
+[board_pins]
+aliases = 
+	
+	EXP1_1=PE8, EXP1_2=PE7,
+	EXP1_3=PE9, EXP1_4=PE10,
+	EXP1_5=PE12, EXP1_6=PE13,
+	EXP1_7=PE14, EXP1_8=PE15,
+	EXP1_9=<GND>, EXP1_10=<5V>,
+	
+	
+	EXP2_1=PA6, EXP2_2=PA5,
+	EXP2_3=PB1, EXP2_4=PA4,
+	EXP2_5=PB2, EXP2_6=PA7,
+	EXP2_7=PC15, EXP2_8=<RST>,
+	EXP2_9=<GND>, EXP2_10=PC5
+=======================
+Extruder max_extrude_ratio=0.266081
+mcu 'mcu': Starting CAN connect
+Created a socket
+Unhandled exception during connect
+Traceback (most recent call last):
+  File "/home/661wls/klipper/klippy/klippy.py", line 176, in _connect
+    self.send_event("klippy:mcu_identify")
+  File "/home/661wls/klipper/klippy/klippy.py", line 263, in send_event
+    return [cb(*params) for cb in self.event_handlers.get(event, [])]
+  File "/home/661wls/klipper/klippy/klippy.py", line 263, in <listcomp>
+    return [cb(*params) for cb in self.event_handlers.get(event, [])]
+  File "/home/661wls/klipper/klippy/mcu.py", line 792, in _mcu_identify
+    self._serial.connect_canbus(self._serialport, nodeid,
+  File "/home/661wls/klipper/klippy/serialhdl.py", line 135, in connect_canbus
+    bus = can.interface.Bus(channel=canbus_iface,
+  File "/home/661wls/klippy-env/lib/python3.9/site-packages/can/interface.py", line 127, in __new__
+    return cls(channel, *args, **kwargs)
+  File "/home/661wls/klippy-env/lib/python3.9/site-packages/can/interfaces/socketcan/socketcan.py", line 594, in __init__
+    bind_socket(self.socket, channel)
+  File "/home/661wls/klippy-env/lib/python3.9/site-packages/can/interfaces/socketcan/socketcan.py", line 459, in bind_socket
+    sock.bind((channel,))
+OSError: [Errno 19] No such device
+webhooks client 4124788744: New connection
+webhooks client 4124788744: Client info {'program': 'Moonraker', 'version': 'v0.8.0-40-gb21f177'}
+webhooks client 4124788744: Disconnected
+Restarting printer
+Start printer at Wed May 17 09:25:06 2023 (1684340706.8 2020.1)
+===== Config file =====
+[virtual_sdcard]
+path = ~/printer_data/gcodes
+on_error_gcode = CANCEL_PRINT
+
+[pause_resume]
+
+[display_status]
+
+[gcode_macro CANCEL_PRINT]
+description = Cancel the actual running print
+rename_existing = CANCEL_PRINT_BASE
+gcode = 
+	
+	{% set macro_found = True if printer['gcode_macro _CLIENT_VARIABLE'] is defined else False %}
+	{% set client = printer['gcode_macro _CLIENT_VARIABLE'] %}
+	{% set allow_park = False if not macro_found
+	else False if client.park_at_cancel is not defined
+	else True  if client.park_at_cancel|lower == 'true'
+	else False %}
+	{% set retract = 5.0  if not macro_found else client.cancel_retract|default(5.0)|abs %}
+	
+	{% set park_x = ""                                    if not macro_found
+	else ""                                    if client.park_at_cancel_x is not defined
+	else "X=" + client.park_at_cancel_x|string if client.park_at_cancel_x is not none %}
+	{% set park_y = ""                                    if not macro_found
+	else ""                                    if client.park_at_cancel_y is not defined
+	else "Y=" + client.park_at_cancel_y|string if client.park_at_cancel_y is not none %}
+	{% set custom_park = True if (park_x|length > 0 or park_y|length > 0) else False %}
+	
+	{% if (custom_park or not printer.pause_resume.is_paused) and allow_park %} _TOOLHEAD_PARK_PAUSE_CANCEL {park_x} {park_y} {% endif %}
+	_CLIENT_RETRACT LENGTH={retract}
+	TURN_OFF_HEATERS
+	M106 S0
+	
+	SET_PAUSE_NEXT_LAYER ENABLE=0
+	SET_PAUSE_AT_LAYER ENABLE=0 LAYER=0
+	CANCEL_PRINT_BASE
+
+[gcode_macro PAUSE]
+description = Pause the actual running print
+rename_existing = PAUSE_BASE
+gcode = 
+	SET_GCODE_VARIABLE MACRO=RESUME VARIABLE=last_extruder_temp VALUE="{printer[printer.toolhead.extruder].target}"
+	
+	PAUSE_BASE
+	_TOOLHEAD_PARK_PAUSE_CANCEL {rawparams}
+
+[gcode_macro RESUME]
+description = Resume the actual running print
+rename_existing = RESUME_BASE
+variable_last_extruder_temp = 0
+gcode = 
+	
+	{% set macro_found = True if printer['gcode_macro _CLIENT_VARIABLE'] is defined else False %}
+	{% set client = printer['gcode_macro _CLIENT_VARIABLE'] %}
+	{% set velocity = printer.configfile.settings.pause_resume.recover_velocity %}
+	{% set sp_move        = velocity if not macro_found else client.speed_move|default(velocity) %}
+	
+	M109 S{last_extruder_temp}
+	
+	_CLIENT_EXTRUDE
+	RESUME_BASE VELOCITY={params.VELOCITY|default(sp_move)}
+
+[gcode_macro SET_PAUSE_NEXT_LAYER]
+description = Enable a pause if the next layer is reached
+gcode = 
+	{% set pause_next_layer = printer['gcode_macro SET_PRINT_STATS_INFO'].pause_next_layer %}
+	{% set ENABLE = params.ENABLE | default(1) | int != 0 %}
+	{% set MACRO = params.MACRO | default(pause_next_layer.call, True) %}
+	SET_GCODE_VARIABLE MACRO=SET_PRINT_STATS_INFO VARIABLE=pause_next_layer VALUE="{{ 'enable': ENABLE, 'call': MACRO }}"
+
+[gcode_macro SET_PAUSE_AT_LAYER]
+description = Enable/disable a pause if a given layer number is reached
+gcode = 
+	{% set pause_at_layer = printer['gcode_macro SET_PRINT_STATS_INFO'].pause_at_layer %}
+	{% set ENABLE = params.ENABLE | int != 0 if params.ENABLE is defined
+	else params.LAYER is defined %}
+	{% set LAYER = params.LAYER | default(pause_at_layer.layer) | int %}
+	{% set MACRO = params.MACRO | default(pause_at_layer.call, True) %}
+	SET_GCODE_VARIABLE MACRO=SET_PRINT_STATS_INFO VARIABLE=pause_at_layer VALUE="{{ 'enable': ENABLE, 'layer': LAYER, 'call': MACRO }}"
+
+[gcode_macro SET_PRINT_STATS_INFO]
+rename_existing = SET_PRINT_STATS_INFO_BASE
+description = Overwrite, to get pause_next_layer and pause_at_layer feature
+variable_pause_next_layer = { 'enable': False, 'call': "PAUSE" }
+variable_pause_at_layer = { 'enable': False, 'layer': 0, 'call': "PAUSE" }
+gcode = 
+	{% if pause_next_layer.enable %}
+	{action_respond_info("%s, forced by pause_next_layer" % pause_next_layer.call)}
+	{pause_next_layer.call}
+	SET_PAUSE_NEXT_LAYER ENABLE=0
+	{% elif pause_at_layer.enable and params.CURRENT_LAYER is defined and params.CURRENT_LAYER|int == pause_at_layer.layer %}
+	{action_respond_info("%s, forced by pause_at_layer [%d]" % (pause_at_layer.call, pause_at_layer.layer))}
+	{pause_at_layer.call}
+	SET_PAUSE_AT_LAYER ENABLE=0
+	{% endif %}
+	SET_PRINT_STATS_INFO_BASE {rawparams}
+
+[gcode_macro _TOOLHEAD_PARK_PAUSE_CANCEL]
+description = Helper: park toolhead used in PAUSE and CANCEL_PRINT
+gcode = 
+	
+	{% set macro_found = True if printer['gcode_macro _CLIENT_VARIABLE'] is defined else False %}
+	{% set client = printer['gcode_macro _CLIENT_VARIABLE'] %}
+	{% set velocity = printer.configfile.settings.pause_resume.recover_velocity %}
+	{% set use_custom     = False if not macro_found
+	else False if client.use_custom_pos is not defined
+	else True  if client.use_custom_pos|lower == 'true'
+	else False %}
+	{% set custom_park_x  = 0.0 if not macro_found else client.custom_park_x|default(0.0) %}
+	{% set custom_park_y  = 0.0 if not macro_found else client.custom_park_y|default(0.0) %}
+	{% set park_dz        = 2.0 if not macro_found else client.custom_park_dz|default(2.0)|abs %}
+	{% set sp_hop         = 900  if not macro_found else client.speed_hop|default(15) * 60 %}
+	{% set sp_move        = velocity * 60 if not macro_found else client.speed_move|default(velocity) * 60 %}
+	
+	{% set origin    = printer.gcode_move.homing_origin %}
+	{% set act       = printer.gcode_move.gcode_position %}
+	{% set max       = printer.toolhead.axis_maximum %}
+	{% set cone      = printer.toolhead.cone_start_z|default(max.z) %}
+	{% set round_bed = True if printer.configfile.settings.printer.kinematics is in ['delta','polar','rotary_delta','winch']
+	else False %}
+	
+	{% set z_min = params.Z_MIN|default(0)|float %}
+	{% set z_park = [[(act.z + park_dz), z_min]|max, (max.z - origin.z)]|min %}
+	{% set x_park = params.X       if params.X is defined
+	else custom_park_x  if use_custom
+	else 0.0            if round_bed
+	else (max.x - 5.0) %}
+	{% set y_park = params.Y       if params.Y is defined
+	else custom_park_y  if use_custom
+	else (max.y - 5.0)  if round_bed and z_park < cone
+	else 0.0            if round_bed
+	else (max.y - 5.0) %}
+	
+	_CLIENT_RETRACT
+	{% if "xyz" in printer.toolhead.homed_axes %}
+	G90
+	G1 Z{z_park} F{sp_hop}
+	G1 X{x_park} Y{y_park} F{sp_move}
+	{% if not printer.gcode_move.absolute_coordinates %} G91 {% endif %}
+	{% else %}
+	{action_respond_info("Printer not homed")}
+	{% endif %}
+
+[gcode_macro _CLIENT_EXTRUDE]
+description = Extrudes, if the extruder is hot enough
+gcode = 
+	{% set macro_found = True if printer['gcode_macro _CLIENT_VARIABLE'] is defined else False %}
+	{% set client = printer['gcode_macro _CLIENT_VARIABLE'] %}
+	{% set use_fw_retract = False if not macro_found
+	else False if client.use_fw_retract is not defined
+	else True  if client.use_fw_retract|lower == 'true' and printer.firmware_retraction is defined
+	else False %}
+	
+	{% set length = (params.LENGTH|float) if params.LENGTH is defined
+	else 1.0 if not macro_found
+	else client.unretract|default(1.0) %}
+	
+	{% set speed = params.SPEED if params.SPEED is defined
+	else 35 if not macro_found
+	else client.speed_unretract|default(35) %}
+	
+	{% set absolute_extrude = printer.gcode_move.absolute_extrude %}
+	
+	{% if printer.extruder.can_extrude %}
+	{% if use_fw_retract %}
+	{% if length < 0 %}
+	G10
+	{% else %}
+	G11
+	{% endif %}
+	{% else %}
+	M83
+	G1 E{length} F{(speed|float|abs) * 60}
+	{% if absolute_extrude %}
+	M82
+	{% endif %}
+	{% endif %}
+	{% else %}
+	{action_respond_info("Extruder not hot enough")}
+	{% endif %}
+
+[gcode_macro _CLIENT_RETRACT]
+description = Retracts, if the extruder is hot enough
+gcode = 
+	{% set macro_found = True if printer['gcode_macro _CLIENT_VARIABLE'] is defined else False %}
+	{% set client = printer['gcode_macro _CLIENT_VARIABLE'] %}
+	
+	{% set length = (params.LENGTH|float) if params.LENGTH is defined
+	else 1.0 if not macro_found
+	else client.retract|default(1.0) %}
+	
+	{% set speed = params.SPEED if params.SPEED is defined
+	else 35 if not macro_found
+	else client.speed_retract|default(35) %}
+	
+	_CLIENT_EXTRUDE LENGTH=-{length|float|abs} SPEED={speed|float|abs}
+
+[stepper_x]
+step_pin = PF13
+dir_pin = PF12
+enable_pin = !PF14
+microsteps = 16
+rotation_distance = 40
+endstop_pin = PG6
+position_endstop = 0
+position_max = 200
+homing_speed = 50
+
+[stepper_y]
+step_pin = PG0
+dir_pin = PG1
+enable_pin = !PF15
+microsteps = 16
+rotation_distance = 40
+endstop_pin = PG9
+position_endstop = 0
+position_max = 200
+homing_speed = 50
+
+[stepper_z]
+step_pin = PF11
+dir_pin = PG3
+enable_pin = !PG5
+microsteps = 16
+rotation_distance = 8
+endstop_pin = PG10
+position_endstop = 0.5
+position_max = 200
+
+[extruder]
+step_pin = EBBCan: PD0
+dir_pin = !EBBCan: PD1
+enable_pin = !EBBCan: PD2
+microsteps = 16
+rotation_distance = 3.484
+nozzle_diameter = 0.400
+filament_diameter = 1.750
+heater_pin = EBBCan: PB13
+sensor_type = Generic 3950
+sensor_pin = EBBCan: PA3
+control = pid
+pid_kp = 21.527
+pid_ki = 1.063
+pid_kd = 108.982
+min_temp = 0
+max_temp = 270
+pressure_advance = 0.019
+
+[heater_bed]
+heater_pin = PA1
+sensor_pin = PF3
+max_power = 0.6
+sensor_type = EPCOS 100K B57560G104F
+control = watermark
+min_temp = -100
+max_temp = 999
+
+[fan]
+pin = EBBCan: PA0
+
+[mcu]
+canbus_uuid = 642f53509351
+
+[mcu EBBCan]
+canbus_uuid = 127081e7e3c6
+
+[printer]
+kinematics = cartesian
+max_velocity = 300
+max_accel = 3000
+max_z_velocity = 5
+max_z_accel = 100
+
+[board_pins]
+aliases = 
+	
+	EXP1_1=PE8, EXP1_2=PE7,
+	EXP1_3=PE9, EXP1_4=PE10,
+	EXP1_5=PE12, EXP1_6=PE13,
+	EXP1_7=PE14, EXP1_8=PE15,
+	EXP1_9=<GND>, EXP1_10=<5V>,
+	
+	
+	EXP2_1=PA6, EXP2_2=PA5,
+	EXP2_3=PB1, EXP2_4=PA4,
+	EXP2_5=PB2, EXP2_6=PA7,
+	EXP2_7=PC15, EXP2_8=<RST>,
+	EXP2_9=<GND>, EXP2_10=PC5
+=======================
+Extruder max_extrude_ratio=0.266081
+mcu 'mcu': Starting CAN connect
+Created a socket
+webhooks client 4124787256: New connection
+webhooks client 4124787256: Client info {'program': 'Moonraker', 'version': 'v0.8.0-40-gb21f177'}
+Loaded MCU 'mcu' 119 commands (v0.11.0-200-g7511151a / gcc: (15:8-2019-q3-1+b1) 8.3.1 20190703 (release) [gcc-8-branch revision 273027] binutils: (2.34-4+rpi1+14) 2.34)
+MCU 'mcu' config: ADC_MAX=4095 BUS_PINS_i2c1=PB6,PB7 BUS_PINS_i2c1a=PB8,PB9 BUS_PINS_i2c2=PB10,PB11 BUS_PINS_i2c3=PA8,PC9 BUS_PINS_sdio=PC12,PD2,PC8,PC9,PC10,PC11 BUS_PINS_spi1=PA6,PA7,PA5 BUS_PINS_spi1a=PB4,PB5,PB3 BUS_PINS_spi2=PB14,PB15,PB13 BUS_PINS_spi2a=PC2,PC3,PB10 BUS_PINS_spi3=PB4,PB5,PB3 BUS_PINS_spi3a=PC11,PC12,PC10 BUS_PINS_spi4=PE13,PE14,PE12 CANBUS_BRIDGE=1 CLOCK_FREQ=180000000 MCU=stm32f446xx PWM_MAX=255 RECEIVE_WINDOW=192 RESERVE_PINS_CAN=PD0,PD1 RESERVE_PINS_USB=PA11,PA12 RESERVE_PINS_crystal=PH0,PH1 STATS_SUMSQ_BASE=256 STEPPER_BOTH_EDGE=1
+mcu 'EBBCan': Starting CAN connect
+Created a socket
+mcu 'EBBCan': Timeout on connect
+Created a socket
+mcu 'EBBCan': Wait for identify_response
+Traceback (most recent call last):
+  File "/home/661wls/klipper/klippy/serialhdl.py", line 68, in _get_identify_data
+    params = self.send_with_response(msg, 'identify_response')
+  File "/home/661wls/klipper/klippy/serialhdl.py", line 261, in send_with_response
+    return src.get_response([cmd], self.default_cmd_queue)
+  File "/home/661wls/klipper/klippy/serialhdl.py", line 318, in get_response
+    self.serial.raw_send_wait_ack(cmds[-1], minclock, reqclock,
+  File "/home/661wls/klipper/klippy/serialhdl.py", line 253, in raw_send_wait_ack
+    self._error("Serial connection closed")
+  File "/home/661wls/klipper/klippy/serialhdl.py", line 61, in _error
+    raise error(self.warn_prefix + (msg % params))
+serialhdl.error: mcu 'EBBCan': Serial connection closed
+mcu 'EBBCan': Timeout on connect
+Created a socket
+mcu 'EBBCan': Wait for identify_response
+Traceback (most recent call last):
+  File "/home/661wls/klipper/klippy/serialhdl.py", line 68, in _get_identify_data
+    params = self.send_with_response(msg, 'identify_response')
+  File "/home/661wls/klipper/klippy/serialhdl.py", line 261, in send_with_response
+    return src.get_response([cmd], self.default_cmd_queue)
+  File "/home/661wls/klipper/klippy/serialhdl.py", line 318, in get_response
+    self.serial.raw_send_wait_ack(cmds[-1], minclock, reqclock,
+  File "/home/661wls/klipper/klippy/serialhdl.py", line 253, in raw_send_wait_ack
+    self._error("Serial connection closed")
+  File "/home/661wls/klipper/klippy/serialhdl.py", line 61, in _error
+    raise error(self.warn_prefix + (msg % params))
+serialhdl.error: mcu 'EBBCan': Serial connection closed
+mcu 'EBBCan': Timeout on connect
+Created a socket
+mcu 'EBBCan': Wait for identify_response
+Traceback (most recent call last):
+  File "/home/661wls/klipper/klippy/serialhdl.py", line 68, in _get_identify_data
+    params = self.send_with_response(msg, 'identify_response')
+  File "/home/661wls/klipper/klippy/serialhdl.py", line 261, in send_with_response
+    return src.get_response([cmd], self.default_cmd_queue)
+  File "/home/661wls/klipper/klippy/serialhdl.py", line 318, in get_response
+    self.serial.raw_send_wait_ack(cmds[-1], minclock, reqclock,
+  File "/home/661wls/klipper/klippy/serialhdl.py", line 253, in raw_send_wait_ack
+    self._error("Serial connection closed")
+  File "/home/661wls/klipper/klippy/serialhdl.py", line 61, in _error
+    raise error(self.warn_prefix + (msg % params))
+serialhdl.error: mcu 'EBBCan': Serial connection closed
+mcu 'EBBCan': Timeout on connect
+Created a socket
+mcu 'EBBCan': Wait for identify_response
+Traceback (most recent call last):
+  File "/home/661wls/klipper/klippy/serialhdl.py", line 68, in _get_identify_data
+    params = self.send_with_response(msg, 'identify_response')
+  File "/home/661wls/klipper/klippy/serialhdl.py", line 261, in send_with_response
+    return src.get_response([cmd], self.default_cmd_queue)
+  File "/home/661wls/klipper/klippy/serialhdl.py", line 318, in get_response
+    self.serial.raw_send_wait_ack(cmds[-1], minclock, reqclock,
+  File "/home/661wls/klipper/klippy/serialhdl.py", line 253, in raw_send_wait_ack
+    self._error("Serial connection closed")
+  File "/home/661wls/klipper/klippy/serialhdl.py", line 61, in _error
+    raise error(self.warn_prefix + (msg % params))
+serialhdl.error: mcu 'EBBCan': Serial connection closed
+mcu 'EBBCan': Timeout on connect
+Created a socket
+mcu 'EBBCan': Wait for identify_response
+Traceback (most recent call last):
+  File "/home/661wls/klipper/klippy/serialhdl.py", line 68, in _get_identify_data
+    params = self.send_with_response(msg, 'identify_response')
+  File "/home/661wls/klipper/klippy/serialhdl.py", line 261, in send_with_response
+    return src.get_response([cmd], self.default_cmd_queue)
+  File "/home/661wls/klipper/klippy/serialhdl.py", line 318, in get_response
+    self.serial.raw_send_wait_ack(cmds[-1], minclock, reqclock,
+  File "/home/661wls/klipper/klippy/serialhdl.py", line 253, in raw_send_wait_ack
+    self._error("Serial connection closed")
+  File "/home/661wls/klipper/klippy/serialhdl.py", line 61, in _error
+    raise error(self.warn_prefix + (msg % params))
+serialhdl.error: mcu 'EBBCan': Serial connection closed
+mcu 'EBBCan': Timeout on connect
+Created a socket
+mcu 'EBBCan': Wait for identify_response
+Traceback (most recent call last):
+  File "/home/661wls/klipper/klippy/serialhdl.py", line 68, in _get_identify_data
+    params = self.send_with_response(msg, 'identify_response')
+  File "/home/661wls/klipper/klippy/serialhdl.py", line 261, in send_with_response
+    return src.get_response([cmd], self.default_cmd_queue)
+  File "/home/661wls/klipper/klippy/serialhdl.py", line 318, in get_response
+    self.serial.raw_send_wait_ack(cmds[-1], minclock, reqclock,
+  File "/home/661wls/klipper/klippy/serialhdl.py", line 253, in raw_send_wait_ack
+    self._error("Serial connection closed")
+  File "/home/661wls/klipper/klippy/serialhdl.py", line 61, in _error
+    raise error(self.warn_prefix + (msg % params))
+serialhdl.error: mcu 'EBBCan': Serial connection closed
+mcu 'EBBCan': Timeout on connect
+Created a socket
+mcu 'EBBCan': Wait for identify_response
+Traceback (most recent call last):
+  File "/home/661wls/klipper/klippy/serialhdl.py", line 68, in _get_identify_data
+    params = self.send_with_response(msg, 'identify_response')
+  File "/home/661wls/klipper/klippy/serialhdl.py", line 261, in send_with_response
+    return src.get_response([cmd], self.default_cmd_queue)
+  File "/home/661wls/klipper/klippy/serialhdl.py", line 318, in get_response
+    self.serial.raw_send_wait_ack(cmds[-1], minclock, reqclock,
+  File "/home/661wls/klipper/klippy/serialhdl.py", line 253, in raw_send_wait_ack
+    self._error("Serial connection closed")
+  File "/home/661wls/klipper/klippy/serialhdl.py", line 61, in _error
+    raise error(self.warn_prefix + (msg % params))
+serialhdl.error: mcu 'EBBCan': Serial connection closed
+mcu 'EBBCan': Timeout on connect
+Created a socket
+mcu 'EBBCan': Wait for identify_response
+Traceback (most recent call last):
+  File "/home/661wls/klipper/klippy/serialhdl.py", line 68, in _get_identify_data
+    params = self.send_with_response(msg, 'identify_response')
+  File "/home/661wls/klipper/klippy/serialhdl.py", line 261, in send_with_response
+    return src.get_response([cmd], self.default_cmd_queue)
+  File "/home/661wls/klipper/klippy/serialhdl.py", line 318, in get_response
+    self.serial.raw_send_wait_ack(cmds[-1], minclock, reqclock,
+  File "/home/661wls/klipper/klippy/serialhdl.py", line 253, in raw_send_wait_ack
+    self._error("Serial connection closed")
+  File "/home/661wls/klipper/klippy/serialhdl.py", line 61, in _error
+    raise error(self.warn_prefix + (msg % params))
+serialhdl.error: mcu 'EBBCan': Serial connection closed
+mcu 'EBBCan': Timeout on connect
+Created a socket
+mcu 'EBBCan': Wait for identify_response
+Traceback (most recent call last):
+  File "/home/661wls/klipper/klippy/serialhdl.py", line 68, in _get_identify_data
+    params = self.send_with_response(msg, 'identify_response')
+  File "/home/661wls/klipper/klippy/serialhdl.py", line 261, in send_with_response
+    return src.get_response([cmd], self.default_cmd_queue)
+  File "/home/661wls/klipper/klippy/serialhdl.py", line 318, in get_response
+    self.serial.raw_send_wait_ack(cmds[-1], minclock, reqclock,
+  File "/home/661wls/klipper/klippy/serialhdl.py", line 253, in raw_send_wait_ack
+    self._error("Serial connection closed")
+  File "/home/661wls/klipper/klippy/serialhdl.py", line 61, in _error
+    raise error(self.warn_prefix + (msg % params))
+serialhdl.error: mcu 'EBBCan': Serial connection closed
+mcu 'EBBCan': Timeout on connect
+Created a socket
+mcu 'EBBCan': Unable to open CAN port: Failed to transmit: [Errno 105] No buffer space available
+mcu 'EBBCan': Wait for identify_response
+Traceback (most recent call last):
+  File "/home/661wls/klipper/klippy/serialhdl.py", line 68, in _get_identify_data
+    params = self.send_with_response(msg, 'identify_response')
+  File "/home/661wls/klipper/klippy/serialhdl.py", line 261, in send_with_response
+    return src.get_response([cmd], self.default_cmd_queue)
+  File "/home/661wls/klipper/klippy/serialhdl.py", line 318, in get_response
+    self.serial.raw_send_wait_ack(cmds[-1], minclock, reqclock,
+  File "/home/661wls/klipper/klippy/serialhdl.py", line 253, in raw_send_wait_ack
+    self._error("Serial connection closed")
+  File "/home/661wls/klipper/klippy/serialhdl.py", line 61, in _error
+    raise error(self.warn_prefix + (msg % params))
+serialhdl.error: mcu 'EBBCan': Serial connection closed
+b'Got error -1 in can write: (105)No buffer space available'
+Created a socket
+mcu 'EBBCan': Unable to open CAN port: Failed to transmit: [Errno 105] No buffer space available
+b'Got error -1 in can write: (105)No buffer space available'
+Created a socket
+mcu 'EBBCan': Unable to open CAN port: Failed to transmit: [Errno 105] No buffer space available
+b'Got error -1 in can write: (105)No buffer space available'
+Created a socket
+mcu 'EBBCan': Unable to open CAN port: Failed to transmit: [Errno 105] No buffer space available
+b'Got error -1 in can write: (105)No buffer space available'
+Created a socket
+mcu 'EBBCan': Unable to open CAN port: Failed to transmit: [Errno 105] No buffer space available
+b'Got error -1 in can write: (105)No buffer space available'
+Created a socket
+mcu 'EBBCan': Unable to open CAN port: Failed to transmit: [Errno 105] No buffer space available
+b'Got error -1 in can read: (100)Network is down'
+Created a socket
+webhooks client 4124787256: Disconnected
+Restarting printer
+Start printer at Wed May 17 09:26:31 2023 (1684340791.3 2104.7)
+===== Config file =====
+[virtual_sdcard]
+path = ~/printer_data/gcodes
+on_error_gcode = CANCEL_PRINT
+
+[pause_resume]
+
+[display_status]
+
+[gcode_macro CANCEL_PRINT]
+description = Cancel the actual running print
+rename_existing = CANCEL_PRINT_BASE
+gcode = 
+	
+	{% set macro_found = True if printer['gcode_macro _CLIENT_VARIABLE'] is defined else False %}
+	{% set client = printer['gcode_macro _CLIENT_VARIABLE'] %}
+	{% set allow_park = False if not macro_found
+	else False if client.park_at_cancel is not defined
+	else True  if client.park_at_cancel|lower == 'true'
+	else False %}
+	{% set retract = 5.0  if not macro_found else client.cancel_retract|default(5.0)|abs %}
+	
+	{% set park_x = ""                                    if not macro_found
+	else ""                                    if client.park_at_cancel_x is not defined
+	else "X=" + client.park_at_cancel_x|string if client.park_at_cancel_x is not none %}
+	{% set park_y = ""                                    if not macro_found
+	else ""                                    if client.park_at_cancel_y is not defined
+	else "Y=" + client.park_at_cancel_y|string if client.park_at_cancel_y is not none %}
+	{% set custom_park = True if (park_x|length > 0 or park_y|length > 0) else False %}
+	
+	{% if (custom_park or not printer.pause_resume.is_paused) and allow_park %} _TOOLHEAD_PARK_PAUSE_CANCEL {park_x} {park_y} {% endif %}
+	_CLIENT_RETRACT LENGTH={retract}
+	TURN_OFF_HEATERS
+	M106 S0
+	
+	SET_PAUSE_NEXT_LAYER ENABLE=0
+	SET_PAUSE_AT_LAYER ENABLE=0 LAYER=0
+	CANCEL_PRINT_BASE
+
+[gcode_macro PAUSE]
+description = Pause the actual running print
+rename_existing = PAUSE_BASE
+gcode = 
+	SET_GCODE_VARIABLE MACRO=RESUME VARIABLE=last_extruder_temp VALUE="{printer[printer.toolhead.extruder].target}"
+	
+	PAUSE_BASE
+	_TOOLHEAD_PARK_PAUSE_CANCEL {rawparams}
+
+[gcode_macro RESUME]
+description = Resume the actual running print
+rename_existing = RESUME_BASE
+variable_last_extruder_temp = 0
+gcode = 
+	
+	{% set macro_found = True if printer['gcode_macro _CLIENT_VARIABLE'] is defined else False %}
+	{% set client = printer['gcode_macro _CLIENT_VARIABLE'] %}
+	{% set velocity = printer.configfile.settings.pause_resume.recover_velocity %}
+	{% set sp_move        = velocity if not macro_found else client.speed_move|default(velocity) %}
+	
+	M109 S{last_extruder_temp}
+	
+	_CLIENT_EXTRUDE
+	RESUME_BASE VELOCITY={params.VELOCITY|default(sp_move)}
+
+[gcode_macro SET_PAUSE_NEXT_LAYER]
+description = Enable a pause if the next layer is reached
+gcode = 
+	{% set pause_next_layer = printer['gcode_macro SET_PRINT_STATS_INFO'].pause_next_layer %}
+	{% set ENABLE = params.ENABLE | default(1) | int != 0 %}
+	{% set MACRO = params.MACRO | default(pause_next_layer.call, True) %}
+	SET_GCODE_VARIABLE MACRO=SET_PRINT_STATS_INFO VARIABLE=pause_next_layer VALUE="{{ 'enable': ENABLE, 'call': MACRO }}"
+
+[gcode_macro SET_PAUSE_AT_LAYER]
+description = Enable/disable a pause if a given layer number is reached
+gcode = 
+	{% set pause_at_layer = printer['gcode_macro SET_PRINT_STATS_INFO'].pause_at_layer %}
+	{% set ENABLE = params.ENABLE | int != 0 if params.ENABLE is defined
+	else params.LAYER is defined %}
+	{% set LAYER = params.LAYER | default(pause_at_layer.layer) | int %}
+	{% set MACRO = params.MACRO | default(pause_at_layer.call, True) %}
+	SET_GCODE_VARIABLE MACRO=SET_PRINT_STATS_INFO VARIABLE=pause_at_layer VALUE="{{ 'enable': ENABLE, 'layer': LAYER, 'call': MACRO }}"
+
+[gcode_macro SET_PRINT_STATS_INFO]
+rename_existing = SET_PRINT_STATS_INFO_BASE
+description = Overwrite, to get pause_next_layer and pause_at_layer feature
+variable_pause_next_layer = { 'enable': False, 'call': "PAUSE" }
+variable_pause_at_layer = { 'enable': False, 'layer': 0, 'call': "PAUSE" }
+gcode = 
+	{% if pause_next_layer.enable %}
+	{action_respond_info("%s, forced by pause_next_layer" % pause_next_layer.call)}
+	{pause_next_layer.call}
+	SET_PAUSE_NEXT_LAYER ENABLE=0
+	{% elif pause_at_layer.enable and params.CURRENT_LAYER is defined and params.CURRENT_LAYER|int == pause_at_layer.layer %}
+	{action_respond_info("%s, forced by pause_at_layer [%d]" % (pause_at_layer.call, pause_at_layer.layer))}
+	{pause_at_layer.call}
+	SET_PAUSE_AT_LAYER ENABLE=0
+	{% endif %}
+	SET_PRINT_STATS_INFO_BASE {rawparams}
+
+[gcode_macro _TOOLHEAD_PARK_PAUSE_CANCEL]
+description = Helper: park toolhead used in PAUSE and CANCEL_PRINT
+gcode = 
+	
+	{% set macro_found = True if printer['gcode_macro _CLIENT_VARIABLE'] is defined else False %}
+	{% set client = printer['gcode_macro _CLIENT_VARIABLE'] %}
+	{% set velocity = printer.configfile.settings.pause_resume.recover_velocity %}
+	{% set use_custom     = False if not macro_found
+	else False if client.use_custom_pos is not defined
+	else True  if client.use_custom_pos|lower == 'true'
+	else False %}
+	{% set custom_park_x  = 0.0 if not macro_found else client.custom_park_x|default(0.0) %}
+	{% set custom_park_y  = 0.0 if not macro_found else client.custom_park_y|default(0.0) %}
+	{% set park_dz        = 2.0 if not macro_found else client.custom_park_dz|default(2.0)|abs %}
+	{% set sp_hop         = 900  if not macro_found else client.speed_hop|default(15) * 60 %}
+	{% set sp_move        = velocity * 60 if not macro_found else client.speed_move|default(velocity) * 60 %}
+	
+	{% set origin    = printer.gcode_move.homing_origin %}
+	{% set act       = printer.gcode_move.gcode_position %}
+	{% set max       = printer.toolhead.axis_maximum %}
+	{% set cone      = printer.toolhead.cone_start_z|default(max.z) %}
+	{% set round_bed = True if printer.configfile.settings.printer.kinematics is in ['delta','polar','rotary_delta','winch']
+	else False %}
+	
+	{% set z_min = params.Z_MIN|default(0)|float %}
+	{% set z_park = [[(act.z + park_dz), z_min]|max, (max.z - origin.z)]|min %}
+	{% set x_park = params.X       if params.X is defined
+	else custom_park_x  if use_custom
+	else 0.0            if round_bed
+	else (max.x - 5.0) %}
+	{% set y_park = params.Y       if params.Y is defined
+	else custom_park_y  if use_custom
+	else (max.y - 5.0)  if round_bed and z_park < cone
+	else 0.0            if round_bed
+	else (max.y - 5.0) %}
+	
+	_CLIENT_RETRACT
+	{% if "xyz" in printer.toolhead.homed_axes %}
+	G90
+	G1 Z{z_park} F{sp_hop}
+	G1 X{x_park} Y{y_park} F{sp_move}
+	{% if not printer.gcode_move.absolute_coordinates %} G91 {% endif %}
+	{% else %}
+	{action_respond_info("Printer not homed")}
+	{% endif %}
+
+[gcode_macro _CLIENT_EXTRUDE]
+description = Extrudes, if the extruder is hot enough
+gcode = 
+	{% set macro_found = True if printer['gcode_macro _CLIENT_VARIABLE'] is defined else False %}
+	{% set client = printer['gcode_macro _CLIENT_VARIABLE'] %}
+	{% set use_fw_retract = False if not macro_found
+	else False if client.use_fw_retract is not defined
+	else True  if client.use_fw_retract|lower == 'true' and printer.firmware_retraction is defined
+	else False %}
+	
+	{% set length = (params.LENGTH|float) if params.LENGTH is defined
+	else 1.0 if not macro_found
+	else client.unretract|default(1.0) %}
+	
+	{% set speed = params.SPEED if params.SPEED is defined
+	else 35 if not macro_found
+	else client.speed_unretract|default(35) %}
+	
+	{% set absolute_extrude = printer.gcode_move.absolute_extrude %}
+	
+	{% if printer.extruder.can_extrude %}
+	{% if use_fw_retract %}
+	{% if length < 0 %}
+	G10
+	{% else %}
+	G11
+	{% endif %}
+	{% else %}
+	M83
+	G1 E{length} F{(speed|float|abs) * 60}
+	{% if absolute_extrude %}
+	M82
+	{% endif %}
+	{% endif %}
+	{% else %}
+	{action_respond_info("Extruder not hot enough")}
+	{% endif %}
+
+[gcode_macro _CLIENT_RETRACT]
+description = Retracts, if the extruder is hot enough
+gcode = 
+	{% set macro_found = True if printer['gcode_macro _CLIENT_VARIABLE'] is defined else False %}
+	{% set client = printer['gcode_macro _CLIENT_VARIABLE'] %}
+	
+	{% set length = (params.LENGTH|float) if params.LENGTH is defined
+	else 1.0 if not macro_found
+	else client.retract|default(1.0) %}
+	
+	{% set speed = params.SPEED if params.SPEED is defined
+	else 35 if not macro_found
+	else client.speed_retract|default(35) %}
+	
+	_CLIENT_EXTRUDE LENGTH=-{length|float|abs} SPEED={speed|float|abs}
+
+[stepper_x]
+step_pin = PF13
+dir_pin = PF12
+enable_pin = !PF14
+microsteps = 16
+rotation_distance = 40
+endstop_pin = PG6
+position_endstop = 0
+position_max = 200
+homing_speed = 50
+
+[stepper_y]
+step_pin = PG0
+dir_pin = PG1
+enable_pin = !PF15
+microsteps = 16
+rotation_distance = 40
+endstop_pin = PG9
+position_endstop = 0
+position_max = 200
+homing_speed = 50
+
+[stepper_z]
+step_pin = PF11
+dir_pin = PG3
+enable_pin = !PG5
+microsteps = 16
+rotation_distance = 8
+endstop_pin = PG10
+position_endstop = 0.5
+position_max = 200
+
+[extruder]
+step_pin = EBBCan: PD0
+dir_pin = !EBBCan: PD1
+enable_pin = !EBBCan: PD2
+microsteps = 16
+rotation_distance = 3.484
+nozzle_diameter = 0.400
+filament_diameter = 1.750
+heater_pin = EBBCan: PB13
+sensor_type = Generic 3950
+sensor_pin = EBBCan: PA3
+control = pid
+pid_kp = 21.527
+pid_ki = 1.063
+pid_kd = 108.982
+min_temp = 0
+max_temp = 270
+pressure_advance = 0.019
+
+[heater_bed]
+heater_pin = PA1
+sensor_pin = PF3
+max_power = 0.6
+sensor_type = EPCOS 100K B57560G104F
+control = watermark
+min_temp = -100
+max_temp = 999
+
+[fan]
+pin = EBBCan: PA0
+
+[mcu]
+canbus_uuid = 642f53509351
+
+[mcu EBBCan]
+canbus_uuid = 127081e7e3c6
+
+[printer]
+kinematics = cartesian
+max_velocity = 300
+max_accel = 3000
+max_z_velocity = 5
+max_z_accel = 100
+
+[board_pins]
+aliases = 
+	
+	EXP1_1=PE8, EXP1_2=PE7,
+	EXP1_3=PE9, EXP1_4=PE10,
+	EXP1_5=PE12, EXP1_6=PE13,
+	EXP1_7=PE14, EXP1_8=PE15,
+	EXP1_9=<GND>, EXP1_10=<5V>,
+	
+	
+	EXP2_1=PA6, EXP2_2=PA5,
+	EXP2_3=PB1, EXP2_4=PA4,
+	EXP2_5=PB2, EXP2_6=PA7,
+	EXP2_7=PC15, EXP2_8=<RST>,
+	EXP2_9=<GND>, EXP2_10=PC5
+=======================
+Extruder max_extrude_ratio=0.266081
+mcu 'mcu': Starting CAN connect
+Created a socket
+webhooks client 4124675784: New connection
+webhooks client 4124675784: Client info {'program': 'Moonraker', 'version': 'v0.8.0-40-gb21f177'}
+mcu 'mcu': Timeout on connect
+Created a socket
+mcu 'mcu': Wait for identify_response
+Traceback (most recent call last):
+  File "/home/661wls/klipper/klippy/serialhdl.py", line 68, in _get_identify_data
+    params = self.send_with_response(msg, 'identify_response')
+  File "/home/661wls/klipper/klippy/serialhdl.py", line 261, in send_with_response
+    return src.get_response([cmd], self.default_cmd_queue)
+  File "/home/661wls/klipper/klippy/serialhdl.py", line 318, in get_response
+    self.serial.raw_send_wait_ack(cmds[-1], minclock, reqclock,
+  File "/home/661wls/klipper/klippy/serialhdl.py", line 253, in raw_send_wait_ack
+    self._error("Serial connection closed")
+  File "/home/661wls/klipper/klippy/serialhdl.py", line 61, in _error
+    raise error(self.warn_prefix + (msg % params))
+serialhdl.error: mcu 'mcu': Serial connection closed
+mcu 'mcu': Timeout on connect
+Created a socket
+mcu 'mcu': Wait for identify_response
+Traceback (most recent call last):
+  File "/home/661wls/klipper/klippy/serialhdl.py", line 68, in _get_identify_data
+    params = self.send_with_response(msg, 'identify_response')
+  File "/home/661wls/klipper/klippy/serialhdl.py", line 261, in send_with_response
+    return src.get_response([cmd], self.default_cmd_queue)
+  File "/home/661wls/klipper/klippy/serialhdl.py", line 318, in get_response
+    self.serial.raw_send_wait_ack(cmds[-1], minclock, reqclock,
+  File "/home/661wls/klipper/klippy/serialhdl.py", line 253, in raw_send_wait_ack
+    self._error("Serial connection closed")
+  File "/home/661wls/klipper/klippy/serialhdl.py", line 61, in _error
+    raise error(self.warn_prefix + (msg % params))
+serialhdl.error: mcu 'mcu': Serial connection closed
+mcu 'mcu': Timeout on connect
+Created a socket
+mcu 'mcu': Wait for identify_response
+Traceback (most recent call last):
+  File "/home/661wls/klipper/klippy/serialhdl.py", line 68, in _get_identify_data
+    params = self.send_with_response(msg, 'identify_response')
+  File "/home/661wls/klipper/klippy/serialhdl.py", line 261, in send_with_response
+    return src.get_response([cmd], self.default_cmd_queue)
+  File "/home/661wls/klipper/klippy/serialhdl.py", line 318, in get_response
+    self.serial.raw_send_wait_ack(cmds[-1], minclock, reqclock,
+  File "/home/661wls/klipper/klippy/serialhdl.py", line 253, in raw_send_wait_ack
+    self._error("Serial connection closed")
+  File "/home/661wls/klipper/klippy/serialhdl.py", line 61, in _error
+    raise error(self.warn_prefix + (msg % params))
+serialhdl.error: mcu 'mcu': Serial connection closed
+mcu 'mcu': Timeout on connect
+Created a socket
+mcu 'mcu': Wait for identify_response
+Traceback (most recent call last):
+  File "/home/661wls/klipper/klippy/serialhdl.py", line 68, in _get_identify_data
+    params = self.send_with_response(msg, 'identify_response')
+  File "/home/661wls/klipper/klippy/serialhdl.py", line 261, in send_with_response
+    return src.get_response([cmd], self.default_cmd_queue)
+  File "/home/661wls/klipper/klippy/serialhdl.py", line 318, in get_response
+    self.serial.raw_send_wait_ack(cmds[-1], minclock, reqclock,
+  File "/home/661wls/klipper/klippy/serialhdl.py", line 253, in raw_send_wait_ack
+    self._error("Serial connection closed")
+  File "/home/661wls/klipper/klippy/serialhdl.py", line 61, in _error
+    raise error(self.warn_prefix + (msg % params))
+serialhdl.error: mcu 'mcu': Serial connection closed
+mcu 'mcu': Timeout on connect
+Created a socket
+mcu 'mcu': Wait for identify_response
+Traceback (most recent call last):
+  File "/home/661wls/klipper/klippy/serialhdl.py", line 68, in _get_identify_data
+    params = self.send_with_response(msg, 'identify_response')
+  File "/home/661wls/klipper/klippy/serialhdl.py", line 261, in send_with_response
+    return src.get_response([cmd], self.default_cmd_queue)
+  File "/home/661wls/klipper/klippy/serialhdl.py", line 318, in get_response
+    self.serial.raw_send_wait_ack(cmds[-1], minclock, reqclock,
+  File "/home/661wls/klipper/klippy/serialhdl.py", line 253, in raw_send_wait_ack
+    self._error("Serial connection closed")
+  File "/home/661wls/klipper/klippy/serialhdl.py", line 61, in _error
+    raise error(self.warn_prefix + (msg % params))
+serialhdl.error: mcu 'mcu': Serial connection closed
+mcu 'mcu': Timeout on connect
+Created a socket
+mcu 'mcu': Wait for identify_response
+Traceback (most recent call last):
+  File "/home/661wls/klipper/klippy/serialhdl.py", line 68, in _get_identify_data
+    params = self.send_with_response(msg, 'identify_response')
+  File "/home/661wls/klipper/klippy/serialhdl.py", line 261, in send_with_response
+    return src.get_response([cmd], self.default_cmd_queue)
+  File "/home/661wls/klipper/klippy/serialhdl.py", line 318, in get_response
+    self.serial.raw_send_wait_ack(cmds[-1], minclock, reqclock,
+  File "/home/661wls/klipper/klippy/serialhdl.py", line 253, in raw_send_wait_ack
+    self._error("Serial connection closed")
+  File "/home/661wls/klipper/klippy/serialhdl.py", line 61, in _error
+    raise error(self.warn_prefix + (msg % params))
+serialhdl.error: mcu 'mcu': Serial connection closed
+mcu 'mcu': Timeout on connect
+Created a socket
+mcu 'mcu': Wait for identify_response
+Traceback (most recent call last):
+  File "/home/661wls/klipper/klippy/serialhdl.py", line 68, in _get_identify_data
+    params = self.send_with_response(msg, 'identify_response')
+  File "/home/661wls/klipper/klippy/serialhdl.py", line 261, in send_with_response
+    return src.get_response([cmd], self.default_cmd_queue)
+  File "/home/661wls/klipper/klippy/serialhdl.py", line 318, in get_response
+    self.serial.raw_send_wait_ack(cmds[-1], minclock, reqclock,
+  File "/home/661wls/klipper/klippy/serialhdl.py", line 253, in raw_send_wait_ack
+    self._error("Serial connection closed")
+  File "/home/661wls/klipper/klippy/serialhdl.py", line 61, in _error
+    raise error(self.warn_prefix + (msg % params))
+serialhdl.error: mcu 'mcu': Serial connection closed
+mcu 'mcu': Timeout on connect
+Created a socket
+mcu 'mcu': Wait for identify_response
+Traceback (most recent call last):
+  File "/home/661wls/klipper/klippy/serialhdl.py", line 68, in _get_identify_data
+    params = self.send_with_response(msg, 'identify_response')
+  File "/home/661wls/klipper/klippy/serialhdl.py", line 261, in send_with_response
+    return src.get_response([cmd], self.default_cmd_queue)
+  File "/home/661wls/klipper/klippy/serialhdl.py", line 318, in get_response
+    self.serial.raw_send_wait_ack(cmds[-1], minclock, reqclock,
+  File "/home/661wls/klipper/klippy/serialhdl.py", line 253, in raw_send_wait_ack
+    self._error("Serial connection closed")
+  File "/home/661wls/klipper/klippy/serialhdl.py", line 61, in _error
+    raise error(self.warn_prefix + (msg % params))
+serialhdl.error: mcu 'mcu': Serial connection closed
+mcu 'mcu': Timeout on connect
+Created a socket
+mcu 'mcu': Wait for identify_response
+Traceback (most recent call last):
+  File "/home/661wls/klipper/klippy/serialhdl.py", line 68, in _get_identify_data
+    params = self.send_with_response(msg, 'identify_response')
+  File "/home/661wls/klipper/klippy/serialhdl.py", line 261, in send_with_response
+    return src.get_response([cmd], self.default_cmd_queue)
+  File "/home/661wls/klipper/klippy/serialhdl.py", line 318, in get_response
+    self.serial.raw_send_wait_ack(cmds[-1], minclock, reqclock,
+  File "/home/661wls/klipper/klippy/serialhdl.py", line 253, in raw_send_wait_ack
+    self._error("Serial connection closed")
+  File "/home/661wls/klipper/klippy/serialhdl.py", line 61, in _error
+    raise error(self.warn_prefix + (msg % params))
+serialhdl.error: mcu 'mcu': Serial connection closed
+mcu 'mcu': Timeout on connect
+Created a socket
+mcu 'mcu': Wait for identify_response
+Traceback (most recent call last):
+  File "/home/661wls/klipper/klippy/serialhdl.py", line 68, in _get_identify_data
+    params = self.send_with_response(msg, 'identify_response')
+  File "/home/661wls/klipper/klippy/serialhdl.py", line 261, in send_with_response
+    return src.get_response([cmd], self.default_cmd_queue)
+  File "/home/661wls/klipper/klippy/serialhdl.py", line 318, in get_response
+    self.serial.raw_send_wait_ack(cmds[-1], minclock, reqclock,
+  File "/home/661wls/klipper/klippy/serialhdl.py", line 253, in raw_send_wait_ack
+    self._error("Serial connection closed")
+  File "/home/661wls/klipper/klippy/serialhdl.py", line 61, in _error
+    raise error(self.warn_prefix + (msg % params))
+serialhdl.error: mcu 'mcu': Serial connection closed
+mcu 'mcu': Timeout on connect
+Created a socket
+mcu 'mcu': Wait for identify_response
+Traceback (most recent call last):
+  File "/home/661wls/klipper/klippy/serialhdl.py", line 68, in _get_identify_data
+    params = self.send_with_response(msg, 'identify_response')
+  File "/home/661wls/klipper/klippy/serialhdl.py", line 261, in send_with_response
+    return src.get_response([cmd], self.default_cmd_queue)
+  File "/home/661wls/klipper/klippy/serialhdl.py", line 318, in get_response
+    self.serial.raw_send_wait_ack(cmds[-1], minclock, reqclock,
+  File "/home/661wls/klipper/klippy/serialhdl.py", line 253, in raw_send_wait_ack
+    self._error("Serial connection closed")
+  File "/home/661wls/klipper/klippy/serialhdl.py", line 61, in _error
+    raise error(self.warn_prefix + (msg % params))
+serialhdl.error: mcu 'mcu': Serial connection closed
+mcu 'mcu': Timeout on connect
+Created a socket
+mcu 'mcu': Wait for identify_response
+Traceback (most recent call last):
+  File "/home/661wls/klipper/klippy/serialhdl.py", line 68, in _get_identify_data
+    params = self.send_with_response(msg, 'identify_response')
+  File "/home/661wls/klipper/klippy/serialhdl.py", line 261, in send_with_response
+    return src.get_response([cmd], self.default_cmd_queue)
+  File "/home/661wls/klipper/klippy/serialhdl.py", line 318, in get_response
+    self.serial.raw_send_wait_ack(cmds[-1], minclock, reqclock,
+  File "/home/661wls/klipper/klippy/serialhdl.py", line 253, in raw_send_wait_ack
+    self._error("Serial connection closed")
+  File "/home/661wls/klipper/klippy/serialhdl.py", line 61, in _error
+    raise error(self.warn_prefix + (msg % params))
+serialhdl.error: mcu 'mcu': Serial connection closed
+mcu 'mcu': Timeout on connect
+Created a socket
+mcu 'mcu': Wait for identify_response
+Traceback (most recent call last):
+  File "/home/661wls/klipper/klippy/serialhdl.py", line 68, in _get_identify_data
+    params = self.send_with_response(msg, 'identify_response')
+  File "/home/661wls/klipper/klippy/serialhdl.py", line 261, in send_with_response
+    return src.get_response([cmd], self.default_cmd_queue)
+  File "/home/661wls/klipper/klippy/serialhdl.py", line 318, in get_response
+    self.serial.raw_send_wait_ack(cmds[-1], minclock, reqclock,
+  File "/home/661wls/klipper/klippy/serialhdl.py", line 253, in raw_send_wait_ack
+    self._error("Serial connection closed")
+  File "/home/661wls/klipper/klippy/serialhdl.py", line 61, in _error
+    raise error(self.warn_prefix + (msg % params))
+serialhdl.error: mcu 'mcu': Serial connection closed
+mcu 'mcu': Timeout on connect
+Created a socket
+mcu 'mcu': Wait for identify_response
+Traceback (most recent call last):
+  File "/home/661wls/klipper/klippy/serialhdl.py", line 68, in _get_identify_data
+    params = self.send_with_response(msg, 'identify_response')
+  File "/home/661wls/klipper/klippy/serialhdl.py", line 261, in send_with_response
+    return src.get_response([cmd], self.default_cmd_queue)
+  File "/home/661wls/klipper/klippy/serialhdl.py", line 318, in get_response
+    self.serial.raw_send_wait_ack(cmds[-1], minclock, reqclock,
+  File "/home/661wls/klipper/klippy/serialhdl.py", line 253, in raw_send_wait_ack
+    self._error("Serial connection closed")
+  File "/home/661wls/klipper/klippy/serialhdl.py", line 61, in _error
+    raise error(self.warn_prefix + (msg % params))
+serialhdl.error: mcu 'mcu': Serial connection closed
+mcu 'mcu': Timeout on connect
+Created a socket
+mcu 'mcu': Wait for identify_response
+Traceback (most recent call last):
+  File "/home/661wls/klipper/klippy/serialhdl.py", line 68, in _get_identify_data
+    params = self.send_with_response(msg, 'identify_response')
+  File "/home/661wls/klipper/klippy/serialhdl.py", line 261, in send_with_response
+    return src.get_response([cmd], self.default_cmd_queue)
+  File "/home/661wls/klipper/klippy/serialhdl.py", line 318, in get_response
+    self.serial.raw_send_wait_ack(cmds[-1], minclock, reqclock,
+  File "/home/661wls/klipper/klippy/serialhdl.py", line 253, in raw_send_wait_ack
+    self._error("Serial connection closed")
+  File "/home/661wls/klipper/klippy/serialhdl.py", line 61, in _error
+    raise error(self.warn_prefix + (msg % params))
+serialhdl.error: mcu 'mcu': Serial connection closed
+mcu 'mcu': Timeout on connect
+Created a socket
+mcu 'mcu': Unable to open CAN port: Failed to transmit: [Errno 105] No buffer space available
+mcu 'mcu': Wait for identify_response
+Traceback (most recent call last):
+  File "/home/661wls/klipper/klippy/serialhdl.py", line 68, in _get_identify_data
+    params = self.send_with_response(msg, 'identify_response')
+  File "/home/661wls/klipper/klippy/serialhdl.py", line 261, in send_with_response
+    return src.get_response([cmd], self.default_cmd_queue)
+  File "/home/661wls/klipper/klippy/serialhdl.py", line 318, in get_response
+    self.serial.raw_send_wait_ack(cmds[-1], minclock, reqclock,
+  File "/home/661wls/klipper/klippy/serialhdl.py", line 253, in raw_send_wait_ack
+    self._error("Serial connection closed")
+  File "/home/661wls/klipper/klippy/serialhdl.py", line 61, in _error
+    raise error(self.warn_prefix + (msg % params))
+serialhdl.error: mcu 'mcu': Serial connection closed
