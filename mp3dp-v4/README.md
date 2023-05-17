@@ -890,5 +890,7 @@ Parts :
   - Update Rear interior panel design
     - Add holes for mounting drag chain, + 2x 3.5mm spaced 12mm, or leave cutout to allow misc drag chain dimensions. 
 
+- Front Panel, consider adding Octopus Boot Loader switch?  Needed to reset Octopus to DFU for bootloader firmware updates
 
-
+Specs:
+- E3D REVO Heater core within BIQU H2 https://e3d-online.zendesk.com/hc/en-us/articles/6536212118173
