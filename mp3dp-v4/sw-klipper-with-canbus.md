@@ -69,9 +69,9 @@ https://github.com/bigtreetech/EBB/blob/master/EBB%20CAN%20V1.1%20(STM32G0B1)/sa
 
 ### CANBus wiring
 
-Using Cat-6 Ethernet Patch cable stranded https://www.amazon.com/gp/product/B01INRUFGK, not ideal, but already have.  Very popular with ~122,000 reviews, however cut and examined wires to learn they're ~26 AWG (or thinner even...)
+Was going to use a [stranded Cat-6 Ethernet Patch cable](https://www.amazon.com/gp/product/B01INRUFGK) I have already.  Despite being very popular with ~122,000 reviews, am not going to use after cutting and examining the wires to learn they're just ~26 AWG, or thinner even...
 
-
+Instead am using Cat 5 24AWG stranded copper.  One pair for CANBus high/low, two pairs for power.  Grounded the final pair with the naive hope of helping shield comms.  Only grounded at end closest to controller
 
 
 
@@ -132,14 +132,16 @@ Configure CanBoot to buildd for EBB v1.2 :
 [ ] Enable Status LED
 
 ```
+make clean
 make
 mv out/canboot.bin ebb_canboot.bin
+```
 
 - Added jumper to Octopus boot0, reset Octopus, should go into DFU mode.
 - Check Octopus is in DFU mode via ```lsusb```, verify output contains ```0483:df11 STMicroelectronics STM Device in DFU Mode```.  Note ```0483:df11``` is common, but could change.  If you see a different Identifier, be sure to use that instead for the instructions that follow.
 - Use dfu-util to upload octopus_canboot.bin and octopus_klipper.bin, follow steps described in https://klipper.discourse.group/t/setup-ebb36-v1-2-connected-to-octopus-pro/6617/5?u=azab2c
   ```
-  sudo dfu-util -a 0 -D ~/CanBoot/octopus_canboot.bin --dfuse-address 0x08000000:force:mass-erase -d 0483:df11
+  sudo dfu-util -a 0 -D ~/CanBoot/octopus_canboot.bin --dfuse-address 0x08000000:force:mass-erase:leave -d 0483:df11
   ```
   ```
   sudo dfu-util -a 0 -D ~/klipper/octopus_klipper.bin --dfuse-address 0x08008000:leave -d 0483:df111
@@ -166,28 +168,39 @@ Returned canbus identifiers for Octopus and EBB36 just once.  After that they we
 
 So, if the devices not being displayed means they're working, or, maybe that they're not connected...  Not ideal.  So, am verifying CANBus is connected and configured by exercising end-to-end functionality, testing stepper motion, and EBB36 connected hotend/fan/extruder motion.
 
-- Power down EBB36.  Ensure power is only provided by USB-C, i.e. ensure CANBus cable not connected.  Add jumper to VBUS header.
+- Power down EBB36.  Ensure power is only provided by USB-C, i.e. ensure CANBus cable not connected.  Add jumper to VUSB header.
 - Power up EBB.  Boot EBB36 into DFU mode (press and hold BOOT and RESET buttons, then release RESET before releasing BOOT).
 - Check Pi can see EBB36 is connected, and in DFU mode using ```lsusb```.  Output should include something like...
   - ```
     0483:df11 STMicroelectronics STM Device in DFU Mode
     ```
-  -  Note the ```0483:df11```, use/substiture that identifier in the following steps.
+  -  Note the ```0483:df11```, use/substitute that identifier in the following steps.
 - Flash CanBoot firmware to EBB36...
 ```
-sudo dfu-util -a 0 -D ~/CanBoot/ebb_canboot.bin --dfuse-address 0x08000000:force:mass-erase -d 0483:df11 
+sudo dfu-util -a 0 -D ~/CanBoot/ebb_canboot.bin --dfuse-address 0x08000000:force:mass-erase:leave -d 0483:df11 
+
+!!! Attempt #2 with 250K baud...
+
+sudo dfu-util -a0 -D ~/CanBoot/ebb_250k_canboot.bin --dfuse-address 0x08000000:force:mass-erase:leave -d 0483:df11
+
+
 ```
 - <mark>???  Flash Klipper firmware to EBB36...
 ```
 sudo dfu-util -a 0 -D ~/klipper/ebb_klipper.bin --dfuse-address 0x08008000:leave -d 0483:df11
 ```
 - Power down EBB36.  Remove USB-C cable from Pi to EBB.  
-- Remove VBUS jumper.  Add 120R jumper.  
+- Remove VUSB jumper.  Add 120R jumper.  
 - Connect fan to EBB36.  Consider delaying connecting other components to EBB36 until getting fan connected to EBB36 working.
 - Connect CANBus cable.
 - Ensure USB-C (re)connected from Pi to Octopus
 - Reset Octopus
 - Verify
+
+
+**Alternatively... ** try uploading klipper without bootloader to EBB
+
+sudo dfu-util -a 0 -D ~/klipper/ebb_noboot_klipper.bin --dfuse-address 0x08000000:force:mass-erase -d 0483:df11
 
 
 python3 ~/CanBoot/scripts/flash_can.py -f ~/klipper/ebb_klipper.bin -u 127081e7e3c6
