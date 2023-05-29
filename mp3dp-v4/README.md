@@ -432,6 +432,10 @@ https://github.com/bigtreetech/BIGTREETECH-OCTOPUS-V1.0/blob/master/Hardware/BIG
   - Install/configure driver, see product [page](https://www.amazon.com/gp/product/B083C12N57/ref=ppx_yo_dt_b_search_asin_title?ie=UTF8&psc=1) and/or manual.
   - Check temp ```vcgencmd measure_temp```
 
+#### Wiring Endstops
+- Related:
+  - [Ryan - Use signal and ground for endstops, do **NOT** use power](https://forum.v1e.com/t/matts-mp3dp-repeat-build/30859/172?u=azab2c)
+
 ## <big>Software</big>
 
 Stock MP3DP v4 builds use Marlin and straight forward separate bundle of wiring from the Controller board, to all the hotend components, e.g. Hot End, extruder, Thermister, Fan(s), BL Touch, etc...  
@@ -484,6 +488,7 @@ Some of the [Community MP3DP Build Logs](https://forum.v1e.com/search?expanded=t
     - Glass on Alu Bed
     - [E3D Hemera](https://forum.v1e.com/t/mp3dp-repeat-v2-aka-v4-z-steppers/35967/5?u=azab2c)
     - [MP3DP Mod - Z Moto Brake, prevent free fall](https://forum.v1e.com/t/mp3dp-repeat-v2-aka-v4-z-steppers/35967/6?u=azab2c)
+    - [Belt pulling out from X carriage](https://forum.v1e.com/t/top-belt-keep-pulling-out-from-the-x-carriage-v4/37870)
 - @ aali0101's 250mm^3 https://forum.v1e.com/t/repeat-v2/33330/251?u=azab2c
 - @ probrwr's 235mm x 235mm x ??? https://forum.v1e.com/t/mp3dp-v4-build-sw-virginia/37238
     - [ZYLTech Extrusion](https://forum.v1e.com/t/mp3dp-v4-build-sw-virginia/37238/2?u=azab2c)
@@ -816,6 +821,18 @@ Parts:
 
 - H2 Revo comes with 2x M3x16mm for attaching 35x35x10 Fan to HotEnd body, too short imo.  If using the fan, consider 2x M3x20mm instead. 
 
+
+
+### Belting the XY Gantry
+- Related / Tips:
+  - [v3 Belting the gantry](https://docs.v1e.com/mp3dp/version3assm/#belting-the-gantry)
+  - [Dan's XY belts](https://forum.v1e.com/t/mp3dp-v4-build-plog/36010/18?u=azab2c)
+  - [Niget's belt](https://forum.v1e.com/t/not-another-mp3dp-v4/37429/116?u=azab2c)
+  - [Ryan - start with belts a bit looser than you'd expect](https://forum.v1e.com/t/mp3dp-v4-build/36437/62?u=azab2c)
+  - [Ryan - X rail should move smoothly](https://forum.v1e.com/t/mp3dp-v4-build/36437/166?u=azab2c)
+  - [MattMed's belt squaring and tensioning adventures](https://forum.v1e.com/t/matts-mp3dp-repeat-build/30859/148?u=azab2c)
+  - [Barry - Belt tension affects squareness, tighten upper and lower belts to strum at same frequency](https://forum.v1e.com/t/matts-mp3dp-repeat-build/30859/164?u=azab2c)
+  - [Ryan - use needle nose pliers to help insert/push locking belt piece into place](https://forum.v1e.com/t/matts-mp3dp-repeat-build/30859/165?u=azab2c)
 # <big>Firmware</big>
 
 
