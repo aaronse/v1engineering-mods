@@ -18,7 +18,7 @@ See Official V1E [MP3DP V4 Docs](https://docs.v1e.com/mp3dp), they reference :
 <table style="width:100%" border=0><tr>
 <td with="33%">
 
-![image](upload://sKmcR0DILU7sQ4IPn4FrIQifLq0.jpeg)
+![image](https://docs.v1e.com/img/mp3dpv4/mp3dpv4_1.jpg)
 
 </td>
 <td width="33%">
@@ -29,7 +29,7 @@ See Official V1E [MP3DP V4 Docs](https://docs.v1e.com/mp3dp), they reference :
 
 <td width="33%">
 
-![image](https://docs.v1e.com/img/mp3dpv4/mp3dpv4_4.webp)
+![image](https://docs.v1e.com/img/mp3dpv4/MP3DP%20v4%20v52.png)
 
 </td>
 </tr>
@@ -86,7 +86,7 @@ Related:
 
 All that said, am biased toward building MP3DP v4 largely because of the V1E community support.  To me, the V1E mindset is focused on getting great quality results for great value.  This resonates with me more than paying a significant premium for something that pushes the limits, and may involve lots of maintenance.  Creating, experimenting and extending is more fun than maintaining.
 
-## <big>SIZING</big>
+# <big>SIZING</big>
 - Default design is for 200mm x 200mm x200mm (not common).
   - Smaller builds like this are more rigid, so better-quality/faster.
 
@@ -134,7 +134,7 @@ All that said, am biased toward building MP3DP v4 largely because of the V1E com
 
 
 
-## <big>BOM / PARTS</big>
+# <big>BOM / PARTS</big>
 
 **Read:** https://forum.v1e.com/t/mp3dp-v4-bom/35315/79?u=azab2c
 
@@ -386,7 +386,7 @@ Related
   - Dan's used [0.5mm Noz, 2 walls, 30% adaptive cubic infill](https://forum.v1e.com/t/mp3dp-v4-build-plog/36010/83?u=azab2c)
 
 
-## <big>Assembly</big>
+# <big>Assembly</big>
 <mark>TODO:</mark>
 Related
 - Until v4 docs available, reading through [v3 Assembly doc](https://docs.v1e.com/mp3dp/version3assm/) will help.
@@ -436,7 +436,13 @@ https://github.com/bigtreetech/BIGTREETECH-OCTOPUS-V1.0/blob/master/Hardware/BIG
 - Related:
   - [Ryan - Use signal and ground for endstops, do **NOT** use power](https://forum.v1e.com/t/matts-mp3dp-repeat-build/30859/172?u=azab2c)
 
-## <big>Software</big>
+
+### Bed Assembly
+
+Steve's Builds shows how to prep and adhere heater bed and magnet layers to Alu plate
+https://www.youtube.com/watch?v=dnAZ1nw6Euk&t=13194s
+
+# <big>Software</big>
 
 Stock MP3DP v4 builds use Marlin and straight forward separate bundle of wiring from the Controller board, to all the hotend components, e.g. Hot End, extruder, Thermister, Fan(s), BL Touch, etc...  
 
@@ -452,13 +458,13 @@ For my build, am instead going use this opportunity to learn about Klipper and C
 Print something, consider sharing your build details, build journey, and claim a [MP3DP serial number](https://forum.v1e.com/t/mp3dp-repeat-serial-number-log/29525) for posterity's sake.
 
 
-## <big>Troubleshooting Printing Issues</big>
+# <big>Troubleshooting Printing Issues</big>
 Some troubleshooting related topics/posts:
 - https://forum.v1e.com/t/mp3dp-v4-build/36437/475?u=azab2c
 
 
 
-## <big>MP3DP v4 V1E Community builds / builders</big>
+# <big>MP3DP v4 V1E Community builds / builders</big>
 
 Some of the [Community MP3DP Build Logs](https://forum.v1e.com/search?expanded=true&q=%23mostly-printed-3d-printer-mp3dp%3Ayour-builds-mp3dp%20order%3Alatest_topic) that helped me.
 
@@ -539,7 +545,7 @@ Some of the [Community MP3DP Build Logs](https://forum.v1e.com/search?expanded=t
 - Dan's costs https://forum.v1e.com/t/mp3dp-v2/37092/3?u=azab2c
 
 
-#### STATUS
+# <big>STATUS</big>
 
   ```javascript
 
@@ -557,15 +563,13 @@ Some of the [Community MP3DP Build Logs](https://forum.v1e.com/search?expanded=t
         2 x Tension Block XY.3mf   1hr
         6 x Z Belt Holder.3mf  6 x 0.5hr, 3hrs
 
+        mods\probrwr-h2-mount\BIQU H2 BLTouch Mount V2.3mf
+        mods\probrwr-h2-mount\H2 to Hemera Adapter v7.3mf
+
     // INPROGRESS
 
-C:\git\v1engineering-mods\mp3dp-v4\mods\probrwr-h2-mount\BIQU H2 BLTouch Mount V2.3mf
-C:\git\v1engineering-mods\mp3dp-v4\mods\probrwr-h2-mount\H2 to Hemera Adapter v7.3mf
-
     // TODO
-    ───Hemera
-        Hemera Fan Shroud.3mf
-
+    
     ├───Misc 2020 clips and parts
         2020 Corner Bracket.3mf
         cable tie Wire Hanger.3mf
@@ -577,10 +581,6 @@ C:\git\v1engineering-mods\mp3dp-v4\mods\probrwr-h2-mount\H2 to Hemera Adapter v7
         Bed Washer.3mf
         filament Rev Bowden Holder.3mf
         Rail Aligner.3mf
-
-    ├───SKR Pro
-        SKR Pro Cover.3mf
-        SKR Pro Wire tie.3mf
 
     └───TFT E3 V3
         TFT CASE V3.STL
@@ -896,7 +896,11 @@ PSU Options
 Parts :
 - https://www.amazon.com/gp/product/B07WJ4CPF5/ref=ppx_yo_dt_b_search_asin_title?ie=UTF8&th=1
   - Specs :
+<table width=50%><tr><td>
+
   ![](https://m.media-amazon.com/images/I/61gg+al37kL._SX522_.jpg)
+
+</td></tr></table>
 
 - TODO:  Design Updates
   - Update Design for my Mod of Z Post
