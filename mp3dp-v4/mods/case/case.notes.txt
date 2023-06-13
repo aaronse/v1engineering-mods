@@ -1,11 +1,23 @@
-TASKS: TODO:
-- Boss/standoffs for Pi
-- Case Mount, clip recesses
+TASKS:
 - Case Mount, connectors arms 2020 to case
+- Lid, add positive stop to lid so will stop bottom's left plate.
+- Base, design support arms
+- Lid, extend overhang, avoid left panel being proud
+- * Boss/standoffs for Pi
+- * Case Mount, clip recesses
+- * cutout for wiring exit
+- * holes sized/spaced for 2020
+- * leave knockouts for 2020 holes
+- * reduce pi nub dia size
+- * increase hinge clearance
+- * remove thin tab for wiring
+- * increase knockout thickness for holes
+- * lcd support left front corner
 
 
+Hexagon Vent/Grill Info:
 
-Radias=3.6 , Spacing=1.8
+Radias = Edge = 3.6mm, Hex Spacing=1.8
 
 Horizontal Hex:
 Quantity/Distance:
