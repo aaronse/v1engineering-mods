@@ -1,0 +1,26 @@
+TASKS: TODO:
+- Boss/standoffs for Pi
+- Case Mount, clip recesses
+- Case Mount, connectors arms 2020 to case
+
+
+
+Radias=3.6 , Spacing=1.8
+
+Horizontal Hex:
+Quantity/Distance:
+5
+( 4 * ( ( 2 * 7.2 ) - 0.4825 ) ) * 1 mm
+
+Quantity/Distance:
+3
+( 2 * ( ( 3.118 * 2 ) + 1.8 ) ) * 1 mm
+
+Vertical Hex:
+Quantity/Distance:
+2
+( 1 * ( ( 2 * 7.2 ) - 0.4825 ) ) * 1 mm
+
+Quantity/Distance:
+8
+-( 7 * ( ( 3.118 * 2 ) + 1.8 ) ) * 1 mm
