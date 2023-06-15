@@ -16,7 +16,6 @@ Some notes related to the Pi+TFT35 Case I end up using/modding/creating...
 
 
 # Printing
-
 - Used PETG for better temp resilience and more flex/spring to help parts fit without cracking.
 - Infill: Cura's Tri-Hexagon infill at 25% goes well with the Hexagon vent holes.
 
@@ -40,28 +39,31 @@ Some notes related to the Pi+TFT35 Case I end up using/modding/creating...
 
 
 # Hexagon Vent/Grill Info
-Some dimension info about the hexagon vent.
+Some Fusion 360 specific details describing the hexagon vent dimensions.
 
 Radius = Edge = 3.6mm, Hex Spacing=1.8
 
-Horizontal Hex:
-Quantity/Distance:
-5
-( 4 * ( ( 2 * 7.2 ) - 0.4825 ) ) * 1 mm
+Repeat Pattern for Horizontally aligned Hexagons:
+```
+    Quantity/Distance:
+    5
+    ( 4 * ( ( 2 * 7.2 ) - 0.4825 ) ) * 1 mm
 
-Quantity/Distance:
-3
-( 2 * ( ( 3.118 * 2 ) + 1.8 ) ) * 1 mm
+    Quantity/Distance:
+    3
+    ( 2 * ( ( 3.118 * 2 ) + 1.8 ) ) * 1 mm
+```
 
-Vertical Hex:
-Quantity/Distance:
-2
-( 1 * ( ( 2 * 7.2 ) - 0.4825 ) ) * 1 mm
+Repeat Pattern for Vertically aligned Hexagons:
+```
+    Quantity/Distance:
+    2
+    ( 1 * ( ( 2 * 7.2 ) - 0.4825 ) ) * 1 mm
 
-Quantity/Distance:
-8
--( 7 * ( ( 3.118 * 2 ) + 1.8 ) ) * 1 mm
-
+    Quantity/Distance:
+    8
+    -( 7 * ( ( 3.118 * 2 ) + 1.8 ) ) * 1 mm
+```    
 
 # Related Work:
 
