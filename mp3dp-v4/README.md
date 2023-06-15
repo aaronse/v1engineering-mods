@@ -424,8 +424,8 @@ https://github.com/bigtreetech/BIGTREETECH-OCTOPUS-V1.0/blob/master/Hardware/BIG
 
 #### Wiring Raspberry PI
 
-- For my build, am using a small [LCD TFT 3.5" (320x480) Touch Screen](https://www.amazon.com/gp/product/B083C12N57/ref=ppx_yo_dt_b_search_asin_title?ie=UTF8&psc=1), may upgrade to larger higher res later...
-  - [Specs and pinouts](http://www.lcdwiki.com/3.5inch_RPi_Display)
+- For my build, am using a small [LCD TFT 3.5" (320x480) GeeekPi Touch Screen](https://www.amazon.com/gp/product/B083C12N57/ref=ppx_yo_dt_b_search_asin_title?ie=UTF8&psc=1), may upgrade to larger higher res later...
+  - [Specs and pinouts](http://www.lcdwiki.com/3.5inch_RPi_Display) and [Specs](wiki.52pi.com/index.php?title=K-0403)
   - [Driver](https://github.com/goodtft/LCD-show)
   - Adhere heat sinks with thermal paste.  Check sufficient clearance between heatsink, fan and TFT.
   - Mount Fan, TFT screen, and standoffs to support TFT screen.
@@ -915,3 +915,20 @@ Parts :
 
 Specs:
 - E3D REVO Heater core within BIQU H2 https://e3d-online.zendesk.com/hc/en-us/articles/6536212118173
+
+Pi+TFT enclosure design
+- Sliding lip+clip
+ - Inner lip dia 5.7
+ - Outer clip dia 7.2
+ - ClipThickness 2.5
+ - Notch/Rib
+  - Inset 2.6
+  - RibHeight 0.5
+  - RibWidth 2.1
+  - M2.5 hole 2.6mm, outer 4.2 +
+
+Related:
+- Prusa MK3 LCD
+ - https://github.com/prusa3d/Original-Prusa-i3/blob/MK3S/Printed-Parts/STL/LCD-cover-ORIGINAL-MK3.stl
+ - MK3/4 Display mount, clips into 2020 https://www.printables.com/model/81026-prusa-display-mk3-mk4/files
+ - Used M2.5 sized nubs/boss from https://github.com/prusa3d/Original-Prusa-i3/blob/MK3S/Printed-Parts/STL/rpi-zero-frame.stl
