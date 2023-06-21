@@ -79,6 +79,7 @@ Related:
     389 × 389 × 457mm
   - Frame overhead 133 x 133 x 201
 - https://www.pantheondesign.com
+  - [Marga Cipta acrylic](https://www.margacipta.com/)
 - [RailCore](https://railcore.org/) too $$$
   - [BOM](https://docs.google.com/spreadsheets/d/1sxKl6h23SXfuNM7hNiX35rIrpISw8AruEEcNl2Fvibk/edit)
 
