@@ -933,3 +933,27 @@ Related:
  - https://github.com/prusa3d/Original-Prusa-i3/blob/MK3S/Printed-Parts/STL/LCD-cover-ORIGINAL-MK3.stl
  - MK3/4 Display mount, clips into 2020 https://www.printables.com/model/81026-prusa-display-mk3-mk4/files
  - Used M2.5 sized nubs/boss from https://github.com/prusa3d/Original-Prusa-i3/blob/MK3S/Printed-Parts/STL/rpi-zero-frame.stl
+
+
+## Filament Runout/Jamb Sensor
+
+### Parts
+- [$19 BTT - Smart Filament Sensor module](https://www.amazon.com/gp/product/B07Z97582P)
+  - [BTT - Smart Filament Sensor module - User Manual.pdf](https://github.com/bigtreetech/smart-filament-detection-module/blob/master/manual/smart%20filament%20sensor%20module%20manual201125.pdf)
+    - Read instructions, including "VI. Wiring Method" which shows pinout for Voltage, Signal, Ground.  Pay attention since board doesn't have reverse voltage protection 🤦‍♂️.
+
+### Related
+- [Setup a BTT Smart Filament Sensor](https://docs.vorondesign.com/community/howto/samwiseg0/btt_smart_filament_sensor.html)
+- [Teaching Tech - BTT Smart filament sensor guide - Detect filament runout and jams](https://www.youtube.com/watch?v=9gLSJIxiuwo)
+- [BigTreeTech - Smart Filament Sensor - 2022 - Chris's Basement](https://www.youtube.com/watch?v=0WDfluszvd0)
+- [Klipper Docs >  filament_motion_sensor](https://www.klipper3d.org/Config_Reference.html#filament_motion_sensor), note sensore detects *motion*, is **NOT** *switch* based.
+- https://www.reddit.com/r/klippers/comments/rv5en3/btt_octopus_and_btt_smart_filamentsensor/, recommends :
+ - 20mm detection length for BIQU h2 direct drive
+ - switch_pin: ^PG12
+- https://www.reddit.com/r/ender5plus/comments/11bx60g/looking_for_some_klipper_help_for_a_filament/
+ - Defines runout macros
+
+- [BTT Smart Filament Sensor - InDepth Review - Design Prototype Test](https://www.youtube.com/watch?v=UUx2R9u6ohE)
+  - Thoughts... "everything about this sensor is a disaster, complete waste of money".
+- [BTT Smart Filament Sensor Electronics Discussion - Design Prototype Test](https://www.youtube.com/watch?v=7xVRTtWErvo)
+  - Thoughts... "Unmitigated pile of fesces"
