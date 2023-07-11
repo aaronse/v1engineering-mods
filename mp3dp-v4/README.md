@@ -935,25 +935,11 @@ Related:
  - Used M2.5 sized nubs/boss from https://github.com/prusa3d/Original-Prusa-i3/blob/MK3S/Printed-Parts/STL/rpi-zero-frame.stl
 
 
-## Filament Runout/Jamb Sensor
+## Gratuitous Lighting
+Picked up [Adafruit NeoDriver - I2C to NeoPixel Driver Board - Stemma QT](https://www.adafruit.com/product/5766) during Adafruit's recent weekly [50% discount product of the week live stream](https://www.youtube.com/watch?v=rn2l9tPTrg0).
 
-### Parts
-- [$19 BTT - Smart Filament Sensor module](https://www.amazon.com/gp/product/B07Z97582P)
-  - [BTT - Smart Filament Sensor module - User Manual.pdf](https://github.com/bigtreetech/smart-filament-detection-module/blob/master/manual/smart%20filament%20sensor%20module%20manual201125.pdf)
-    - Read instructions, including "VI. Wiring Method" which shows pinout for Voltage, Signal, Ground.  Pay attention since board doesn't have reverse voltage protection 🤦‍♂️.
+Planning to have lighting that doesn't change with high frequency, need to inject power, so may as well use this board connected to Pi's I2C.
 
-### Related
-- [Setup a BTT Smart Filament Sensor](https://docs.vorondesign.com/community/howto/samwiseg0/btt_smart_filament_sensor.html)
-- [Teaching Tech - BTT Smart filament sensor guide - Detect filament runout and jams](https://www.youtube.com/watch?v=9gLSJIxiuwo)
-- [BigTreeTech - Smart Filament Sensor - 2022 - Chris's Basement](https://www.youtube.com/watch?v=0WDfluszvd0)
-- [Klipper Docs >  filament_motion_sensor](https://www.klipper3d.org/Config_Reference.html#filament_motion_sensor), note sensore detects *motion*, is **NOT** *switch* based.
-- https://www.reddit.com/r/klippers/comments/rv5en3/btt_octopus_and_btt_smart_filamentsensor/, recommends :
- - 20mm detection length for BIQU h2 direct drive
- - switch_pin: ^PG12
-- https://www.reddit.com/r/ender5plus/comments/11bx60g/looking_for_some_klipper_help_for_a_filament/
- - Defines runout macros
-
-- [BTT Smart Filament Sensor - InDepth Review - Design Prototype Test](https://www.youtube.com/watch?v=UUx2R9u6ohE)
-  - Thoughts... "everything about this sensor is a disaster, complete waste of money".
-- [BTT Smart Filament Sensor Electronics Discussion - Design Prototype Test](https://www.youtube.com/watch?v=7xVRTtWErvo)
-  - Thoughts... "Unmitigated pile of fesces"
+Related:
+  - https://hackaday.com/2022/02/01/did-you-know-that-the-raspberry-pi-4-has-more-spi-i2c-uart-ports/#:~:text=We've%20gotten%20used%20to,on%20its%2040%2Dpin%20header.
+  - https://blog.stabel.family/raspberry-pi-4-multiple-spis-and-the-device-tree/
