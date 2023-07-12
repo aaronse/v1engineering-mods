@@ -1,4 +1,4 @@
-.STL files in this folder are from https://github.com/SnakeOilXY/SnakeOil-XY, 
+.STEP, .STL files in this folder not prefixed with "aza-" were copied as-is from https://github.com/SnakeOilXY/SnakeOil-XY
 
 .gcode files were generated for my printer.
 
