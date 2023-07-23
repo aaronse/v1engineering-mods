@@ -18,6 +18,7 @@ Machine capability depends on the design, build materials, assembly quality, and
 |Quality|Material|Bit|DOC|Plunge Angle|Feed XY|Feed Z|Speed|Coolant|Notes / Source |
 | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- |
 ||Alu|6mm 2 flute|10mm|Angle???|15mm/s|4mm/s|Speed???|Coolant???|@ Tokoloshe, <br/>- Video https://www.youtube.com/watch?v=d00vYzRvVSI |
+||
 ||Acrylic|3mm 1 flute upcut|6mm|60deg|20mm/s, finish: 10mm/s|2mm/s|Makita/Katsu 1 = lowest|None|@Olivier [Acylic on LR2](https://forum.v1e.com/t/acrylic-on-lr2/33034/29?u=azab2c)<br/>- step-over: 30%, trochoidal-stepover : 20%, trochoidal-width: 50%, oscillation: 0.05mm
 ||
 ||Polycarbonate|1/8" 2 flute straight cut|3mm|45deg|50mm/s|13mm/s|???||@jjwharris<br/>- Video @ https://www.youtube.com/watch?v=U8_uKYhMN8c<br/>- https://forum.v1e.com/t/cutting-polycarbonate/6869/7?u=azab2c
