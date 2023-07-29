@@ -50,6 +50,10 @@ Machine capability depends on the design, build materials, assembly quality, and
   - Mapp gas
 - [Protect front and back faces during flame polish](https://forum.v1e.com/t/acrylic-on-lr2/33034/32?u=azab2c)
 
+## Drawing
+- Consider [Pentel EnerGel RTX Retractable Liquid Gel Pen, (0.3mm) Needle Tip, Extra Fine Line, Blue Ink, 3-Pk (BLN73BP3C)](https://www.amazon.com/gp/product/B01NAVDLI5)
+  - Used by misc [forum members](https://forum.v1e.com/t/another-florida-build-lr3-2/38080/185?u=azab2c).
+
 ### Resources
 - [CNC Production Routing Guide](https://forum.v1e.com/t/acrylic-troubleshooting/5283/4?u=azab2c)
 
