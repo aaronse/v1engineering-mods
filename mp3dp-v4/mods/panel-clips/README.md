@@ -1,8 +1,9 @@
-# Panel clips, hinges and misc enclosure hardware
+# MP3DP v4 - Panel clips, hinges and misc enclosure hardware ideas
 
 Notes/links/models related to panels and enclosures.
 
 Related :
+- Search results for '2020 hinge' on [Printables](https://www.printables.com/search/all?q=2020%20hinge), [Thangs](https://thangs.com/search/2020%20hinge?scope=all), [Yeggi](https://www.yeggi.com/q/2020+hinge/)
 - [Revo Nozzle holder](https://www.printables.com/model/99012-revo-nozzle-holder-for-prusa-mk3s)
 
 Voron enclosure models :
