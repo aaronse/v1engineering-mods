@@ -1,4 +1,4 @@
-Sharing notes/questions for my (likely slow) MP3DP v4 build, will periodically update as I make progress.  Appreciate all the info people have been sharing, hoping my aggregated notes here helps others.  This'll be a lagged snapshot of what I'm frequently pushing to [github](https://github.com/aaronse/v1engineering-mods/blob/main/mp3dp-v4).
+﻿Sharing notes/questions for my (likely slow) MP3DP v4 build, will periodically update as I make progress.  Appreciate all the info people have been sharing, hoping my aggregated notes here helps others.  This'll be a lagged snapshot of what I'm frequently pushing to [github](https://github.com/aaronse/v1engineering-mods/blob/main/mp3dp-v4).
 
 
 # <big>MP3DP v4 (aka Repeat v2)</big> <small>— 3D Printed, CNC'd CoreXY 3D Printer</small>
@@ -346,6 +346,7 @@ Related
 
   BIQU H2
   https://www.youtube.com/watch?v=zyKH05bBs4Q
+  https://github.com/bigtreetech/H2-Series
 
   BIQU H2S Revo
   https://www.youtube.com/watch?v=4X1F-dLVT3g
