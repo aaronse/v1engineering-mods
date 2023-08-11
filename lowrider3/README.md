@@ -17,7 +17,7 @@ Machine capability depends on the design, build materials, assembly quality, and
 
 |Quality|Material|Bit|DOC|Plunge Angle|Feed XY|Feed Z|Speed|Coolant|Notes / Source |
 | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- |
-||Alu|[V1E 1/8" Carbide single flute](https://www.v1e.com/products/carbide-single-flute)|7mm|90|20mm/s|4mm/s|RPM?|25psi air + hint of IPA|Trochoidal Milling: Stepover 10% Width: 50% Oscillation: 0<br/>https://youtu.be/wTbvzWy-f1o |
+||Alu|[V1E 1/8" Carbide single flute](https://www.v1e.com/products/carbide-single-flute)|7mm|90deg|20mm/s|4mm/s|RPM?|25psi air + hint of IPA|Trochoidal Milling: Stepover 10% Width: 50% Oscillation: 0<br/>https://youtu.be/wTbvzWy-f1o |
 ||
 ||Alu|6mm 2 flute|10mm|Angle???|15mm/s|4mm/s|Speed???|Coolant???|@ Tokoloshe, <br/>- Video https://www.youtube.com/watch?v=d00vYzRvVSI |
 ||
