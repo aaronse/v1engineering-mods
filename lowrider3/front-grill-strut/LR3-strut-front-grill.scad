@@ -48,6 +48,8 @@ cnc_name =
   //"Aza's Lowrider 3";
   "Milly McMillFace";
 
+cnc_color = "black";
+
 // Font used for CNC name text.  MUST specify a font that's already 
 // already installed and available for OpenSCAD to use, see
 // File menu -> Help -> Font List.  Also, the autocenter logic relies
@@ -99,7 +101,7 @@ function calcTextWidth(s, i=0, ret=0) =
 totalCharWidth = calcTextWidth(cnc_name);
 
 difference() {
-  color("black")
+  color(cnc_color)
     square([beam_len, strut_height]);
   
   // cut out all mountingHoles, top and bottom
