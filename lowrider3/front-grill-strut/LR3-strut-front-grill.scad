@@ -76,7 +76,8 @@ strut_height = 80;
 zone_height = 30;
 zone_padding = 11;
 bit_diameter = 3.175;
-
+// Choose whether to use keyholes for mounting screws
+use_keyholes = "yes"; //[yes,no]
 // Computed variables
 strike_spacing = bit_diameter * 3;
 fontLineHeight = font_size + 3;
@@ -101,8 +102,8 @@ difference() {
   color("black")
     square([beam_len, strut_height]);
   
-  // cut out all keyholes (and notch at bottom)
-  for (i=[0:num_keys-1]) keyhole(7.5 + key_pitch*i);
+  // cut out all mountingHoles, top and bottom
+  for (i=[0:num_keys-1]) mountingHole(7.5 + key_pitch*i);
 
   // V1E Logo
   translate([31 + key_pitch, 57])
@@ -196,12 +197,20 @@ difference() {
 }
 
 
-module keyhole(xpos=7.5) {
-  translate([xpos, 60.5]) {
-    circle(d=9.84, $fn=60);
-    hull() for (y=[0, 13.5]) translate([0, y]) circle(d=5.1, $fn=30);
+module mountingHole(xpos=7.5) {
+  if (use_keyholes == "yes") {
+    translate([xpos, 60.5]) {
+      circle(d=9.84, $fn=60);
+      hull() for (y=[0, 13.5]) translate([0, y]) circle(d=max(bit_diameter, 5.1), $fn=30);
+    }
+    hull() for (y=[-1, 6]) translate([xpos, y]) circle(d=max(bit_diameter, 5.1), $fn=30);
   }
-  hull() for (y=[-1, 6]) translate([xpos, y]) circle(d=5.1, $fn=30);
+  else {
+    translate([xpos, 60.5]) {
+      hull()  translate([0, 13.5]) circle(d=max(bit_diameter, 5.1), $fn=30);
+    }
+    hull() translate([xpos, 6]) circle(d=max(bit_diameter, 5.1), $fn=30);
+  }
 }
 
 // For comparison against reference
