@@ -17,7 +17,7 @@ Machine capability depends on the design, build materials, assembly quality, and
 
 |Quality|Material|Bit|DOC|Plunge Angle|Feed XY|Feed Z|RPM/Speed|Coolant|Notes / Source |
 | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- |
-||Generic Pine|[1/2" dovetail](https://www.ecotools.be/hm-zwaluwstaartfrees-12-7-mm)|5mm|Plunge Angle?|11.7mm/s|3mm/s|Katsu 4|Coolant|- Conventional + Climb milling<br/>- https://forum.v1e.com/t/how-to-work-out-milling-settings/39117/13?u=azab2c|
+||Generic Pine|[1/2" dovetail](https://www.ecotools.be/hm-zwaluwstaartfrees-12-7-mm)|5mm|Plunge Angle?|11.7mm/s|3mm/s|Katsu 4||- Conventional + Climb milling<br/>- https://forum.v1e.com/t/how-to-work-out-milling-settings/39117/13?u=azab2c|
 ||
 ||Alu|[V1E 1/8" Carbide single flute](https://www.v1e.com/products/carbide-single-flute)|7mm|90deg|20mm/s|4mm/s|12K-15K|25psi air + hint of IPA|Trochoidal Milling: Stepover 10% Width: 50% Oscillation: 0<br/>https://youtu.be/wTbvzWy-f1o |
 ||
