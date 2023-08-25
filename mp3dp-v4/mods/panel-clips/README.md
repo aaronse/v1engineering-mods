@@ -42,6 +42,9 @@ Originally created hinge that used M3x30mm with 180 degree swing.  Noticed and f
 
 Notes/links/models related to panels and enclosures.
 
+Used :
+- [SnakeOil panel clips](https://forum.v1e.com/t/mp3dp-v4-azas-build/37251/195?u=azab2c)
+
 Related :
 - Search results for '2020 hinge' on [Printables](https://www.printables.com/search/all?q=2020%20hinge), [Thangs](https://thangs.com/search/2020%20hinge?scope=all), [Yeggi](https://www.yeggi.com/q/2020+hinge/)
 - [Revo Nozzle holder](https://www.printables.com/model/99012-revo-nozzle-holder-for-prusa-mk3s)
