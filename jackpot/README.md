@@ -39,3 +39,5 @@ Some questions/ideas :
 - Whether the intentional nod to the V1 120 logo consumed much additional space, vs just stacking like the v1.0 board.  120 logo would take up more space, but it'd look pretty cool.  Especially with some LED bling in the middle 😀
 - Whether many folks will use the expansion port, if not many will, then could leave connector off to the edge enabling smaller case for builds that don't use modules.
 
+- Consider extra breakout/test headers next to ESP32, could use 2 row SMT headers, saving on through hole, would be weaker though...
+

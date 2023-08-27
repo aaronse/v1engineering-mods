@@ -17,6 +17,8 @@ Machine capability depends on the design, build materials, assembly quality, and
 
 |Quality|Material|Bit|DOC|Plunge Angle|Feed XY|Feed Z|RPM/Speed|Coolant|Notes / Source |
 | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- |
+||Polycarbonate|1/8" 2 flute|1.5mm|45 deg|183mm/s|13m/s|Speed 6|Cold weather|@jjwharris[Post](https://forum.v1e.com/t/cutting-polycarbonate/6869/14)<br/>- https://www.youtube.com/watch?v=Eilyq0q-F1o<br/>- https://forum.v1e.com/t/cutting-polycarbonate/6869/14<br/>- Acc { print: 100, retract: 3000, travel: 1000}|
+||
 ||Generic Pine|[1/2" dovetail](https://www.ecotools.be/hm-zwaluwstaartfrees-12-7-mm)|5mm|Plunge Angle?|11.7mm/s|3mm/s|Katsu 4|| @Olivier <br/>- Conventional + Climb milling<br/>- https://forum.v1e.com/t/how-to-work-out-milling-settings/39117/13?u=azab2c|
 ||
 ||Alu|[V1E 1/8" Carbide single flute](https://www.v1e.com/products/carbide-single-flute)|7mm|90deg|20mm/s|4mm/s|12K-15K|25psi air + hint of IPA|Trochoidal Milling: Stepover 10% Width: 50% Oscillation: 0<br/>https://youtu.be/wTbvzWy-f1o |
