@@ -16,6 +16,11 @@ HISTORY
   -->
 
 <head>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@700&display=swap" rel="stylesheet">
+
+
   <script type="text/javascript">
     var sctx;
 
@@ -35,6 +40,8 @@ HISTORY
     function generate() {
       var fontName = document.getElementById("fontName").value;
       var fontStyle = document.getElementById("fontStyle").value;
+      var fontSize = document.getElementById("fontSize").value;
+      var sampleText = document.getElementById("sampleText").value;
       var widths = charwidth(fontName, fontStyle);
       var outputHtml = "// " + toCamelCase(fontName) + " " + toCamelCase(fontStyle) + " width proportions<br/>\n";
       var fontStyleStr = (!fontStyle || fontStyle.trim().length == 0) ? "" : ":style=" + fontStyle.toLowerCase();
@@ -45,7 +52,12 @@ HISTORY
       outputHtml += "]],\n";
       document.getElementById("output").innerHTML = outputHtml;
       //document.getElementById('usage').innerHTML = "<h3>Usage</h3>\n<p>The array above shows character width as a multiple of font size. To get the width of a character <code>&lt;char&gt;</code> given font size <code>&lt;fontsize&gt;</code> using the font \"" + fontName + " " + fontStyle + "\":</p>\n<p><code>&nbsp; charwidth = " + arrayname + "[ord(char)] * fontsize;<code></p>\n";
-      document.getElementById('sample').innerHTML = "<h3>Font sample</h3>\n<p style=\"font: " + fontStyle + " 20px " + fontName + ";\">" + fontName + " " + fontStyle + ": 0123456789 ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz</p>\n";
+      document.getElementById('sample').innerHTML = 
+        "<h3>Font sample</h3>\n<p style=\"font: " + fontStyle + " 20px " + fontName + ";\">" 
+            + fontName + " " + fontStyle + ": 0123456789 ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz"
+            + "</p>"
+            + "<span style=\"font: " + fontStyle + " " + fontSize + "px " + fontName + ";\">" + sampleText + "</span>";
+
     }
     // convert the input array to camel case
     function toCamelCase(stringinput) {
@@ -73,6 +85,10 @@ HISTORY
       <label for="fontName">Font name</label><br />
       <input type="text" id="fontStyle" name="fontStyle" value="bold">
       <label for="fontStyle">Font style (bold, italic, etc. or leave blank)<br />
+      <input type="text" id="fontSize" name="fontSize" value="75">
+      <label for="fontSize">Font Size<br />
+      <input style="width:400px" type="text" id="sampleText" name="sampleText" value="Plan » Download or export STLs from Fusion 360">
+      <label for="sampleText">Sample Text<br />
     </fieldset>
     <input type="button" onclick="generate()" value="Generate OpenSCAD font width proportions">
   </form>
