@@ -944,3 +944,15 @@ Planning to have lighting that doesn't change with high frequency, need to injec
 Related:
   - https://hackaday.com/2022/02/01/did-you-know-that-the-raspberry-pi-4-has-more-spi-i2c-uart-ports/#:~:text=We've%20gotten%20used%20to,on%20its%2040%2Dpin%20header.
   - https://blog.stabel.family/raspberry-pi-4-multiple-spis-and-the-device-tree/
+  - 
+
+# Configuration
+
+## Klipper Config
+- My Klipper Config's @ https://github.com/aaronse/v1engineering-mods/tree/main/mp3dp-v4/klipper/printer.cfg
+- Snapshot of Mike's @ https://github.com/aaronse/v1engineering-mods/tree/main/mp3dp-v4/klipper/probrwr/printer.cfg
+  
+## Slicer Config
+- work in progress, will share after getting good quality large print...
+  
+
