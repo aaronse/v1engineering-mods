@@ -947,6 +947,7 @@ Related:
   - 
 
 # Configuration
+See [MP3DP v4 - Configs and Slicer Profiles](https://forum.v1e.com/t/mp3dp-v4-configs-and-slicer-profiles/40066/1) for examples of configs other V1E community members are using.
 
 ## Klipper Config
 - My Klipper Config's @ https://github.com/aaronse/v1engineering-mods/tree/main/mp3dp-v4/klipper/printer.cfg
