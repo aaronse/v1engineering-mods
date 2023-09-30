@@ -339,18 +339,34 @@ Related
 
 
 ### Extruder Options
-- Hemera [amzn](https://www.amazon.com/Genuine-E3D-Hemera-1-75mm-Direct/dp/B0829DHHPK) or BiQU H2 V2 (170g lighter)
+- #### Hemera 
+  [amzn](https://www.amazon.com/Genuine-E3D-Hemera-1-75mm-Direct/dp/B0829DHHPK) or BiQU H2 V2 (170g lighter)
 
 - Octopus 
   - MP3DP needs 6 drivers/steppers, Octopus is oversized with 8 drivers, am using because 1) am familiar with the board already, 2) will have 2 more slots for mods.
 
-  BIQU H2
+  #### BIQU H2
   https://www.youtube.com/watch?v=zyKH05bBs4Q
   https://github.com/bigtreetech/H2-Series
+  - Related 3D Models
+    - MJLaverty's https://forum.v1e.com/t/mp3dp-repeat-h2-build/32485
 
-  BIQU H2S Revo
-  https://www.youtube.com/watch?v=4X1F-dLVT3g
-  - Fan Duct https://youtu.be/4X1F-dLVT3g?t=214 by eight_heads
+  #### BIQU H2S Revo
+  - Teaching Tech review https://www.youtube.com/watch?v=4X1F-dLVT3gt=214 
+  - V1E MP3DP to BIQU H2S Adaptors/Carriage mounts
+    - 2023/08/09 @probrwr's https://www.printables.com/model/544033-mp3dp-v4-rail-mount-for-biqu-h2vs-revo
+    - 2023/04/14 @probrwr's https://www.printables.com/model/452491-mount-to-adapt-biqu-h2-revo-to-hemera-mount
+  - BTT's H2 V2S Revo 4020 fan duct @
+    https://github.com/bigtreetech/H2-Series/blob/master/H2%20V2s%20Revo/H2%20V2S%20Revo%204020%20fan%20duct.STL
+  - Related 3D Models, see Printables, [search for BIQU Revo](https://www.printables.com/search/models?q=Biqu%20revo)
+    - Nice detailed BIQU H2 V2S REVO model https://www.printables.com/model/578825-biqu-h2-v2s-revo-hyper-detail/files
+    - Fan Ducts/Shrouds :
+      - https://www.printables.com/model/396716-biqu-h2-revo-part-cooler-5015-bl-touch-mount
+        - Supports Fan and BL Touch Probe, leaves extruder fan clear enabling easier removal when clogged.
+      - Fan Duct suggestions by Teaching Tech video
+        - https://www.thingiverse.com/thing:4749419
+        - https://www.thingiverse.com/thing:4682915
+    - Radial Fan 5015 model https://www.printables.com/model/264959-5015-radial-fan-3d-model-for-conception-step-stl-f/files
 
   - @probrwr has [BiQU H2S Revo](https://biqu.equipment/collections/extruder-hotend-heatsink-j-heat/products/biqu-h2-v2s-revo-extruder) and @gpagnozzi has [BIQU H2 V2.0](https://biqu.equipment/products/biqu-h2-v2-0-extruder?variant=39821278347362)?
 
@@ -951,6 +967,7 @@ See [MP3DP v4 - Configs and Slicer Profiles](https://forum.v1e.com/t/mp3dp-v4-co
 
 ## Klipper Config
 - My Klipper Config's @ https://github.com/aaronse/v1engineering-mods/tree/main/mp3dp-v4/klipper/printer.cfg
+  - Includes comments with links and info.
 - Snapshot of Mike's @ https://github.com/aaronse/v1engineering-mods/tree/main/mp3dp-v4/klipper/probrwr/printer.cfg
   
 ## Slicer Config
