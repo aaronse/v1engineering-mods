@@ -5,7 +5,27 @@ TODO: So much to do, so little time...</mark>
 <br/><br/><br/>
 
 
-# Plan
+# History < ~now < Plan
+- Calibrate printer
+  - https://teachingtechyt.github.io/calibration.html
+  - Test Cube, Temp, Retract Towers (FAIL, too hot,)
+- Investigate Print Fan Duct/Shroud options...
+  - https://forum.v1e.com/t/mp3dp-repeat-h2-build/32485/17?u=azab2c
+- Resist urge to make own Fan Duct...  Fail, and end up designing and sharing one...
+  - https://www.printables.com/model/599054-biqu-h2-revo-part-cooling-fan-duct
+- More Temp/Retract to testing bridging/flow
+- Print 1st Core
+  - https://forum.v1e.com/t/lowrider-3-azas-idex-upgrade-2-routers/40040/10?u=azab2c
+- Print 2nd Core
+~now
+- Unboxing
+- Design SSR multi router wiring, 
+- Order SSR, DIN rail mounted?
+- Core Assembly
+- Controller Wiring
+- Controller Box mods
+- Power distribution, DIN rail mounts?
+
 
 # Parts
 
