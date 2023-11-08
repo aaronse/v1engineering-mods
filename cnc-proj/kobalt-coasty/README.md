@@ -10,6 +10,7 @@
 ## Purpose
 - Practical small (i.e. fast) CNC and Printer project to help learn/practice calibrating CNC and Printer.  Try out pocket holes, engraving, contour cut, basic inlay, and color filling.
 - Support my beverage.
+- Includes Metric and Freedom markers.
 
 ## Parts / Files
 - [kobalt-mat.stl](kobalt-mat.stl) model
@@ -17,9 +18,9 @@
   - [V250_kobalt-mat.gcode](V250_kobalt-mat.gcode) Printer gcode uploaded to my MP3DP for printing.
 - [kobalt-mat-profile.dxf]([kobalt-mat-profile.dxf]) Mat design exported from Fusion 360 sketches I created.
 - EstlCam project files:
-  - [mat-engr.e10](mat-engr.e10)
-  - [mat-cont.e10](mat-cont.e10) 
-  - [mat-hole.e10](mat-hole.e10)
+  - [mat-hole.e10](mat-hole.e10) - Pocket holes
+  - [mat-engr.e10](mat-engr.e10) - Engrave
+  - [mat-cont.e10](mat-cont.e10) - Contour Cut (includes tabs)
   - NOTE:  Used short file names because long filenames don't render/execute correctly on my ESP3D-Marlin setup.
   - QUESTION:  Created file per operation.  Please let me know if there's a way to have single EstlCam project file, that contains multiple layers and/or multiple groups of Cam operations.
 
