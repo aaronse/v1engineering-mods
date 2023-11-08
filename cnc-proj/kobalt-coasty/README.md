@@ -1,5 +1,7 @@
  # Coasty - CNC Calibration, Quality and Speed Test Coaster
 
+[Latest version](https://github.com/aaronse/v1engineering-mods/tree/main/cnc-proj/kobalt-coasty) on github.
+
 ![Alt text](img/coasty-color-fill.png)
 
 
