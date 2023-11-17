@@ -16,7 +16,7 @@
 - [kobalt-mat.stl](kobalt-mat.stl) model
   - [V250_kobalt-mat.3mf](V250_kobalt-mat.3mf) Cura 5.4.0 created project file, includes my printer settings.
   - [V250_kobalt-mat.gcode](V250_kobalt-mat.gcode) Printer gcode uploaded to my MP3DP for printing.
-- [kobalt-mat-profile.dxf]([kobalt-mat-profile.dxf]) Mat design exported from Fusion 360 sketches I created.
+- [kobalt-mat-profile.dxf](kobalt-mat-profile.dxf) Mat design exported from Fusion 360 sketches I created.
 - EstlCam project files:
   - [mat-hole.e10](mat-hole.e10) - Pocket holes
   - [mat-engr.e10](mat-engr.e10) - Engrave
