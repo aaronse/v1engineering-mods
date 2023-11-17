@@ -32,9 +32,11 @@
 
 ## Assembly
 
-- 220 grit sand smooth, vac and microfiber clean debris/dust.
+- Used 5mm thick plywood underlayment leftover scraps.
 
-- 2 coats of spray Shellac
+- Scrape and sanded top/bottom smooth, used 220 grit orbital and manual sandpaper.  Vac and microfiber to clean and remove debris/dust.
+
+- Spray 2 coats of Shellac (Zinsser Clear).
 
 - Pocket, Engrave, Contour…
   - Pocketed using 1.2mm Nano Blue Coat carbide bit (from 40pc set of various bits)
