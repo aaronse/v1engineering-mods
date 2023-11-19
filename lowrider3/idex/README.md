@@ -33,6 +33,13 @@ TODO: So much to do, so little time...</mark>
 
 ## Parts Printed
 
+- Created and shared a ["V1E LowRider 3 IDEX (2 Routers!)" Printables collection](https://www.printables.com/@AzaB2C/collections/884762)
+- https://www.printables.com/model/204709-lowrider-3-cnc
+  - LR Core.3mf
+  - X Drive Mount.3mf
+- Kobalt Router Too and Vac Mounts
+  - https://www.printables.com/model/628738-kobalt-router-lr3-mount/files
+
 ### Calibration
 Building a precise machine requires precisely printed parts using a well calibrated printer.  
 
