@@ -6,6 +6,7 @@ Related:
 - Topic with set of links https://forum.vorondesign.com/threads/bigtreetech-octopus-v1-0-and-v1-1-information.79/
 - Wiring and SW setup walkthrough https://www.youtube.com/watch?v=jgE3XMM9PBk
   - Uses USB-to-CAN ("U2C") Pi Hat, which am not using.  But many of the concepts and steps are related.
+- [How to Use CAN Toolhead Boards Connected Directly to Octopus / Octopus Pro on CanBoot](https://klipper.discourse.group/uploads/short-url/oKyxrVja7wW0J8toGB1pqfaGp4z.pdf) shared on Klipper Forum was very helpful.  The .PDF was mentioned in [https://klipper.discourse.group/t/setup-ebb36-v1-2-connected-to-octopus-pro/6617/3](https://klipper.discourse.group/t/setup-ebb36-v1-2-connected-to-octopus-pro/6617/3).
 
 ### Klipper Install
 Related:
@@ -72,11 +73,6 @@ https://github.com/bigtreetech/EBB/blob/master/EBB%20CAN%20V1.1%20(STM32G0B1)/sa
 Was going to use a [stranded Cat-6 Ethernet Patch cable](https://www.amazon.com/gp/product/B01INRUFGK) I have already.  Despite being very popular with ~122,000 reviews, am not going to use after cutting and examining the wires to learn they're just ~26 AWG, or thinner even...
 
 Instead am using Cat 5 24AWG stranded copper.  One pair for CANBus high/low, two pairs for power.  Grounded the final pair with the naive hope of helping shield comms.  Only grounded at end closest to controller
-
-
-
-file:///C:/Users/aaron/Downloads/How%20to%20Use%20CAN%20Toolhead%20Boards%20Connected%20Directly%20to%20Octopus%20(1).pdf
-
 
 problem: CanBoot scripts failing, ifconfig not listing can0
 cause: ???
