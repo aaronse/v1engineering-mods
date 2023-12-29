@@ -64,9 +64,10 @@ hasSquareFlange = "yes";
 hasSquareFlangeHoles = "yes";
 SquareFlangeThickness = 5;
 SquareFlangeHeight = 10;
-SquareFlangeHoleDiameter = 5;
+SquareFlangeHoleDiameter = 8;
 SquareFlangeHoleThickness = 3;
 SquareFlangeCornerRadius = 2.5;
+SquareFlangeSetback = 5;
 
 
 $fn = 60 * 1;
@@ -163,7 +164,9 @@ difference()
           SD, 
           SD,
           SquareFlangeThickness,
-          SL + LL + TL + 2 * WT - SquareFlangeThickness);
+          SL + LL + TL + 2 * WT 
+            - SquareFlangeThickness
+            - SquareFlangeSetback);
       }
       else
       {
@@ -171,7 +174,9 @@ difference()
           SD,
           SD,
           SquareFlangeThickness,
-          SL + LL + TL + 2 * WT - SquareFlangeThickness,
+          SL + LL + TL + 2 * WT 
+            - SquareFlangeThickness 
+            - SquareFlangeSetback,
           SquareFlangeCornerRadius,
           "z" );
       }
@@ -244,7 +249,9 @@ difference()
     if (hasSquareFlangeHoles == "yes")
     {
       SquareFlangeHoleHeightOffset =
-        SL + LL + TL + 2 * WT - SquareFlangeHoleThickness;
+        SL + LL + TL + 2 * WT 
+        - SquareFlangeHoleThickness
+        - SquareFlangeSetback;
       
       SquareFlangeRadius = SD / 2;
       
