@@ -59,6 +59,16 @@ cutOutWidth = 25;
 // [yes,no] Flag indicating whether to generate flange
 hasFlange = "yes";
 
+// 
+hasSquareFlange = "yes";
+hasSquareFlangeHoles = "yes";
+SquareFlangeThickness = 5;
+SquareFlangeHeight = 10;
+SquareFlangeHoleDiameter = 5;
+SquareFlangeHoleThickness = 3;
+SquareFlangeCornerRadius = 2.5;
+
+
 $fn = 60 * 1;
 
 WT = wallThickness;
@@ -76,11 +86,14 @@ SD = upperEndMeasured == "inside"
   
 LID = lowerEndMeasured == "inside" ? LD : LD - 2 * WT;
 SID = upperEndMeasured == "inside" ? SD : SD - 2 * WT;
+
 LID = LD - 2 * WT;
 SID = SD - 2 * WT;
 DR = LD + 3 * WT;
 
 top = (hasFlange == "yes") ? SL + LL + TL + 2 * WT : SL + LL + TL;
+
+
 
 module transCylinder(D1, D2, H, Z)
 {
@@ -90,8 +103,30 @@ module transCylinder(D1, D2, H, Z)
   }
 }
 
+module transRoundedCube(W, D, H, Z, radius, apply_to)
+{
+  translate([ -W/2, -D/2, Z ])
+  {
+    //cube([W, D, H], center = false);
+    roundedcube(
+      size = [W, D, H],
+      center = false,
+      radius = radius,
+      apply_to = apply_to);
+  }
+}
+
+module transCube(W, D, H, Z)
+{
+  translate([ -W/2, -D/2, Z ])
+  {
+    cube([W, D, H], center = false);
+  }
+}
+
 difference()
 {
+  // Objects to Add...
   union()
   {
     transCylinder(LD, LD, LL, 0); // Lower
@@ -118,10 +153,35 @@ difference()
       // Upper
       transCylinder(SD, SD, SL, LL + TL); 
     }
+    
+    
+    if (hasSquareFlange == "yes")
+    {
+      if (SquareFlangeCornerRadius == 0)
+      {
+        transCube(
+          SD, 
+          SD,
+          SquareFlangeThickness,
+          SL + LL + TL + 2 * WT - SquareFlangeThickness);
+      }
+      else
+      {
+        transRoundedCube(
+          SD,
+          SD,
+          SquareFlangeThickness,
+          SL + LL + TL + 2 * WT - SquareFlangeThickness,
+          SquareFlangeCornerRadius,
+          "z" );
+      }
+    }
   }
   
+  // Objects to Subtract...
   union()
   {
+    
     // Lower
     transCylinder(LID, LID, LL + 1, 0); 
     if (hasFlange == "yes")
@@ -179,5 +239,103 @@ difference()
         SL,
         LL + TL + 2 * WT);
     }
+    
+    // Square Flange Holes
+    if (hasSquareFlangeHoles == "yes")
+    {
+      SquareFlangeHoleHeightOffset =
+        SL + LL + TL + 2 * WT - SquareFlangeHoleThickness;
+      
+      SquareFlangeRadius = SD / 2;
+      
+      // Set hole pattern radius to between square flange 
+      // corner and upper outside diameter
+      PattRadius =
+        (sqrt(2 * pow(SquareFlangeRadius, 2)) + SquareFlangeRadius) / 2;
+      
+      n = 4;        // number of objects
+      step = 360/n;
+      for (i=[0:step:359])
+      {
+        angle = i;
+        dx = PattRadius * cos(angle + 45);
+        dy = PattRadius * sin(angle + 45);
+        color("red"){
+          translate([dx ,dy , SquareFlangeHoleHeightOffset])
+          {
+            cylinder(
+              d1 = SquareFlangeHoleDiameter,
+              d2 = SquareFlangeHoleDiameter, 
+              h = SquareFlangeHoleThickness + 1, 
+              center = false);
+          }
+        }
+      }
+    }
+    
   }
+}
+
+
+// From https://gist.github.com/groovenectar/92174cb1c98c1089347e
+// Higher definition curves
+// $fs = 0.01;
+
+module roundedcube(size = [1, 1, 1], center = false, radius = 0.5, apply_to = "all") {
+	// If single value, convert to [x, y, z] vector
+	size = (size[0] == undef) ? [size, size, size] : size;
+
+	translate_min = radius;
+	translate_xmax = size[0] - radius;
+	translate_ymax = size[1] - radius;
+	translate_zmax = size[2] - radius;
+
+	diameter = radius * 2;
+
+	module build_point(type = "sphere", rotate = [0, 0, 0]) {
+		if (type == "sphere") {
+			sphere(r = radius);
+		} else if (type == "cylinder") {
+			rotate(a = rotate)
+			cylinder(h = diameter, r = radius, center = true);
+		}
+	}
+
+	obj_translate = (center == false) ?
+		[0, 0, 0] : [
+			-(size[0] / 2),
+			-(size[1] / 2),
+			-(size[2] / 2)
+		];
+
+	translate(v = obj_translate) {
+		hull() {
+			for (translate_x = [translate_min, translate_xmax]) {
+				x_at = (translate_x == translate_min) ? "min" : "max";
+				for (translate_y = [translate_min, translate_ymax]) {
+					y_at = (translate_y == translate_min) ? "min" : "max";
+					for (translate_z = [translate_min, translate_zmax]) {
+						z_at = (translate_z == translate_min) ? "min" : "max";
+
+						translate(v = [translate_x, translate_y, translate_z])
+						if (
+							(apply_to == "all") ||
+							(apply_to == "xmin" && x_at == "min") || (apply_to == "xmax" && x_at == "max") ||
+							(apply_to == "ymin" && y_at == "min") || (apply_to == "ymax" && y_at == "max") ||
+							(apply_to == "zmin" && z_at == "min") || (apply_to == "zmax" && z_at == "max")
+						) {
+							build_point("sphere");
+						} else {
+							rotate = 
+								(apply_to == "xmin" || apply_to == "xmax" || apply_to == "x") ? [0, 90, 0] : (
+								(apply_to == "ymin" || apply_to == "ymax" || apply_to == "y") ? [90, 90, 0] :
+								[0, 0, 0]
+							);
+							build_point("cylinder", rotate);
+						}
+					}
+				}
+			}
+		}
+	}
 }
