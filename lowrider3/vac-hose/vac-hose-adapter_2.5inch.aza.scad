@@ -59,7 +59,7 @@ cutOutWidth = 25;
 // [yes,no] Flag indicating whether to generate flange
 hasFlange = "yes";
 
-// 
+// Optional options for optional Square Flange
 hasSquareFlange = "yes";
 hasSquareFlangeHoles = "yes";
 SquareFlangeThickness = 5;
@@ -183,25 +183,25 @@ difference()
   {
     
     // Lower
-    transCylinder(LID, LID, LL + 1, 0); 
+    transCylinder(LID, LID, LL + 2, -1); 
     if (hasFlange == "yes")
     {
       // Lower to Flange
-      transCylinder(LID, LID, WT, LL);
+      transCylinder(LID, LID, WT + 0.001, LL);
       
       // Flange
-      transCylinder(LID, LID, WT, LL + WT);
+      transCylinder(LID, LID, WT + 0.001, LL + WT);
       
       // Flange to Upper
-      transCylinder(LID, SID, TL, LL + 2 * WT); 
+      transCylinder(LID, SID, TL + 0.001, LL + 2 * WT); 
     }
     else
     {
       // Lower-to-Upper
-      transCylinder(LID, SID, TL, LL);      
+      transCylinder(LID, SID, TL + 0.001, LL);      
       
       // Upper
-      transCylinder(SID, SID, SL, LL + TL); 
+      transCylinder(SID, SID, SL + 0.001, LL + TL); 
     }
 
     if (hasCutout == "yes")
@@ -228,7 +228,7 @@ difference()
       transCylinder(
         SID,
         SID,
-        SL,
+        SL + 0.001,
         LL + TL + 3 * WT);
     }
     else
@@ -236,7 +236,7 @@ difference()
       transCylinder(
         SID,
         SID,
-        SL,
+        SL + 0.001,
         LL + TL + 2 * WT);
     }
     
