@@ -59,7 +59,7 @@ https://klipper.discourse.group/t/octopus-pro-canboot-can-bus-bridge/3734/30?u=a
   - PTFE 4mm+ ID, ~6 OD, maybe high temp silicone?
 
 - TODO:
-  - TODO: Change buad rate from 250000 to 500000 (make menuconfig and mainsail config?)
+  - TODO: Change baud rate from 250000 to 500000 (make menuconfig and mainsail config?)
   - TODO: Read https://klipper.discourse.group/t/setup-ebb36-v1-2-connected-to-octopus-pro/6617/2
   - TODO: *Maybe* Read https://github.com/Esoterical/voron_canbus
   - TODO: *Maybe* Read Voron Discord #can_bus_depot https://discord.com/channels/460117602945990666/1076243803947667516
@@ -79,7 +79,7 @@ cause: ???
 context:
 - Related? https://github.com/Arksine/CanBoot/issues/69
 
-actions:
+## Actions:
 - Edited ```/etc/rc.local``` per https://github.com/Arksine/CanBoot/issues/72#issuecomment-1501347910
 - Looked up what "allow-hotplug" does.  Considered changing to "auto", but am wondering whether lack of can0 indicates EBB and/or Octopus USB-to-CAN bridage CANBus device is not being detected, and/or Klipper printer.cfg isn't configured to enable CAN even if the build is.  Am questioning everything at this point given how long root causing missing can0 is taking.
 - Powered off.  Added jumper to EBB's 120R pins.  Powered on.
