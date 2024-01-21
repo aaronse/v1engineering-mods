@@ -1,0 +1,228 @@
+Section;Extruder;Key;Type;Label;Value
+general;0;Date;str;Date;21/01/2024 02:32:05
+general;0;Os;str;Os;Windows 10.0.19045
+general;0;Cura_Version;str;Cura Version;5.4.0
+general;0;Profile;str;Profile;PLA 0.6 noz
+general;0;Quality;str;Quality;Fast
+general;0;Extruder_Count;int;Extruder_Count;1
+resolution;1;layer_height;float;Layer Height;0.3
+resolution;1;layer_height_0;float;Initial Layer Height;0.28
+resolution;1;line_width;float;Line Width;0.65
+resolution;1;wall_line_width;float;Wall Line Width;0.6
+resolution;1;wall_line_width_0;float;Outer Wall Line Width;0.6
+resolution;1;wall_line_width_x;float;Inner Wall(s) Line Width;0.6
+resolution;1;skin_line_width;float;Top/Bottom Line Width;0.45
+resolution;1;infill_line_width;float;Infill Line Width;0.65
+resolution;1;initial_layer_line_width_factor;float;Initial Layer Line Width;100
+shell;1;wall_thickness;float;Wall Thickness;0.8
+shell;1;wall_line_count;int;Wall Line Count;3
+shell;1;wall_transition_length;float;Wall Transition Length;0.65
+shell;1;wall_distribution_count;int;Wall Distribution Count;1
+shell;1;wall_transition_angle;float;Wall Transitioning Threshold Angle;10
+shell;1;wall_transition_filter_deviation;float;Wall Transitioning Filter Margin;0.1
+shell;1;wall_0_wipe_dist;float;Outer Wall Wipe Distance;0.1
+shell;1;wall_0_inset;float;Outer Wall Inset;0
+shell;1;optimize_wall_printing_order;bool;Optimize Wall Printing Order;True
+shell;1;inset_direction;enum;Wall Ordering;inside_out
+shell;1;alternate_extra_perimeter;bool;Alternate Extra Wall;True
+shell;1;min_wall_line_width;float;Minimum Wall Line Width;0.34
+shell;1;min_even_wall_line_width;float;Minimum Even Wall Line Width;0.34
+shell;1;min_odd_wall_line_width;float;Minimum Odd Wall Line Width;0.34
+shell;1;fill_outline_gaps;bool;Print Thin Walls;True
+shell;1;min_feature_size;float;Minimum Feature Size;0.15
+shell;1;min_bead_width;float;Minimum Thin Wall Line Width;0.34
+shell;1;xy_offset;float;Horizontal Expansion;0
+shell;1;xy_offset_layer_0;float;Initial Layer Horizontal Expansion;0
+shell;1;hole_xy_offset;float;Hole Horizontal Expansion;0
+shell;1;z_seam_type;enum;Z Seam Alignment;sharpest_corner
+shell;1;z_seam_corner;enum;Seam Corner Preference;z_seam_corner_inner
+top_bottom;1;roofing_layer_count;int;Top Surface Skin Layers;1
+top_bottom;1;roofing_line_width;float;Top Surface Skin Line Width;0.6
+top_bottom;1;roofing_pattern;enum;Top Surface Skin Pattern;lines
+top_bottom;1;roofing_monotonic;bool;Monotonic Top Surface Order;True
+top_bottom;1;roofing_angles;[int];Top Surface Skin Line Directions;[ ]
+top_bottom;1;top_bottom_thickness;float;Top/Bottom Thickness;0.8
+top_bottom;1;top_thickness;float;Top Thickness;0.8
+top_bottom;1;top_layers;int;Top Layers;4
+top_bottom;1;bottom_thickness;float;Bottom Thickness;0.8
+top_bottom;1;bottom_layers;int;Bottom Layers;4
+top_bottom;1;initial_bottom_layers;int;Initial Bottom Layers;4
+top_bottom;1;top_bottom_pattern;enum;Top/Bottom Pattern;lines
+top_bottom;1;top_bottom_pattern_0;enum;Bottom Pattern Initial Layer;lines
+top_bottom;1;skin_monotonic;bool;Monotonic Top/Bottom Order;False
+top_bottom;1;skin_angles;[int];Top/Bottom Line Directions;[ ]
+top_bottom;1;skin_no_small_gaps_heuristic;bool;No Skin in Z Gaps;False
+top_bottom;1;skin_outline_count;int;Extra Skin Wall Count;1
+top_bottom;1;ironing_enabled;bool;Enable Ironing;False
+top_bottom;1;skin_overlap;float;Skin Overlap Percentage;5
+top_bottom;1;skin_overlap_mm;float;Skin Overlap;0.0262
+top_bottom;1;skin_preshrink;float;Skin Removal Width;1.8
+top_bottom;1;top_skin_preshrink;float;Top Skin Removal Width;1.8
+top_bottom;1;bottom_skin_preshrink;float;Bottom Skin Removal Width;1.8
+top_bottom;1;expand_skins_expand_distance;float;Skin Expand Distance;1.8
+top_bottom;1;top_skin_expand_distance;float;Top Skin Expand Distance;1.8
+top_bottom;1;bottom_skin_expand_distance;float;Bottom Skin Expand Distance;1.8
+top_bottom;1;max_skin_angle_for_expansion;float;Maximum Skin Angle for Expansion;90
+top_bottom;1;min_skin_width_for_expansion;float;Minimum Skin Width for Expansion;0
+infill;1;infill_sparse_density;float;Infill Density;40
+infill;1;infill_line_distance;float;Infill Line Distance;4.875
+infill;1;infill_pattern;enum;Infill Pattern;cubic
+infill;1;zig_zaggify_infill;bool;Connect Infill Lines;True
+infill;1;infill_angles;[int];Infill Line Directions;[ ]
+infill;1;infill_offset_x;float;Infill X Offset;0
+infill;1;infill_offset_y;float;Infill Y Offset;0
+infill;1;infill_randomize_start_location;bool;Randomize Infill Start;False
+infill;1;infill_multiplier;int;Infill Line Multiplier;1
+infill;1;infill_wall_line_count;int;Extra Infill Wall Count;0
+infill;1;infill_overlap;float;Infill Overlap Percentage;10
+infill;1;infill_overlap_mm;float;Infill Overlap;0.0625
+infill;1;infill_wipe_dist;float;Infill Wipe Distance;0.15
+infill;1;infill_sparse_thickness;float;Infill Layer Thickness;0.3
+infill;1;gradual_infill_steps;int;Gradual Infill Steps;0
+infill;1;infill_before_walls;bool;Infill Before Walls;False
+infill;1;min_infill_area;float;Minimum Infill Area;5
+infill;1;infill_support_enabled;bool;Infill Support;False
+infill;1;skin_edge_support_thickness;float;Skin Edge Support Thickness;0
+infill;1;skin_edge_support_layers;int;Skin Edge Support Layers;0
+material;1;material_print_temperature;float;Printing Temperature;205
+material;1;material_print_temperature_layer_0;float;Printing Temperature Initial Layer;215
+material;1;material_initial_print_temperature;float;Initial Printing Temperature;210
+material;1;material_final_print_temperature;float;Final Printing Temperature;210
+material;1;material_bed_temperature;float;Build Plate Temperature;60
+material;1;material_bed_temperature_layer_0;float;Build Plate Temperature Initial Layer;60
+material;1;material_shrinkage_percentage;float;Scaling Factor Shrinkage Compensation;100
+material;1;material_shrinkage_percentage_xy;float;Horizontal Scaling Factor Shrinkage Compensation;100
+material;1;material_shrinkage_percentage_z;float;Vertical Scaling Factor Shrinkage Compensation;100
+material;1;material_flow;float;Flow;95
+material;1;wall_material_flow;float;Wall Flow;93
+material;1;wall_0_material_flow;float;Outer Wall Flow;93
+material;1;wall_x_material_flow;float;Inner Wall(s) Flow;98
+material;1;skin_material_flow;float;Top/Bottom Flow;95
+material;1;roofing_material_flow;float;Top Surface Skin Flow;95
+material;1;infill_material_flow;float;Infill Flow;95
+material;1;prime_tower_flow;float;Prime Tower Flow;95
+material;1;material_flow_layer_0;float;Initial Layer Flow;108
+material;1;wall_x_material_flow_layer_0;float;Initial Layer Inner Wall Flow;108
+material;1;wall_0_material_flow_layer_0;float;Initial Layer Outer Wall Flow;108
+material;1;skin_material_flow_layer_0;float;Initial Layer Bottom Flow;108
+speed;1;speed_print;float;Print Speed;120
+speed;1;speed_infill;float;Infill Speed;120
+speed;1;speed_wall;float;Wall Speed;70
+speed;1;speed_wall_0;float;Outer Wall Speed;70
+speed;1;speed_wall_x;float;Inner Wall Speed;70
+speed;1;speed_roofing;float;Top Surface Skin Speed;70
+speed;1;speed_topbottom;float;Top/Bottom Speed;70
+speed;1;speed_travel;float;Travel Speed;500
+speed;1;speed_layer_0;float;Initial Layer Speed;30
+speed;1;speed_print_layer_0;float;Initial Layer Print Speed;30
+speed;1;speed_travel_layer_0;float;Initial Layer Travel Speed;200
+speed;1;speed_z_hop;float;Z Hop Speed;10
+speed;1;speed_slowdown_layers;int;Number of Slower Layers;3
+speed;1;speed_equalize_flow_width_factor;float;Flow Equalization Ratio;100
+speed;1;acceleration_enabled;bool;Enable Acceleration Control;True
+speed;1;acceleration_travel_enabled;bool;Enable Travel Acceleration;True
+speed;1;acceleration_print;float;Print Acceleration;3500
+speed;1;acceleration_infill;float;Infill Acceleration;3500
+speed;1;acceleration_wall;float;Wall Acceleration;3500
+speed;1;acceleration_wall_0;float;Outer Wall Acceleration;3500
+speed;1;acceleration_wall_x;float;Inner Wall Acceleration;3500
+speed;1;acceleration_roofing;float;Top Surface Skin Acceleration;3500
+speed;1;acceleration_topbottom;float;Top/Bottom Acceleration;3500
+speed;1;acceleration_travel;float;Travel Acceleration;3500
+speed;1;acceleration_layer_0;float;Initial Layer Acceleration;3500
+speed;1;acceleration_print_layer_0;float;Initial Layer Print Acceleration;3500
+speed;1;acceleration_travel_layer_0;float;Initial Layer Travel Acceleration;3500
+speed;1;jerk_enabled;bool;Enable Jerk Control;False
+travel;1;retraction_enable;bool;Enable Retraction;True
+travel;1;retract_at_layer_change;bool;Retract at Layer Change;False
+travel;1;retraction_amount;float;Retraction Distance;0.5
+travel;1;retraction_speed;float;Retraction Speed;5
+travel;1;retraction_retract_speed;float;Retraction Retract Speed;5
+travel;1;retraction_prime_speed;float;Retraction Prime Speed;2
+travel;1;retraction_extra_prime_amount;float;Retraction Extra Prime Amount;0
+travel;1;retraction_min_travel;float;Retraction Minimum Travel;1.6
+travel;1;retraction_count_max;int;Maximum Retraction Count;10
+travel;1;retraction_extrusion_window;float;Minimum Extrusion Distance Window;2
+travel;1;retraction_combing;enum;Combing Mode;infill
+travel;1;retraction_combing_max_distance;float;Max Comb Distance With No Retract;30
+travel;1;travel_retract_before_outer_wall;bool;Retract Before Outer Wall;False
+travel;1;travel_avoid_other_parts;bool;Avoid Printed Parts When Traveling;True
+travel;1;travel_avoid_supports;bool;Avoid Supports When Traveling;True
+travel;1;travel_avoid_distance;float;Travel Avoid Distance;0.625
+travel;1;layer_start_x;float;Layer Start X;0
+travel;1;layer_start_y;float;Layer Start Y;0
+travel;1;retraction_hop_enabled;bool;Z Hop When Retracted;True
+travel;1;retraction_hop_only_when_collides;bool;Z Hop Only Over Printed Parts;False
+travel;1;retraction_hop;float;Z Hop Height;0.6
+cooling;1;cool_fan_enabled;bool;Enable Print Cooling;True
+cooling;1;cool_fan_speed;float;Fan Speed;100
+cooling;1;cool_fan_speed_min;float;Regular Fan Speed;100
+cooling;1;cool_fan_speed_max;float;Maximum Fan Speed;100
+cooling;1;cool_min_layer_time_fan_speed_max;float;Regular/Maximum Fan Speed Threshold;20
+cooling;1;cool_fan_speed_0;float;Initial Fan Speed;0
+cooling;1;cool_fan_full_at_height;float;Regular Fan Speed at Height;0.88
+cooling;1;cool_fan_full_layer;int;Regular Fan Speed at Layer;3
+cooling;1;cool_min_layer_time;float;Minimum Layer Time;15
+cooling;1;cool_min_speed;float;Minimum Speed;10
+cooling;1;cool_lift_head;bool;Lift Head;False
+cooling;1;cool_min_temperature;float;Small Layer Printing Temperature;205
+support;1;support_enable;bool;Generate Support;False
+platform_adhesion;1;adhesion_type;enum;Build Plate Adhesion Type;none
+platform_adhesion;1;adhesion_z_offset;float;Z Offset;0
+platform_adhesion;1;adhesion_z_offset_extensive_processing;bool;Extensive Z Offset Processing;False
+meshfix;1;meshfix_union_all;bool;Union Overlapping Volumes;True
+meshfix;1;meshfix_union_all_remove_holes;bool;Remove All Holes;False
+meshfix;1;meshfix_extensive_stitching;bool;Extensive Stitching;False
+meshfix;1;meshfix_keep_open_polygons;bool;Keep Disconnected Faces;False
+meshfix;1;multiple_mesh_overlap;float;Merged Meshes Overlap;0.16
+meshfix;1;carve_multiple_volumes;bool;Remove Mesh Intersection;False
+meshfix;1;remove_empty_first_layers;bool;Remove Empty First Layers;True
+meshfix;1;meshfix_maximum_resolution;float;Maximum Resolution;0.16
+meshfix;1;meshfix_maximum_travel_resolution;float;Maximum Travel Resolution;0.6667
+meshfix;1;meshfix_maximum_deviation;float;Maximum Deviation;0.04
+meshfix;1;meshfix_maximum_extrusion_area_deviation;float;Maximum Extrusion Area Deviation;50000
+blackmagic;1;print_sequence;enum;Print Sequence;all_at_once
+blackmagic;1;infill_mesh;bool;Infill Mesh;False
+blackmagic;1;infill_mesh_order;int;Mesh Processing Rank;0
+blackmagic;1;cutting_mesh;bool;Cutting Mesh;False
+blackmagic;1;mold_enabled;bool;Mold;False
+blackmagic;1;support_mesh;bool;Support Mesh;False
+blackmagic;1;anti_overhang_mesh;bool;Anti Overhang Mesh;False
+blackmagic;1;magic_mesh_surface_mode;enum;Surface Mode;normal
+blackmagic;1;magic_spiralize;bool;Spiralize Outer Contour;False
+blackmagic;1;relative_extrusion;bool;Relative Extrusion;False
+experimental;1;slicing_tolerance;enum;Slicing Tolerance;middle
+experimental;1;infill_enable_travel_optimization;bool;Infill Travel Optimization;True
+experimental;1;minimum_polygon_circumference;float;Minimum Polygon Circumference;1
+experimental;1;draft_shield_enabled;bool;Enable Draft Shield;False
+experimental;1;conical_overhang_enabled;bool;Make Overhang Printable;False
+experimental;1;coasting_enable;bool;Enable Coasting;False
+experimental;1;magic_fuzzy_skin_enabled;bool;Fuzzy Skin;False
+experimental;1;flow_rate_max_extrusion_offset;float;Flow Rate Compensation Max Extrusion Offset;0
+experimental;1;flow_rate_extrusion_offset_factor;float;Flow Rate Compensation Factor;100
+experimental;1;adaptive_layer_height_enabled;bool;Use Adaptive Layers;False
+experimental;1;wall_overhang_angle;float;Overhanging Wall Angle;75
+experimental;1;wall_overhang_speed_factor;float;Overhanging Wall Speed;50
+experimental;1;bridge_settings_enabled;bool;Enable Bridge Settings;True
+experimental;1;bridge_wall_min_length;float;Minimum Bridge Wall Length;2.15
+experimental;1;bridge_skin_support_threshold;float;Bridge Skin Support Threshold;50
+experimental;1;bridge_sparse_infill_max_density;float;Bridge Sparse Infill Max Density;0
+experimental;1;bridge_wall_coast;float;Bridge Wall Coasting;10
+experimental;1;bridge_wall_speed;float;Bridge Wall Speed;35
+experimental;1;bridge_wall_material_flow;float;Bridge Wall Flow;50
+experimental;1;bridge_skin_speed;float;Bridge Skin Speed;35
+experimental;1;bridge_skin_material_flow;float;Bridge Skin Flow;60
+experimental;1;bridge_skin_density;float;Bridge Skin Density;100
+experimental;1;bridge_fan_speed;float;Bridge Fan Speed;100
+experimental;1;bridge_enable_more_layers;bool;Bridge Has Multiple Layers;True
+experimental;1;bridge_skin_speed_2;float;Bridge Second Skin Speed;35
+experimental;1;bridge_skin_material_flow_2;float;Bridge Second Skin Flow;100
+experimental;1;bridge_skin_density_2;float;Bridge Second Skin Density;75
+experimental;1;bridge_fan_speed_2;float;Bridge Second Skin Fan Speed;0
+experimental;1;bridge_skin_speed_3;float;Bridge Third Skin Speed;35
+experimental;1;bridge_skin_material_flow_3;float;Bridge Third Skin Flow;110
+experimental;1;bridge_skin_density_3;float;Bridge Third Skin Density;80
+experimental;1;bridge_fan_speed_3;float;Bridge Third Skin Fan Speed;0
+experimental;1;clean_between_layers;bool;Wipe Nozzle Between Layers;False
+experimental;1;small_hole_max_size;float;Small Hole Max Size;0
+experimental;1;material_alternate_walls;bool;Alternate Wall Directions;False
