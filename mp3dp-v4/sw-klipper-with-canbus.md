@@ -86,6 +86,27 @@ Based on info at https://klipper.discourse.group/t/setup-ebb36-v1-2-connected-to
 - Looked up what "allow-hotplug" does.  Considered changing to "auto", but am wondering whether lack of can0 indicates EBB and/or Octopus USB-to-CAN bridage CANBus device is not being detected, and/or Klipper printer.cfg isn't configured to enable CAN even if the build is.  Am questioning everything at this point given how long root causing missing can0 is taking.
 - Powered off.  Added jumper to EBB's 120R pins.  Powered on.
 
+### Configure Raspberry Pi interface
+
+Based on https://klipper.discourse.group/t/setup-ebb36-v1-2-connected-to-octopus-pro/6617/17?u=azab2c
+
+```
+sudo nano /etc/network/interfaces.d/can0
+```
+
+Originally used 250000
+```
+allow-hotplug can0
+iface can0 can static
+    bitrate 500000
+    up ifconfig $IFACE txqueuelen 1024
+    pre-up ip link set can0 type can bitrate 500000
+    pre-up ip link set can0 txqueuelen 1024
+```
+
+```
+sudo reboot
+```
 
 ### Config and Build CanBoot
 
