@@ -93,11 +93,13 @@ sudo apt-get upgrade
 ```
 cd ~/CanBoot
 git pull
+```
+
+Configure settings to build CanBoot for Octopus v1.1 :
+```
 make clean
 make menuconfig
 ```
-
-Configure CanBoot to build for Octopus v1.1 :
 
 ```
     Micro-controller Architecture (STMicroelectronics STM32)  --->
@@ -113,15 +115,18 @@ Configure CanBoot to build for Octopus v1.1 :
 [ ] Enable Status LED
 ```
 
+Build, move and rename Canboot binary (built for Octopus) for flashing later on.
 ```
 make
 mv out/canboot.bin octopus_canboot.bin
+```
 
+Configure settings to build CanBoot for EBB v1.2 :
+```
 make clean
 make menuconfig
 ```
 
-Configure CanBoot to build for EBB v1.2 :
 ```
     [2023 Original install] CanBoot Configuration v0.0.1-43-g10cc588
     [2024-01-22] Katapult Configuration v0.0.1-61-gec4df2e-dirty
@@ -139,27 +144,8 @@ Configure CanBoot to build for EBB v1.2 :
 (PA13)  Status LED GPIO Pin
 ```
 
-
-
-    Micro-controller Architecture (STMicroelectronics STM32)  --->
-    Processor model (STM32G0B1)  --->
-    Build Katapult deployment application (Do not build)  --->
-    Clock Reference (8 MHz crystal)  --->
-    Communication interface (CAN bus (on PB0/PB1))  --->
-    Application start offset (8KiB offset)  --->
-(250000) CAN bus speed
-()  GPIO pins to set on bootloader entry
-[*] Support bootloader entry on rapid double click of reset button
-[ ] Enable bootloader entry on button (or gpio) state
-[*] Enable Status LED
-(PA13)  Status LED GPIO Pin
-
-
-
-
-
+Build, move and rename Canboot binary (built for EBB) for flashing later on.
 ```
-make clean
 make
 mv out/canboot.bin ebb_canboot.bin
 ```
