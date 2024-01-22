@@ -193,6 +193,31 @@ mv out/klipper.bin octopus_klipper.bin
 ```
 
 
+Configure settings to build Klipper for EBB :
+```
+make clean
+make menuconfig
+```
+
+```
+                         Klipper Firmware Configuration
+[*] Enable extra low-level configuration options
+    Micro-controller Architecture (STMicroelectronics STM32)  --->
+    Processor model (STM32G0B1)  --->
+    Bootloader offset (8KiB bootloader)  --->
+    Clock Reference (8 MHz crystal)  --->
+    Communication interface (CAN bus (on PB0/PB1))  --->
+(500000) CAN bus speed
+()  GPIO pins to set at micro-controller startup
+```
+
+
+Build, move and rename Klipper binary (built for EBB) for flashing later on.
+```
+make
+mv out/klipper.bin ebb_klipper.bin
+```
+
 
 
 - Added jumper to Octopus boot0, reset Octopus, should go into DFU mode.
