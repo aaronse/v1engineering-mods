@@ -92,6 +92,7 @@ sudo apt-get upgrade
 
 ```
 cd ~/CanBoot
+git pull
 make clean
 make menuconfig
 ```
@@ -120,7 +121,7 @@ make clean
 make menuconfig
 ```
 
-Configure CanBoot to buildd for EBB v1.2 :
+Configure CanBoot to build for EBB v1.2 :
 ```
     CanBoot Configuration v0.0.1-43-g10cc588
     Micro-controller Architecture (STMicroelectronics STM32)  --->
