@@ -59,7 +59,7 @@ https://klipper.discourse.group/t/octopus-pro-canboot-can-bus-bridge/3734/30?u=a
   - PTFE 4mm+ ID, ~6 OD, maybe high temp silicone?
 
 - TODO:
-  - TODO: Change baud rate from 250000 to 500000 (make menuconfig and mainsail config?)
+  - TODO: Must change baud rate from 250000 to 500000 or 1000000 even, before enabling input shaping (make menuconfig and mainsail config?)
   - TODO: Read https://klipper.discourse.group/t/setup-ebb36-v1-2-connected-to-octopus-pro/6617/2
   - TODO: *Maybe* Read https://github.com/Esoterical/voron_canbus
   - TODO: *Maybe* Read Voron Discord #can_bus_depot https://discord.com/channels/460117602945990666/1076243803947667516
@@ -94,13 +94,12 @@ Based on https://klipper.discourse.group/t/setup-ebb36-v1-2-connected-to-octopus
 sudo nano /etc/network/interfaces.d/can0
 ```
 
-Originally used 250000
 ```
 allow-hotplug can0
 iface can0 can static
-    bitrate 500000
+    bitrate 250000
     up ifconfig $IFACE txqueuelen 1024
-    pre-up ip link set can0 type can bitrate 500000
+    pre-up ip link set can0 type can bitrate 250000
     pre-up ip link set can0 txqueuelen 1024
 ```
 
@@ -126,22 +125,6 @@ make clean
 make menuconfig
 ```
 
-PROBABLY USE THIS (CAN bus based)...
-```
-    Micro-controller Architecture (STMicroelectronics STM32)  --->
-    Processor model (STM32F446)  --->
-    Build Katapult deployment application (Do not build)  --->
-    Clock Reference (12 MHz crystal)  --->
-    Communication interface (CAN bus (on PD0/PD1))  --->
-    Application start offset (32KiB offset)  --->
-(250000) CAN bus speed
-()  GPIO pins to set on bootloader entry
-[*] Support bootloader entry on rapid double click of reset button
-[ ] Enable bootloader entry on button (or gpio) state
-[ ] Enable Status LED
-```
-
-PROBABLY DO NOT USE THIS (USB)...
 ```
     Micro-controller Architecture (STMicroelectronics STM32)  --->
     Processor model (STM32F446)  --->
@@ -155,6 +138,26 @@ PROBABLY DO NOT USE THIS (USB)...
 [ ] Enable bootloader entry on button (or gpio) state
 [ ] Enable Status LED
 ```
+
+
+<mark>
+DO NOT USE THIS..<br/>
+```
+    Micro-controller Architecture (STMicroelectronics STM32)  --->
+    Processor model (STM32F446)  --->
+    Build Katapult deployment application (Do not build)  --->
+    Clock Reference (12 MHz crystal)  --->
+    Communication interface (CAN bus (on PD0/PD1))  --->
+    Application start offset (32KiB offset)  --->
+(250000) CAN bus speed
+()  GPIO pins to set on bootloader entry
+[*] Support bootloader entry on rapid double click of reset button
+[ ] Enable bootloader entry on button (or gpio) state
+[ ] Enable Status LED
+```
+</mark>
+<br/>
+<br/>
 
 Build, move and rename Canboot binary (built for Octopus) for flashing later on.
 ```
@@ -177,7 +180,7 @@ make menuconfig
     Clock Reference (8 MHz crystal)  --->
     Communication interface (CAN bus (on PB0/PB1))  --->
     Application start offset (8KiB offset)  --->
-(500000) CAN bus speed
+(250000) CAN bus speed
 ()  GPIO pins to set on bootloader entry
 [*] Support bootloader entry on rapid double click of reset button
 [ ] Enable bootloader entry on button (or gpio) state
@@ -246,7 +249,7 @@ make menuconfig
     Bootloader offset (8KiB bootloader)  --->
     Clock Reference (8 MHz crystal)  --->
     Communication interface (CAN bus (on PB0/PB1))  --->
-(500000) CAN bus speed
+(250000) CAN bus speed
 ()  GPIO pins to set at micro-controller startup
 ```
 
@@ -284,11 +287,29 @@ mv out/klipper.bin ebb_klipper.bin
 cd ~/CanBoot/scripts
 pip3 install pyserial
 python3 flash_can.py -f ~/klipper/octopus_klipper.bin -d <serial_device>
+
+For example...
+
+python3 flash_can.py -f ~/klipper/octopus_klipper.bin -d /dev/serial/by-id/usb-katapult_stm32f446xx_2A0005001850344D30353320-if00
 ```
 
+
+List CAN Bus UUIDs for Octopus and EBB36...
 ```
-~/klippy-env/bin/python ~/klipper/scripts/canbus_query.py can0
+cd ~/CanBoot/scripts
+~/klippy-env/bin/python flash_can.py -i can0 -q
+
 ```
+
+Example output
+```
+Resetting all bootloader node IDs...
+Checking for Katapult nodes...
+Detected UUID: f7a5fa2b8bf6, Application: Katapult
+Query Complete
+```
+
+<mark>~/klippy-env/bin/python ~/klipper/scripts/canbus_query.py can0</mark>
 
 Returned canbus identifiers for Octopus and EBB36 just once.  After that they were not displayed.  Spent many many hours trying to figure out why the ~~"devices are not being listed, so they must be broken"~~, well...  Turns out I didn't RT*M the scattered docs enough, 🤦‍♂️, [Klipper Docs > CANBus](https://github.com/Klipper3d/klipper/blob/master/docs/CANBUS.md) says... 
 - *"Note that the canbus_query.py tool will only report uninitialized devices - if Klipper (or a similar tool) configures the device then it will no longer appear in the list."*
@@ -325,12 +346,37 @@ sudo dfu-util -a 0 -D ~/klipper/ebb_klipper.bin --dfuse-address 0x08008000:leave
 - Verify
 
 
-**Alternatively... ** try uploading klipper without bootloader to EBB
+Upload Klipper to EBB via Katapult over CAN Bus
 
 ```
-sudo dfu-util -a 0 -D ~/klipper/ebb_noboot_klipper.bin --dfuse-address 0x08000000:force:mass-erase -d 0483:df11
 
-python3 ~/CanBoot/scripts/flash_can.py -f ~/klipper/ebb_klipper.bin -u 127081e7e3c6
+python3 ~/CanBoot/scripts/flash_can.py -f ~/klipper/ebb_klipper.bin -u f7a5fa2b8bf6
+```
+
+Example Output...
+
+```
+661wls@repeat:~/CanBoot/scripts $ python3 ~/CanBoot/scripts/flash_can.py -f ~/klipper/ebb_klipper.bin -u f7a5fa2b8bf6
+Sending bootloader jump command...
+Resetting all bootloader node IDs...
+Attempting to connect to bootloader
+Katapult Connected
+Protocol Version: 1.0.0
+Block Size: 64 bytes
+Application Start: 0x8002000
+MCU type: stm32g0b1xx
+Verifying canbus connection
+Flashing '/home/661wls/klipper/ebb_klipper.bin'...
+
+[##################################################]
+
+Write complete: 14 pages
+Verifying (block count = 426)...
+
+[##################################################]
+
+Verification Complete: SHA = A2A405AB42F65688BDDCA68A24FAC8B5B644308C
+Flash Success
 ```
 
 ## Futures:

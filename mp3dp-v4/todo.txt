@@ -1,0 +1,14 @@
+- Print Test Cube...
+  - https://forum.v1e.com/t/mp3dp-ilya-s-build/40250/122?u=azab2c
+  - "Also, one thing I learn in 3d printing is that many times issues related to over or under extrusion. This is the very first thing I do with a new setup or material - print a hollow cube with 6 walls making sure the sum or 6 0.4-0.45mm walls is equal to 2.4mm (without air gaps)"
+
+Springs/Leveling-nuts
+https://forum.v1e.com/t/mp3dp-ilya-s-build/40250/8?u=azab2c
+https://www.amazon.com/dp/B0CLYB2W4P/?th=1
+
+3x Springs
+https://forum.v1e.com/t/mp3dp-ilya-s-build/40250/9?u=azab2c
+
+Rail lubricant
+WD Specialist PTFE
+- https://youtu.be/vso6lgTRSo0?si=b-qQ3LQUIoEYLoAR&t=171
