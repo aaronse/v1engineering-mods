@@ -216,7 +216,7 @@ make menuconfig
     Micro-controller Architecture (STMicroelectronics STM32)  --->
     Processor model (STM32F446)  --->
     Bootloader offset (32KiB bootloader)  --->
-    Clock Reference (8 MHz crystal)  --->
+    Clock Reference (12 MHz crystal)  --->
     Communication interface (USB to CAN bus bridge (USB on PA11/PA12))  --->
     CAN bus interface (CAN bus (on PD0/PD1))  --->
     USB ids  --->
