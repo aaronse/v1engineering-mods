@@ -90,10 +90,14 @@ sudo apt-get update
 sudo apt-get upgrade
 ```
 
+```
 cd ~/CanBoot
 make clean
 make menuconfig
+```
+
 Configure CanBoot to build for Octopus v1.1 :
+
 ```
     Micro-controller Architecture (STMicroelectronics STM32)  --->
     Processor model (STM32F446)  --->
@@ -107,11 +111,15 @@ Configure CanBoot to build for Octopus v1.1 :
 [ ] Enable bootloader entry on button (or gpio) state
 [ ] Enable Status LED
 ```
+
+```
 make
 mv out/canboot.bin octopus_canboot.bin
 
 make clean
 make menuconfig
+```
+
 Configure CanBoot to buildd for EBB v1.2 :
 ```
     CanBoot Configuration v0.0.1-43-g10cc588
@@ -126,6 +134,7 @@ Configure CanBoot to buildd for EBB v1.2 :
 [*] Support bootloader entry on rapid double click of reset button
 [ ] Enable bootloader entry on button (or gpio) state
 [ ] Enable Status LED
+```
 
 ```
 make clean
@@ -196,11 +205,11 @@ sudo dfu-util -a 0 -D ~/klipper/ebb_klipper.bin --dfuse-address 0x08008000:leave
 
 **Alternatively... ** try uploading klipper without bootloader to EBB
 
+```
 sudo dfu-util -a 0 -D ~/klipper/ebb_noboot_klipper.bin --dfuse-address 0x08000000:force:mass-erase -d 0483:df11
 
-
 python3 ~/CanBoot/scripts/flash_can.py -f ~/klipper/ebb_klipper.bin -u 127081e7e3c6
-
+```
 
 ## Futures:
 - WaveShare 7" or similar screen
