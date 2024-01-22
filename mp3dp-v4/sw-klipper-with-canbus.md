@@ -79,11 +79,15 @@ cause: ???
 context:
 - Related? https://github.com/Arksine/CanBoot/issues/69
 
-## Actions:
+## Config, Build and Upload Firmware to Octopus and EBB:
+Based on info at https://klipper.discourse.group/t/setup-ebb36-v1-2-connected-to-octopus-pro/6617/5?u=azab2c
+
 - Edited ```/etc/rc.local``` per https://github.com/Arksine/CanBoot/issues/72#issuecomment-1501347910
 - Looked up what "allow-hotplug" does.  Considered changing to "auto", but am wondering whether lack of can0 indicates EBB and/or Octopus USB-to-CAN bridage CANBus device is not being detected, and/or Klipper printer.cfg isn't configured to enable CAN even if the build is.  Am questioning everything at this point given how long root causing missing can0 is taking.
 - Powered off.  Added jumper to EBB's 120R pins.  Powered on.
 
+
+### Config and Build CanBoot
 
 ```
 sudo apt-get update
@@ -128,7 +132,7 @@ make menuconfig
 ```
 
 ```
-    [2023 Original install] CanBoot Configuration v0.0.1-43-g10cc588
+    [2023-05 Original install] CanBoot Configuration v0.0.1-43-g10cc588
     [2024-01-22] Katapult Configuration v0.0.1-61-gec4df2e-dirty
     Micro-controller Architecture (STMicroelectronics STM32)  --->
     Processor model (STM32G0B1)  --->
@@ -150,16 +154,62 @@ make
 mv out/canboot.bin ebb_canboot.bin
 ```
 
+
+### Config and Build Klipper
+
+```
+sudo apt-get update
+sudo apt-get upgrade
+```
+
+```
+cd ~/klipper
+git pull
+```
+
+Configure settings to build Klipper for Octopus v1.1 :
+```
+make clean
+make menuconfig
+```
+
+```
+              Klipper Firmware Configuration
+[*] Enable extra low-level configuration options
+    Micro-controller Architecture (STMicroelectronics STM32)  --->
+    Processor model (STM32F446)  --->
+    Bootloader offset (32KiB bootloader)  --->
+    Clock Reference (8 MHz crystal)  --->
+    Communication interface (USB (on PA11/PA12))  --->
+    USB ids  --->
+()  GPIO pins to set at micro-controller startup
+```
+
+
+Build, move and rename Klipper binary (built for Octopus) for flashing later on.
+```
+make
+mv out/klipper.bin octopus_klipper.bin
+```
+
+
+
+
 - Added jumper to Octopus boot0, reset Octopus, should go into DFU mode.
-- Check Octopus is in DFU mode via ```lsusb```, verify output contains ```0483:df11 STMicroelectronics STM Device in DFU Mode```.  Note ```0483:df11``` is common, but could change.  If you see a different Identifier, be sure to use that instead for the instructions that follow.
+- Check Octopus is in DFU mode via ```lsusb```, verify output contains ```0483:df11 STMicroelectronics STM Device in DFU Mode```.  Note ```0483:df11 STMicroelectronics STM Device in DFU Mode``` is common, but could change.  If you see a different Identifier, be sure to use that instead for the instructions that follow.
 - Use dfu-util to upload octopus_canboot.bin and octopus_klipper.bin, follow steps described in https://klipper.discourse.group/t/setup-ebb36-v1-2-connected-to-octopus-pro/6617/5?u=azab2c
   ```
   sudo dfu-util -a 0 -D ~/CanBoot/octopus_canboot.bin --dfuse-address 0x08000000:force:mass-erase:leave -d 0483:df11
   ```
+- Check Octopus is still in DFU mode.  Flash may have rebooted ensure ```lsusb``` is still listing device with ```0483:df11 STMicroelectronics STM Device in DFU Mode``` or whatever identifier your Controller board type normally returns.
   ```
   sudo dfu-util -a 0 -D ~/klipper/octopus_klipper.bin --dfuse-address 0x08008000:leave -d 0483:df111
   ```
 - Remove Octopus boot0 jumper and reset.
+
+
+- Ensure correct baud rate specified in Klipper printer.cfg, edit [mcu] section, [https://www.klipper3d.org/Config_Reference.html?h=mcu+baud#mcu](https://www.klipper3d.org/Config_Reference.html?h=mcu+baud#mcu).
+
 - Query CANBus status, checks can0 interface is working and that CanBoot on Octopus is running...
     ```
     cd ~/CanBoot/scripts
