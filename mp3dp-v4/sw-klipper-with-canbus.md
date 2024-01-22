@@ -123,7 +123,8 @@ make menuconfig
 
 Configure CanBoot to build for EBB v1.2 :
 ```
-    CanBoot Configuration v0.0.1-43-g10cc588
+    [2023 Original install] CanBoot Configuration v0.0.1-43-g10cc588
+    [2024-01-22] Katapult Configuration v0.0.1-61-gec4df2e-dirty
     Micro-controller Architecture (STMicroelectronics STM32)  --->
     Processor model (STM32G0B1)  --->
     Build CanBoot deployment application (Do not build)  --->
@@ -134,8 +135,28 @@ Configure CanBoot to build for EBB v1.2 :
 ()  GPIO pins to set on bootloader entry
 [*] Support bootloader entry on rapid double click of reset button
 [ ] Enable bootloader entry on button (or gpio) state
-[ ] Enable Status LED
+[*] Enable Status LED
+(PA13)  Status LED GPIO Pin
 ```
+
+
+
+    Micro-controller Architecture (STMicroelectronics STM32)  --->
+    Processor model (STM32G0B1)  --->
+    Build Katapult deployment application (Do not build)  --->
+    Clock Reference (8 MHz crystal)  --->
+    Communication interface (CAN bus (on PB0/PB1))  --->
+    Application start offset (8KiB offset)  --->
+(250000) CAN bus speed
+()  GPIO pins to set on bootloader entry
+[*] Support bootloader entry on rapid double click of reset button
+[ ] Enable bootloader entry on button (or gpio) state
+[*] Enable Status LED
+(PA13)  Status LED GPIO Pin
+
+
+
+
 
 ```
 make clean
