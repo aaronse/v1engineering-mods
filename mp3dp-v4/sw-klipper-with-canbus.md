@@ -126,6 +126,22 @@ make clean
 make menuconfig
 ```
 
+PROBABLY USE THIS (CAN bus based)...
+```
+    Micro-controller Architecture (STMicroelectronics STM32)  --->
+    Processor model (STM32F446)  --->
+    Build Katapult deployment application (Do not build)  --->
+    Clock Reference (12 MHz crystal)  --->
+    Communication interface (CAN bus (on PD0/PD1))  --->
+    Application start offset (32KiB offset)  --->
+(250000) CAN bus speed
+()  GPIO pins to set on bootloader entry
+[*] Support bootloader entry on rapid double click of reset button
+[ ] Enable bootloader entry on button (or gpio) state
+[ ] Enable Status LED
+```
+
+PROBABLY DO NOT USE THIS (USB)...
 ```
     Micro-controller Architecture (STMicroelectronics STM32)  --->
     Processor model (STM32F446)  --->
@@ -195,14 +211,16 @@ make menuconfig
 ```
 
 ```
-              Klipper Firmware Configuration
+                         Klipper Firmware Configuration
 [*] Enable extra low-level configuration options
     Micro-controller Architecture (STMicroelectronics STM32)  --->
     Processor model (STM32F446)  --->
     Bootloader offset (32KiB bootloader)  --->
     Clock Reference (8 MHz crystal)  --->
-    Communication interface (USB (on PA11/PA12))  --->
+    Communication interface (USB to CAN bus bridge (USB on PA11/PA12))  --->
+    CAN bus interface (CAN bus (on PD0/PD1))  --->
     USB ids  --->
+(250000) CAN bus speed
 ()  GPIO pins to set at micro-controller startup
 ```
 
@@ -247,7 +265,7 @@ mv out/klipper.bin ebb_klipper.bin
   ```
   sudo dfu-util -a 0 -D ~/CanBoot/octopus_canboot.bin --dfuse-address 0x08000000:force:mass-erase:leave -d 0483:df11
   ```
-- Check Octopus is still in DFU mode.  Flash may have rebooted ensure ```lsusb``` is still listing device with ```0483:df11 STMicroelectronics STM Device in DFU Mode``` or whatever identifier your Controller board type normally returns.
+- Check Octopus is still in DFU mode.  Previous flash step may have take controller out of DFU mode.  Press reset button to re-enter DFU again.  Ensure ```lsusb``` is still listing device with ```0483:df11 STMicroelectronics STM Device in DFU Mode``` or whatever identifier your Controller board type normally returns.
   ```
   sudo dfu-util -a 0 -D ~/klipper/octopus_klipper.bin --dfuse-address 0x08008000:leave -d 0483:df111
   ```
