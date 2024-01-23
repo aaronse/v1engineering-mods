@@ -1,4 +1,4 @@
-## <big>Software</big>
+# <big>Software</big>
 
 This doc shares references to resources that helped me setup Klipper, MainSail with my Octopus, RaspberryPi, CANBus build.
 
@@ -8,7 +8,7 @@ Related:
   - Uses USB-to-CAN ("U2C") Pi Hat, which am not using.  But many of the concepts and steps are related.
 - [How to Use CAN Toolhead Boards Connected Directly to Octopus / Octopus Pro on Katapult](https://klipper.discourse.group/uploads/short-url/oKyxrVja7wW0J8toGB1pqfaGp4z.pdf) shared on Klipper Forum was very helpful.  The .PDF was mentioned in [https://klipper.discourse.group/t/setup-ebb36-v1-2-connected-to-octopus-pro/6617/3](https://klipper.discourse.group/t/setup-ebb36-v1-2-connected-to-octopus-pro/6617/3).
 
-### Klipper Install
+## Klipper Install
 Related:
 - [2022/8 Chris Riley YT - Klipper Firmware - Install - 2022 - Chris's Basement](https://www.youtube.com/watch?v=qS1TC7zVXYw)
 - [2022/8 Chris Riley YT - Klipper, Mainsail, Fluidd - 2022 - Chris's Basement](https://www.youtube.com/watch?v=FjMZzW_WVQ8)
@@ -25,10 +25,55 @@ Related:
   - [31:15](https://www.youtube.com/live/zXFGQMVvHrs?feature=share&t=1875) KlipperScreen setup/config of TFT mounted to Pi.
 - [Klipper Docs - CANBUS](https://www.klipper3d.org/CANBUS.html?h=menuconfig)
 
+### Klipper WebCam setup
+For download, install and configure info, see [Klipper - Multiple Cameras - Mainsail - Fluidd - Chris's Basement - 2023](https://www.youtube.com/watch?v=PAQ1lkUC-nM).  Shows how to setup 1-many WebCam.
 
-## CANBus setup
+If logs contain dependency errors, e.g. streamer lib not install, then may need to install/build crowsnest...
 
-### EBB36 setup
+```
+cd crowsnest
+sudo make install
+```
+
+Discover id for USB Cams via...
+```
+dir /dev/v4l/by-id
+
+```
+
+Edit, save, and restart Klipper, maybe restart Pi host even
+```
+[crowsnest]
+log_path: /home/661wls/printer_data/logs/crowsnest.log
+log_level: verbose                      # Valid Options are quiet/verbose/debug
+delete_log: true                       # Deletes log on every restart, if set to true
+no_proxy: false
+
+[cam 1]
+mode: ustreamer                         # ustreamer - Provides mjpg and snapshots. (All devices)
+                                        # camera-streamer - Provides webrtc, mjpg and snapshots. (rpi + Raspi OS based only)
+enable_rtsp: false                      # If camera-streamer is used, this enables also usage of an rtsp server
+rtsp_port: 8554                         # Set different ports for each device!
+port: 8081                              # HTTP/MJPG Stream/Snapshot Port
+device: /dev/v4l/by-id/usb-Microsoft_Microsoft®_LifeCam_Cinema_TM_-video-index0  # AZA , was /dev/video0 
+resolution: 640x480                     # widthxheight format
+max_fps: 15                             # If Hardware Supports this it will be forced, otherwise ignored/coerced.
+```
+
+Browse camera via...
+
+```
+http://repeat/webcam2/?action=stream
+```
+
+Logs...
+```
+/home/661wls/printer_data/logs/crowsnest.log
+```
+
+
+### Klipper CANBus setup
+
 Related :
 - https://github.com/bigtreetech/EBB repo contains [user manual](https://github.com/bigtreetech/EBB/blob/master/EBB%20CAN%20V1.1%20(STM32G0B1)/EBB36%20CAN%20V1.1/BIGTREETECH%20EBB36%20CAN%20V1.1%20User%20Manual.pdf), [hardware specs](https://github.com/bigtreetech/EBB/tree/master/EBB%20CAN%20V1.1%20(STM32G0B1)/EBB36%20CAN%20V1.1/Hardware), [pinout](https://github.com/bigtreetech/EBB/blob/master/EBB%20CAN%20V1.1%20(STM32G0B1)/EBB36%20CAN%20V1.1/Hardware/EBB36%20CAN%20V1.1%26V1.2-PIN.png).  Read the docs for the model and version you have...
   - For my EBB 36 v1.2 ...
@@ -67,7 +112,7 @@ https://klipper.discourse.group/t/octopus-pro-canboot-can-bus-bridge/3734/30?u=a
 https://github.com/bigtreetech/EBB/blob/master/EBB%20CAN%20V1.1%20(STM32G0B1)/sample-bigtreetech-ebb-canbus-v1.2.cfg
 
 
-### CANBus wiring
+#### CANBus wiring
 
 Was going to use a [stranded Cat-6 Ethernet Patch cable](https://www.amazon.com/gp/product/B01INRUFGK) I have already.  Despite being very popular with ~122,000 reviews, am not going to use after cutting and examining the wires to learn they're just ~26 AWG, or thinner even...
 
@@ -78,14 +123,14 @@ cause: ???
 context:
 - Related? https://github.com/Arksine/Katapult/issues/69
 
-## Config, Build and Upload Firmware to Octopus and EBB:
+#### Config, Build and Upload Firmware to Octopus and EBB:
 Based on info at https://klipper.discourse.group/t/setup-ebb36-v1-2-connected-to-octopus-pro/6617/5?u=azab2c
 
 - Edited ```/etc/rc.local``` per https://github.com/Arksine/Katapult/issues/72#issuecomment-1501347910
 - Looked up what "allow-hotplug" does.  Considered changing to "auto", but am wondering whether lack of can0 indicates EBB and/or Octopus USB-to-CAN bridage CANBus device is not being detected, and/or Klipper printer.cfg isn't configured to enable CAN even if the build is.  Am questioning everything at this point given how long root causing missing can0 is taking.
 - Powered off.  Added jumper to EBB's 120R pins.  Powered on.
 
-### Configure Raspberry Pi interface
+#### Configure Raspberry Pi interface
 
 Based on https://klipper.discourse.group/t/setup-ebb36-v1-2-connected-to-octopus-pro/6617/17?u=azab2c
 
@@ -106,7 +151,7 @@ iface can0 can static
 sudo reboot
 ```
 
-### Config and Build Katapult
+#### Config and Build Katapult
 
 ```
 sudo apt-get update
@@ -175,7 +220,7 @@ mv out/katapult.bin ebb_katapult.bin
 ```
 
 
-### Config and Build Klipper
+#### Config and Build Klipper
 
 ```
 sudo apt-get update
