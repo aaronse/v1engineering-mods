@@ -59,7 +59,6 @@ https://klipper.discourse.group/t/octopus-pro-canboot-can-bus-bridge/3734/30?u=a
   - PTFE 4mm+ ID, ~6 OD, maybe high temp silicone?
 
 - TODO:
-  - TODO: Must change baud rate from 250000 to 500000 or 1000000 even, before enabling input shaping (make menuconfig and mainsail config?)
   - TODO: Read https://klipper.discourse.group/t/setup-ebb36-v1-2-connected-to-octopus-pro/6617/2
   - TODO: *Maybe* Read https://github.com/Esoterical/voron_canbus
   - TODO: *Maybe* Read Voron Discord #can_bus_depot https://discord.com/channels/460117602945990666/1076243803947667516
@@ -97,9 +96,9 @@ sudo nano /etc/network/interfaces.d/can0
 ```
 allow-hotplug can0
 iface can0 can static
-    bitrate 250000
+    bitrate 1000000
     up ifconfig $IFACE txqueuelen 1024
-    pre-up ip link set can0 type can bitrate 250000
+    pre-up ip link set can0 type can bitrate 1000000
     pre-up ip link set can0 txqueuelen 1024
 ```
 
@@ -161,7 +160,7 @@ make menuconfig
     Clock Reference (8 MHz crystal)  --->
     Communication interface (CAN bus (on PB0/PB1))  --->
     Application start offset (8KiB offset)  --->
-(250000) CAN bus speed
+(1000000) CAN bus speed
 ()  GPIO pins to set on bootloader entry
 [*] Support bootloader entry on rapid double click of reset button
 [ ] Enable bootloader entry on button (or gpio) state
@@ -204,7 +203,7 @@ make menuconfig
     Communication interface (USB to CAN bus bridge (USB on PA11/PA12))  --->
     CAN bus interface (CAN bus (on PD0/PD1))  --->
     USB ids  --->
-(250000) CAN bus speed
+(1000000) CAN bus speed
 ()  GPIO pins to set at micro-controller startup
 ```
 
@@ -230,7 +229,7 @@ make menuconfig
     Bootloader offset (8KiB bootloader)  --->
     Clock Reference (8 MHz crystal)  --->
     Communication interface (CAN bus (on PB0/PB1))  --->
-(250000) CAN bus speed
+(1000000) CAN bus speed
 ()  GPIO pins to set at micro-controller startup
 ```
 
@@ -312,15 +311,19 @@ So, if the devices not being displayed means they're working, or, maybe that the
     ```
   -  Note the ```0483:df11```, use/substitute that identifier in the following steps.
 - Flash Katapult firmware to EBB36...
+
 ```
 sudo dfu-util -a 0 -D ~/katapult/ebb_katapult.bin --dfuse-address 0x08000000:force:mass-erase:leave -d 0483:df11 
+```
 
+- Flash Klipper firmware to EBB36...
+
+<mark>2024/1/23 DID NOT WORK with offset 0x08008000 (ie. 32kb)!  Edited to 0x08002000 but haven't tried, next time...🤷‍♂️  ENDED UP USING Katapult upload mentioned later in this doc</mark>
 
 ```
-- <mark>???  Flash Klipper firmware to EBB36...
+sudo dfu-util -a 0 -D ~/klipper/ebb_klipper.bin --dfuse-address 0x08002000:leave -d 0483:df11
 ```
-sudo dfu-util -a 0 -D ~/klipper/ebb_klipper.bin --dfuse-address 0x08008000:leave -d 0483:df11
-```
+
 - Power down EBB36.  Remove USB-C cable from Pi to EBB.  
 - Remove VUSB jumper.  Add 120R jumper.  
 - Connect fan to EBB36.  Consider delaying connecting other components to EBB36 until getting fan connected to EBB36 working.
