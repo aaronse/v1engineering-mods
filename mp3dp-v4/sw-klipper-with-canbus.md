@@ -6,7 +6,7 @@ Related:
 - Topic with set of links https://forum.vorondesign.com/threads/bigtreetech-octopus-v1-0-and-v1-1-information.79/
 - Wiring and SW setup walkthrough https://www.youtube.com/watch?v=jgE3XMM9PBk
   - Uses USB-to-CAN ("U2C") Pi Hat, which am not using.  But many of the concepts and steps are related.
-- [How to Use CAN Toolhead Boards Connected Directly to Octopus / Octopus Pro on CanBoot](https://klipper.discourse.group/uploads/short-url/oKyxrVja7wW0J8toGB1pqfaGp4z.pdf) shared on Klipper Forum was very helpful.  The .PDF was mentioned in [https://klipper.discourse.group/t/setup-ebb36-v1-2-connected-to-octopus-pro/6617/3](https://klipper.discourse.group/t/setup-ebb36-v1-2-connected-to-octopus-pro/6617/3).
+- [How to Use CAN Toolhead Boards Connected Directly to Octopus / Octopus Pro on Katapult](https://klipper.discourse.group/uploads/short-url/oKyxrVja7wW0J8toGB1pqfaGp4z.pdf) shared on Klipper Forum was very helpful.  The .PDF was mentioned in [https://klipper.discourse.group/t/setup-ebb36-v1-2-connected-to-octopus-pro/6617/3](https://klipper.discourse.group/t/setup-ebb36-v1-2-connected-to-octopus-pro/6617/3).
 
 ### Klipper Install
 Related:
@@ -38,12 +38,12 @@ Related :
 - [CAN Bus overview by Teaching Tech (YT)](https://www.youtube.com/watch?v=5pLjeQz9pEI) 
   - https://github.com/meteyou/KlipperMisc
 
-#### Build and Flash CANBoot firmware onto EBB36
+#### Build and Flash Katapult firmware onto EBB36
 - https://maz0r.github.io/klipper_canbus/toolhead/ebb36-42_v1.1.html
 - https://klipper.discourse.group/t/setup-ebb36-v1-2-connected-to-octopus-pro/6617/17?u=azab2c
 
 
-#### Build and Flash CANBoot and Klipper firmware onto Octopus
+#### Build and Flash Katapult and Klipper firmware onto Octopus
 
 - https://klipper.discourse.group/t/setup-ebb36-v1-2-connected-to-octopus-pro/6617/5?u=azab2c
 
@@ -74,15 +74,15 @@ Was going to use a [stranded Cat-6 Ethernet Patch cable](https://www.amazon.com/
 
 Instead am using Cat 5 24AWG stranded copper.  One pair for CANBus high/low, two pairs for power.  Grounded the final pair with the naive hope of helping shield comms.  Only grounded at end closest to controller
 
-problem: CanBoot scripts failing, ifconfig not listing can0
+problem: Katapult scripts failing, ifconfig not listing can0
 cause: ???
 context:
-- Related? https://github.com/Arksine/CanBoot/issues/69
+- Related? https://github.com/Arksine/Katapult/issues/69
 
 ## Config, Build and Upload Firmware to Octopus and EBB:
 Based on info at https://klipper.discourse.group/t/setup-ebb36-v1-2-connected-to-octopus-pro/6617/5?u=azab2c
 
-- Edited ```/etc/rc.local``` per https://github.com/Arksine/CanBoot/issues/72#issuecomment-1501347910
+- Edited ```/etc/rc.local``` per https://github.com/Arksine/Katapult/issues/72#issuecomment-1501347910
 - Looked up what "allow-hotplug" does.  Considered changing to "auto", but am wondering whether lack of can0 indicates EBB and/or Octopus USB-to-CAN bridage CANBus device is not being detected, and/or Klipper printer.cfg isn't configured to enable CAN even if the build is.  Am questioning everything at this point given how long root causing missing can0 is taking.
 - Powered off.  Added jumper to EBB's 120R pins.  Powered on.
 
@@ -107,7 +107,7 @@ iface can0 can static
 sudo reboot
 ```
 
-### Config and Build CanBoot
+### Config and Build Katapult
 
 ```
 sudo apt-get update
@@ -115,11 +115,12 @@ sudo apt-get upgrade
 ```
 
 ```
-cd ~/CanBoot
+git clone https://github.com/Arksine/katapult
+cd ~/katapult
 git pull
 ```
 
-Configure settings to build CanBoot for Octopus v1.1 :
+Configure settings to build Katapult for Octopus v1.1 :
 ```
 make clean
 make menuconfig
@@ -128,7 +129,7 @@ make menuconfig
 ```
     Micro-controller Architecture (STMicroelectronics STM32)  --->
     Processor model (STM32F446)  --->
-    Build CanBoot deployment application (Do not build)  --->
+    Build Katapult deployment application (Do not build)  --->
     Clock Reference (12 MHz crystal)  --->
     Communication interface (USB (on PA11/PA12))  --->
     Application start offset (32KiB offset)  --->
@@ -140,43 +141,23 @@ make menuconfig
 ```
 
 
-<mark>
-DO NOT USE THIS..<br/>
-```
-    Micro-controller Architecture (STMicroelectronics STM32)  --->
-    Processor model (STM32F446)  --->
-    Build Katapult deployment application (Do not build)  --->
-    Clock Reference (12 MHz crystal)  --->
-    Communication interface (CAN bus (on PD0/PD1))  --->
-    Application start offset (32KiB offset)  --->
-(250000) CAN bus speed
-()  GPIO pins to set on bootloader entry
-[*] Support bootloader entry on rapid double click of reset button
-[ ] Enable bootloader entry on button (or gpio) state
-[ ] Enable Status LED
-```
-</mark>
-<br/>
-<br/>
-
-Build, move and rename Canboot binary (built for Octopus) for flashing later on.
+Build, move and rename Katapult binary (built for Octopus) for flashing later on.
 ```
 make
-mv out/canboot.bin octopus_canboot.bin
+mv out/katapult.bin octopus_katapult.bin
 ```
 
-Configure settings to build CanBoot for EBB v1.2 :
+Configure settings to build Katapult for EBB v1.2 :
 ```
 make clean
 make menuconfig
 ```
 
 ```
-    [2023-05 Original install] CanBoot Configuration v0.0.1-43-g10cc588
-    [2024-01-22] Katapult Configuration v0.0.1-61-gec4df2e-dirty
+    Katapult Configuration v0.0.1-61-gec4df2e-dirty
     Micro-controller Architecture (STMicroelectronics STM32)  --->
     Processor model (STM32G0B1)  --->
-    Build CanBoot deployment application (Do not build)  --->
+    Build Katapult deployment application (Do not build)  --->
     Clock Reference (8 MHz crystal)  --->
     Communication interface (CAN bus (on PB0/PB1))  --->
     Application start offset (8KiB offset)  --->
@@ -188,10 +169,10 @@ make menuconfig
 (PA13)  Status LED GPIO Pin
 ```
 
-Build, move and rename Canboot binary (built for EBB) for flashing later on.
+Build, move and rename Katapult binary (built for EBB) for flashing later on.
 ```
 make
-mv out/canboot.bin ebb_canboot.bin
+mv out/katapult.bin ebb_katapult.bin
 ```
 
 
@@ -264,9 +245,9 @@ mv out/klipper.bin ebb_klipper.bin
 
 - Added jumper to Octopus boot0, reset Octopus, should go into DFU mode.
 - Check Octopus is in DFU mode via ```lsusb```, verify output contains ```0483:df11 STMicroelectronics STM Device in DFU Mode```.  Note ```0483:df11 STMicroelectronics STM Device in DFU Mode``` is common, but could change.  If you see a different Identifier, be sure to use that instead for the instructions that follow.
-- Use dfu-util to upload octopus_canboot.bin and octopus_klipper.bin, follow steps described in https://klipper.discourse.group/t/setup-ebb36-v1-2-connected-to-octopus-pro/6617/5?u=azab2c
+- Use dfu-util to upload octopus_katapult.bin and octopus_klipper.bin, follow steps described in https://klipper.discourse.group/t/setup-ebb36-v1-2-connected-to-octopus-pro/6617/5?u=azab2c
   ```
-  sudo dfu-util -a 0 -D ~/CanBoot/octopus_canboot.bin --dfuse-address 0x08000000:force:mass-erase:leave -d 0483:df11
+  sudo dfu-util -a 0 -D ~/katapult/octopus_katapult.bin --dfuse-address 0x08000000:force:mass-erase:leave -d 0483:df11
   ```
 - Check Octopus is still in DFU mode.  Previous flash step may have take controller out of DFU mode.  Press reset button to re-enter DFU again.  Ensure ```lsusb``` is still listing device with ```0483:df11 STMicroelectronics STM Device in DFU Mode``` or whatever identifier your Controller board type normally returns.
   ```
@@ -277,14 +258,20 @@ mv out/klipper.bin ebb_klipper.bin
 
 - Ensure correct baud rate specified in Klipper printer.cfg, edit [mcu] section, [https://www.klipper3d.org/Config_Reference.html?h=mcu+baud#mcu](https://www.klipper3d.org/Config_Reference.html?h=mcu+baud#mcu).
 
-- Query CANBus status, checks can0 interface is working and that CanBoot on Octopus is running...
+- Query CANBus status, checks can0 interface is working and that Katapult on Octopus is running...
     ```
-    cd ~/CanBoot/scripts
-    python3 flash_can.py -q
+    cd ~/katapult/scripts
+    python3 ~/kanBoot/scripts/flash_can.py -q
     ```
-- Flash Klipper to Octopus via CanBoot serial command
+
+- Get Octopus Serial Id
 ```
-cd ~/CanBoot/scripts
+ls /dev/serial/by-id
+```
+
+- Flash Klipper to Octopus via Katapult serial command
+```
+cd ~/katapult/scripts
 pip3 install pyserial
 python3 flash_can.py -f ~/klipper/octopus_klipper.bin -d <serial_device>
 
@@ -293,10 +280,11 @@ For example...
 python3 flash_can.py -f ~/klipper/octopus_klipper.bin -d /dev/serial/by-id/usb-katapult_stm32f446xx_2A0005001850344D30353320-if00
 ```
 
+ifconfig should list can0
 
 List CAN Bus UUIDs for Octopus and EBB36...
 ```
-cd ~/CanBoot/scripts
+cd ~/katapult/scripts
 ~/klippy-env/bin/python flash_can.py -i can0 -q
 
 ```
@@ -323,13 +311,9 @@ So, if the devices not being displayed means they're working, or, maybe that the
     0483:df11 STMicroelectronics STM Device in DFU Mode
     ```
   -  Note the ```0483:df11```, use/substitute that identifier in the following steps.
-- Flash CanBoot firmware to EBB36...
+- Flash Katapult firmware to EBB36...
 ```
-sudo dfu-util -a 0 -D ~/CanBoot/ebb_canboot.bin --dfuse-address 0x08000000:force:mass-erase:leave -d 0483:df11 
-
-!!! Attempt #2 with 250K baud...
-
-sudo dfu-util -a0 -D ~/CanBoot/ebb_250k_canboot.bin --dfuse-address 0x08000000:force:mass-erase:leave -d 0483:df11
+sudo dfu-util -a 0 -D ~/katapult/ebb_katapult.bin --dfuse-address 0x08000000:force:mass-erase:leave -d 0483:df11 
 
 
 ```
@@ -350,13 +334,18 @@ Upload Klipper to EBB via Katapult over CAN Bus
 
 ```
 
-python3 ~/CanBoot/scripts/flash_can.py -f ~/klipper/ebb_klipper.bin -u f7a5fa2b8bf6
+python3 ~/katapult/scripts/flash_can.py -f ~/klipper/ebb_klipper.bin -u f7a5fa2b8bf6
+```
+
+Upload  Klipper onto Octopus over CAN Bus...
+```
+python3 ~/katapult/scripts/flash_can.py -f ~/klipper/octopus_klipper.bin -u 642f53509351
 ```
 
 Example Output...
 
 ```
-661wls@repeat:~/CanBoot/scripts $ python3 ~/CanBoot/scripts/flash_can.py -f ~/klipper/ebb_klipper.bin -u f7a5fa2b8bf6
+661wls@repeat:~/katapult/scripts $ python3 ~/katapult/scripts/flash_can.py -f ~/klipper/ebb_klipper.bin -u f7a5fa2b8bf6
 Sending bootloader jump command...
 Resetting all bootloader node IDs...
 Attempting to connect to bootloader
