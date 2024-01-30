@@ -50,7 +50,17 @@ dir /dev/v4l/by-id
 
 ```
 
-Edit, save, and restart Klipper, maybe restart Pi host even
+Edit Crowsnest config, save, and restart Klipper, maybe restart Pi host even
+
+Replace ```device: ???``` with Id appropriate for Raspiberry Pi and/or USB Cameras you're using:
+
+```
+For raspberry pi...
+  device: /dev/video0
+For my USB LifeCam, found Id in earlier step...
+  device: /dev/v4l/by-id/usb-Microsoft_Microsoft®_LifeCam_Cinema_TM_-video-index0   
+```
+
 ```
 [crowsnest]
 log_path: /home/661wls/printer_data/logs/crowsnest.log
@@ -64,7 +74,7 @@ mode: ustreamer                         # ustreamer - Provides mjpg and snapshot
 enable_rtsp: false                      # If camera-streamer is used, this enables also usage of an rtsp server
 rtsp_port: 8554                         # Set different ports for each device!
 port: 8081                              # HTTP/MJPG Stream/Snapshot Port
-device: /dev/v4l/by-id/usb-Microsoft_Microsoft®_LifeCam_Cinema_TM_-video-index0  # AZA , was /dev/video0 
+device: ??? 
 resolution: 640x480                     # widthxheight format
 max_fps: 15                             # If Hardware Supports this it will be forced, otherwise ignored/coerced.
 ```
