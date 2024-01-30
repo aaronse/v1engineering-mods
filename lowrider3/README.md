@@ -15,6 +15,8 @@ TODO: Create index of Mods within this Repo.  Until then browse the sub folders.
 ## Actual Observed Settings
 Machine capability depends on the design, build materials, assembly quality, and maintenance.  With that in mind, here's what people have been able to achieve.  They show  what's possible, and what to strive for :
 
+**Use Landscape orientation if reading with CellPhone or small screen.  Table below has 10+ columns**
+
 |Quality|Material|Bit|DOC|Plunge Angle|Feed XY|Feed Z|RPM/Speed|Coolant|Notes / Source |
 | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- |
 ||Polycarbonate|1/8" 2 flute|1.5mm|45 deg|183mm/s|13m/s|Speed 6|Cold weather|@jjwharris, more details in [Forum Post](https://forum.v1e.com/t/cutting-polycarbonate/6869/14)<br/>- https://www.youtube.com/watch?v=Eilyq0q-F1o<br/>- Acc { print: 100, retract: 3000, travel: 1000}<br/>- Drivers { current : 1000mA }|
