@@ -28,11 +28,20 @@ Related:
 ### Klipper WebCam setup
 For download, install and configure info, see [Klipper - Multiple Cameras - Mainsail - Fluidd - Chris's Basement - 2023](https://www.youtube.com/watch?v=PAQ1lkUC-nM).  Shows how to setup 1-many WebCam.
 
+Ensure camera interface is enabled... ```sudo raspi-config```
+Test the camera works... ```raspistill -o test.jpg.``` download and view image, can use winscp or similar.
+
 If logs contain dependency errors, e.g. streamer lib not install, then may need to install/build crowsnest...
 
 ```
 cd crowsnest
 sudo make install
+```
+
+If ```mjpg-streamer``` dependency is missing for some reason... 
+```
+sudo apt update
+sudo apt install mjpg-streamer
 ```
 
 Discover id for USB Cams via...
