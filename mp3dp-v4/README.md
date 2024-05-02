@@ -736,7 +736,9 @@ C:\Projects(NAS)\Make.V1E_RepeatV2\alt\Assembly_Manual_Trident.pdf
       - 8 total, M5 x 16mm x 2 per mount
       - 4 total, M3 x 8mm x 1 per mount
     
+### Assimilated SnakeOil XY Parts
 
+- Used/remixed SnakeOil XY's Panel Clips, details at [mods/panel-clips/SnakeOil-XY/README.md](mods/panel-clips/SnakeOil-XY/README.md)
 
 
 # <big>Assembly Notes</big>
