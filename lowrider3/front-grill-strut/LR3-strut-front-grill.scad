@@ -200,7 +200,7 @@ difference() {
 
 
 module mountingHole(xpos=7.5) {
-  if (use_keyholes == "yes") {
+  if (use_keyholes == "yyes") {
     translate([xpos, 60.5]) {
       circle(d=9.84, $fn=60);
       hull() for (y=[0, 13.5]) translate([0, y]) circle(d=max(bit_diameter, 5.1), $fn=30);
@@ -208,8 +208,8 @@ module mountingHole(xpos=7.5) {
     hull() for (y=[-1, 6]) translate([xpos, y]) circle(d=max(bit_diameter, 5.1), $fn=30);
   }
   else {
-    translate([xpos, 60.5]) {
-      hull()  translate([0, 13.5]) circle(d=max(bit_diameter, 5.1), $fn=30);
+    translate([xpos, 74]) {
+      hull()  translate([0, 0]) circle(d=max(bit_diameter, 5.1), $fn=30);
     }
     hull() translate([xpos, 6]) circle(d=max(bit_diameter, 5.1), $fn=30);
   }
