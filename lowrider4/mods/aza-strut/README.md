@@ -1,0 +1,1 @@
+Based on Jamie's https://vector76.github.io/Web_OpenSCAD_Customizer/strut_plate.html
