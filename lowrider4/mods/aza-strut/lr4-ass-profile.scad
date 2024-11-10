@@ -1,3 +1,6 @@
+// V1E LowRider 4 ASSembly profile - Used within Custom Strut
+// -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+
 // Parameters for the dimensions
 line_thickness = 2;
 

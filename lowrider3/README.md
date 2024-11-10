@@ -1,4 +1,4 @@
-# <big>V1E LowRider3 Mods, Notes and Resources</big>
+# <big>V1E LowRider 3 Mods, Notes and Resources</big>
 
 <mark style="opacity:0.4">
 TODO: Create index of Mods within this Repo.  Until then browse the sub folders.</mark>

@@ -19,10 +19,10 @@ bottom_wing_bot = 5.5;
 
 render_2d = true;
 
-
 cnc_name = 
-  /* Aza's */ "LOWRIDER 4";
-  //"Milly McMillFace";
+	"LOWRIDER 4";
+  // "Aza's";
+  // "Milly McMillFace";
 
 cnc_color = "black";
 
@@ -68,9 +68,7 @@ fontLineHeight = increment_font_size + 3;
 num_keys = calcNumBraces(strut_length, num_braces);
 key_pitch = (strut_length - 18)/(num_keys-1);
 
-
-
-include <fontWidthProportions.scad>
+include <font-width-proportions.scad>
 include <lr4-ass-profile.scad>
 
 fontWidthProportions = findFontWidthProportions(cnc_name_font)[1];
@@ -118,7 +116,6 @@ module strut_plate(xlen, nbraces_=0, isFront = 0, extra_top, extra_bot) {
   nspaces = nbraces-1;
   pitch = (xlen-18)/nspaces;
 	
-	
 	union() {
 		
 		difference() {
@@ -161,8 +158,7 @@ module strut_plate(xlen, nbraces_=0, isFront = 0, extra_top, extra_bot) {
 						}
 					}
 			}
-			
-		
+				
 			// Front Strut details
 			if (isFront == 1)
 			{
@@ -223,8 +219,6 @@ module strut_plate(xlen, nbraces_=0, isFront = 0, extra_top, extra_bot) {
 							size = increment_font_size,
 							spacing = increment_font_spacing);
 					}
-					
-
 				}		
 				
 				// Last usable marker
@@ -242,7 +236,6 @@ module strut_plate(xlen, nbraces_=0, isFront = 0, extra_top, extra_bot) {
 							size = increment_font_size,
 							spacing = increment_font_spacing);
 				}
-				
 				
 				// Draw 50mm increment notches
 				// Positioned as close to edge as possible without being considered part of the Strut's exterior contour
@@ -282,8 +275,7 @@ module strut_plate(xlen, nbraces_=0, isFront = 0, extra_top, extra_bot) {
 							}
 						}
 					}
-				}
-				
+				}			
 			}
 		}
 		
