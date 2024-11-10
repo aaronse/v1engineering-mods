@@ -1,10 +1,18 @@
-# <big>V1E LowRider 3 Mods, Notes and Resources</big>
+## [V1E LowRider 3 Mods, Notes and Resources](/lowrider3/README.md)
 
-<mark style="opacity:0.4">
-TODO: Create index of Mods within this Repo.  Until then browse the sub folders.</mark>
-<br/><br/><br/>
+- [LR3 Custom Front Grill (strut)](/lowrider3/front-grill-strut/README.md)<br/>
+- [LR3 Custom Mid Belt Y Tensioner Blocks](/lowrider3/y-tension-blocks/README.md)<br/>
+- [LR3 Vac Hose parts](/lowrider3/vac-hose/README.md)<br/>
+- [LR3 Vac Hose Hanger parts](/lowrider3/vac-hose-hanger/README.md)
+- [LR3 Makita tool mount for 2-1/2" Vac hose and reusable zipties](/lowrider3/makita-tool-mount/README.md)<br/>
+- [LR3 IDEX build (Dual Router)](/lowrider3/idex/README.md)
+- [LR3 Adapter for Pen, Drag knife or (RDZ) diamond engraver](/lowrider3/drag-bit-pen-mount/README.md)
+- [LR3 BowFlex dumbell weight adapters](/lowrider3/bowflex-mount/README.md)
+- [LR3 Almost pointless pointy dust flaps](/lowrider3/dust-flaps/README.md)
+- [LR3 **ALL** the Struts generator - Was used to enable fast downloading of pre generated LR3 Struts from LR3 Calculator](/lowrider3/strut-plate-variable/README.md)<br/>
 
-# Milling Settings
+
+## Milling Settings
 @Noobs like me, MUST read [V1E Docs/Milling Basics](https://docs.v1engineering.com/tools/milling-basics/), [V1E Docs/Milling Metal](https://docs.v1engineering.com/tools/milling-metal/)
 - Baseline Settings
   - Starter settings...  For materials softer than Metal https://docs.v1engineering.com/tools/milling-basics/#for-the-impatient
@@ -12,7 +20,7 @@ TODO: Create index of Mods within this Repo.  Until then browse the sub folders.
   - Metal settings https://docs.v1engineering.com/tools/milling-metal/#baseline-settings
 
 
-## Actual Observed Settings
+### Actual Observed Settings
 Machine capability depends on the design, build materials, assembly quality, and maintenance.  With that in mind, here's what people have been able to achieve.  They show  what's possible, and what to strive for :
 
 **Use Landscape orientation if reading with CellPhone or small screen.  Table below has 10+ columns**
@@ -51,14 +59,14 @@ Machine capability depends on the design, build materials, assembly quality, and
 ||
 ||Soft Wood|1/4"|10mm|15mm/s|10mm|||NA|https://forum.v1e.com/t/lowrider-maximum-speeds-and-feeds-depends-cut-deep-with-slow-feeds-to-max-cut-volume/29228/12
 
-## Acrylic
+### Acrylic
 
 - [Polish edges with 400 thru to 2000+ grit]([Protect front and back faces during flame polish](https://forum.v1e.com/t/acrylic-on-lr2/33034/32?u=azab2c)
 - [How to Polish and Shape Plastic Edges](https://www.youtube.com/watch?v=QhAXbA2lmnE)
   - Mapp gas
 - [Protect front and back faces during flame polish](https://forum.v1e.com/t/acrylic-on-lr2/33034/32?u=azab2c)
 
-## Drawing
+### Drawing
 - Consider [Pentel EnerGel RTX Retractable Liquid Gel Pen, (0.3mm) Needle Tip, Extra Fine Line, Blue Ink, 3-Pk (BLN73BP3C)](https://www.amazon.com/gp/product/B01NAVDLI5)
   - Used by misc [forum members](https://forum.v1e.com/t/another-florida-build-lr3-2/38080/185?u=azab2c).
 
@@ -66,4 +74,4 @@ Machine capability depends on the design, build materials, assembly quality, and
 - [CNC Production Routing Guide](https://forum.v1e.com/t/acrylic-troubleshooting/5283/4?u=azab2c)
 
 
-# Software
+## Software

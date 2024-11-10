@@ -1,12 +1,10 @@
-# <big>V1E LowRider 4 Mods, Notes and Resources</big>
-
-# Mods
-- [Custom Struts with text, logos and measurement markers](mods/aza-strut/README.md)
-- [Cooling/Misting setup](mods/mist-cooling/README.md)
-- [Printable XZ Plate (temporary - use until Alu milled)](mods/xz-plates/README.md)
+## [V1E LowRider 4 Mods, Notes and Resources](/lowrider4/README.md)
+- [LR4 Custom Struts with text, logos and measurement markers](/lowrider4/mods/aza-strut/README.md)
+- [LR4 Cooling/Misting setup](/lowrider4/mods/mist-cooling/README.md)
+- [LR4 Printable XZ Plate (temporary - use until Alu milled)](/lowrider4/mods/xz-plates/README.md)
 
 <mark style="opacity:0.4">
-TODO: Create index of Mods within this Repo.  Until then browse the sub folders.</mark>
+TODO: Assume this index is stale, go rummage around the folders, see what you find.</mark>
 <br/><br/><br/>
 
 
