@@ -2,6 +2,8 @@
 
 # Mods
 - [Custom Struts with text, logos and measurement markers](mods/aza-strut/README.md)
+- [Cooling/Misting setup](mods/mist-cooling/README.md)
+- [Printable XZ Plate (temporary - use until Alu milled)](mods/xz-plates/README.md)
 
 <mark style="opacity:0.4">
 TODO: Create index of Mods within this Repo.  Until then browse the sub folders.</mark>
