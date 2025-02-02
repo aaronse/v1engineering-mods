@@ -5,7 +5,7 @@ Collection of modifications for V1 Engineering related projects that are (initia
 - [LR4 Custom Struts with text, logos and measurement markers](/lowrider4/mods/aza-strut/README.md)
 - [LR4 Cooling/Misting setup](/lowrider4/mods/mist-cooling/README.md)
 - [LR4 Printable XZ Plate (temporary - use until Alu milled)](/lowrider4/mods/xz-plates/README.md)
-
+- [LR4 Belt Holder Adjustment Screw Pad](/lowrider4/mods/belt-holder-pad/README.md)
 
 ## [V1E LowRider 3 Mods, Notes and Resources](/lowrider3/README.md)
 - [LR3 Custom Front Grill (strut)](/lowrider3/front-grill-strut/README.md)<br/>
