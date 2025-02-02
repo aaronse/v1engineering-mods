@@ -3,7 +3,7 @@
 **Problem:**  Observed endstop swing arms being able to sneak behind _Front Belt Holder Adjustment Screws_ during less than perfect homing scenarios, which are very common when first getting set up, and when things go pear shaped.
 
 **Fix:**  
-- Switch to _Button Head_ instead of stock _Pan Head_ bolts.  Do not use _Flanged Button Head_ bolts.  Reason is that the stock _Pan Head_ have a curved profile that endstop swing arms can sneak behind. 
+- For just the adjustment screws in the _Front Belt Holders_, recommend switching to _Button Head_ instead of stock _Pan Head_ bolts.  Do not use _Flanged Button Head_ bolts.  Reason is that the stock _Pan Head_ have a curved profile that endstop swing arms can sneak behind. 
   ![](img/bolt-options-labeled.png)
 
 - Consider using some number of M3 washers behind head of the adjustment screw so there's no gap for the swing arm to sneak behind, or, consider these printable parts:
