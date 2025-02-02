@@ -6,9 +6,10 @@
 - For just the adjustment screws in the _Front Belt Holders_, recommend switching to _Button Head_ instead of stock _Pan Head_ bolts.  Do not use _Flanged Button Head_ bolts.  Reason is that the stock _Pan Head_ have a curved profile that endstop swing arms can sneak behind. 
   ![](img/bolt-options-labeled.png)
 
-- Consider using some number of M3 washers behind head of the adjustment screw so there's no gap for the swing arm to sneak behind, or, consider these printable parts:
+- Consider using some number of M3 washers behind head of the adjustment screw so there's no gap for the swing arm to sneak behind, or, consider these printable parts (PETG 0.6mm nozzle, 0.2mm layer height worked for me):
   - [y_belt_min_pad.stl](./y_belt_min_pad.stl)
   - [y_belt_max_pad.stl](./y_belt_max_pad.stl)
+  - [belt_holder_pads.3mf](./belt_holder_pads.3mf) - Both parts oriented for printing.
 
   Am personally using these spacer pads for now, BUT, this requires I calibrate and configure FluidNC Pulloff distance values so that XY motion is not skewed.  
   
