@@ -131,3 +131,8 @@ dmypy.json
 js-paint/
 
 .printables
+
+# Scraper cache and output
+.cache/
+.output/
+.output.old/
