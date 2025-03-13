@@ -1,6 +1,6 @@
 # Created to download images from a Discourse based forum like https://forum.v1e.com/t/10-years-of-v1/48075
 
-# Started with https://chatgpt.com/share/67ae494f-a344-800b-b352-46c8772b0c89, then kept going...
+# Started with https://chatgpt.com/share/67ae494f-a344-800b-b352-46c8772b0c89, but then kept going...
 
 import os
 import csv
@@ -187,8 +187,14 @@ def write_users_csv(users: dict):
     print(f"Users CSV written to {csv_path}")
 
 
-def process_tag(tag: str, topic_limit: int = None, max_images: int = 5,
-                min_likes: int = 3, skip_download: bool = False, use_cache: bool = True):
+def process_tag(
+        tag: str,
+        topic_limit: int = None,
+        max_images: int = 5,
+        min_likes: int = 3,
+        skip_download: bool = False,
+        use_cache: bool = True,
+        fetch_topics: bool = False):
     """
     Process topics for a given tag:
       - Fetch all topics (with pagination and caching).
@@ -212,7 +218,7 @@ def process_tag(tag: str, topic_limit: int = None, max_images: int = 5,
         "image_filename", "image_url", "like_count", "reply_count", "view_count"
     ])
     
-    topics = get_topics_for_tag(tag, use_cache=use_cache)
+    topics = get_topics_for_tag(tag, use_cache = use_cache and not fetch_topics)
     if not topics:
         print(f"No topics found for tag {tag}")
         csv_file.close()
@@ -328,17 +334,29 @@ def process_tag(tag: str, topic_limit: int = None, max_images: int = 5,
     csv_file.close()
     print(f"Done processing tag: {tag}. Metadata saved to {csv_path}")
 
+
 def main(
         topic_limit: int = None, 
         max_images: int = 5, 
         min_likes: int = 3, 
         skip_download: bool = False,
-        use_cache: bool = True):
+        use_cache: bool = True,
+        fetch_topics: bool = False):
     
     ensure_dir(DOWNLOAD_BASE_DIR)
     for tag in TAGS_TO_FETCH:
-        process_tag(tag, topic_limit, max_images, min_likes, skip_download, use_cache)
-    
+        process_tag(
+            tag,
+            topic_limit,
+            max_images,
+            min_likes,
+            skip_download,
+            use_cache,
+            fetch_topics)
+
+    # Write the encountered users to CSV for later reference
+    write_users_csv(encountered_users)
+
     # Print summary stats
     print("\n----- Summary -----")
     print(f"Total topics processed: {total_topics_processed}")
@@ -361,6 +379,11 @@ if __name__ == "__main__":
                         help="Skip downloading images; only gather metadata and count potential downloads.")
     parser.add_argument("--no-cache", action="store_true",
                         help="Do not use cached API responses (default uses cache).")
+    parser.add_argument("--fetch-topics", action="store_true",
+                        help="Force fetching Topics list, ignore cached Topics list.  But does NOT "
+                        "fetch each Topic again.  Cached data for each Topic remains.  Use to fetch "
+                        "new gallery topics, without having to fetch all the known Topics again.  "
+                        "TODO: Ideally, should do something smarter that doesn't miss updates to cached topics.")
     args = parser.parse_args()
 
     # use_cache is True unless --no-cache is provided
@@ -371,4 +394,5 @@ if __name__ == "__main__":
         max_images=args.max_images,
         min_likes=args.min_likes,
         skip_download=args.skip_download,
-        use_cache=use_cache)
+        use_cache=use_cache,
+        fetch_topics=args.fetch_topics)

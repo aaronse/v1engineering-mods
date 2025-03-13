@@ -11,7 +11,7 @@
       "request": "launch",
       "program": "${file}",
       "console": "integratedTerminal",
-      "args": ["--skip-download", "--topic-limit", "1000", "--max-images", "5", "--min-likes", "3"]
+      "args": ["--fetch-topics", "--skip-download", "--topic-limit", "1000", "--max-images", "5", "--min-likes", "3"]
     }
   ]
 }
