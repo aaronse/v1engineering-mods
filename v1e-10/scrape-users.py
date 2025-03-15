@@ -18,6 +18,7 @@ CSV_PATH = ".output/users.csv"      # Path to the CSV file containing user data
 OUTPUT_DIR = ".output/users/"       # Directory where downloaded .png files will be stored
 BASE_URL = "https://forum.v1e.com"   # Base URL for downloading avatars
 AVATAR_SIZE = "48"                   # Value to replace the {size} token in avatar_template URLs
+force = False
 
 import os
 import csv
@@ -35,31 +36,45 @@ def download_avatar(username, avatar_template):
     avatar_path = avatar_template.replace("{size}", AVATAR_SIZE)
     # Construct the full URL for the avatar image
     url = BASE_URL + avatar_path
-    print(f"Downloading avatar for {username} from {url}")
+    
+    file_path = os.path.join(OUTPUT_DIR, f"{username}.png")
+    if not force and os.path.exists(file_path):
+        return False
     
     # Download the image
+    print(f"Downloading avatar for {username} from {url}")
+
     response = requests.get(url)
     if response.status_code == 200:
         # Save the image as <username>.png in the OUTPUT_DIR folder
-        file_path = os.path.join(OUTPUT_DIR, f"{username}.png")
         with open(file_path, "wb") as f:
             f.write(response.content)
         print(f"Saved avatar to {file_path}")
+        return True
     else:
         print(f"Failed to download avatar for {username}. Status code: {response.status_code}")
+        return False
 
 def main():
     # Ensure the output directory exists
     os.makedirs(OUTPUT_DIR, exist_ok=True)
     
+    avatars_downloaded = 0
+    users_count = 0
+
     # Open and parse the CSV file containing user data
     try:
         with open(CSV_PATH, newline='') as csvfile:
             reader = csv.DictReader(csvfile)
             for row in reader:
+                users_count += 1
                 username = row["username"]
                 avatar_template = row["avatar_template"]
-                download_avatar(username, avatar_template)
+                if download_avatar(username, avatar_template):
+                    avatars_downloaded += 1
+
+            print(f"Users : {users_count}, Avatars downloaded : {avatars_downloaded}")
+
     except FileNotFoundError:
         print(f"CSV file not found at {CSV_PATH}")
 

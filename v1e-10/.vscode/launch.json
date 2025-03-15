@@ -13,13 +13,13 @@
       "console": "integratedTerminal",
 
       // Run normally...
-      "args": ["--topic-limit", "1000", "--max-images", "5", "--min-likes", "3"]
+      "args": ["-topic-limit", "1000", "-max-images", "5", "-min-likes", "3"]
       
       // Run normally, but skip downloading image files
-      // "args": ["--skip-download", "--topic-limit", "1000", "--max-images", "5", "--min-likes", "3"]
+      // "args": ["-skip-download", "-topic-limit", "1000", "-max-images", "5", "-min-likes", "3"]
       
       // Fetch latest topics list, use cached Topic data or fetch if cache miss 
-      //"args": ["--fetch-topics", "--skip-download", "--topic-limit", "1000", "--max-images", "5", "--min-likes", "3"]
+      //"args": ["-fetch-topics", "-skip-download", "-topic-limit", "1000", "-max-images", "5", "-min-likes", "3"]
     },
     {
       "name": "Launch Chrome for Web Debugging",

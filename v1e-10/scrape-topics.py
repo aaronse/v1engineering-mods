@@ -19,6 +19,9 @@ total_bytes_downloaded = 0
 # Global dictionary to accumulate encountered users
 encountered_users = {}
 
+# Globals...
+verbose_enabled = False
+
 # ---------------------------------
 # Configuration
 # ---------------------------------
@@ -38,6 +41,10 @@ CACHE_DIR = ".cache"
 # ---------------------------------
 # Helper Functions
 # ---------------------------------
+def verbose(s : str):
+    if verbose_enabled:
+        print(s)
+
 def sanitize_filename(filename: str) -> str:
     """Remove or replace characters not safe for filenames."""
     return "".join(char for char in filename if char.isalnum() or char in ("-", "_", ".", " "))
@@ -86,12 +93,13 @@ def cached_fetch_json(url: str, use_cache: bool = True):
     """
     cache_path = get_cache_path(url)
     if use_cache and os.path.exists(cache_path):
-        print(f"Loading cached data from {cache_path}")
+        verbose(f"Loading cached data from {cache_path}")
         try:
             with open(cache_path, "r", encoding="utf-8") as f:
                 return json.load(f)
         except Exception as e:
             print(f"Error loading cache {cache_path}: {e}")
+    
     print(f"Fetching data from {url}")
     data = fetch_json(url)
     if data and use_cache:
@@ -100,6 +108,7 @@ def cached_fetch_json(url: str, use_cache: bool = True):
                 json.dump(data, f)
         except Exception as e:
             print(f"Error writing cache to {cache_path}: {e}")
+
     return data
 
 
@@ -160,7 +169,7 @@ def parse_images_from_post_html(cooked_html: str):
 def download_file(url: str, filepath: str):
     """Download a file from URL to a local filepath if it doesn't already exist."""
     if os.path.exists(filepath):
-        print(f"Download file, skipping existing, path: {filepath}")
+        verbose(f"Download file, skipping existing, path: {filepath}")
         return
 
     print(f"Download file, url : {url}, path: {filepath}")
@@ -266,7 +275,7 @@ def process_single_topic(topic, tag_dir, topics_writer, images_writer, max_image
     # Limit to max_images from the chosen post.
     chosen_images = chosen_images[:max_images]
 
-    print(f"Topic {topic_id}: Selected post {chosen_post_id} with {post_like_count} likes has {len(chosen_images)} image(s) (max {max_images}).")
+    verbose(f"Topic {topic_id}: Selected post {chosen_post_id} with {post_like_count} likes has {len(chosen_images)} image(s) (max {max_images}).")
 
     # Write topic-level metadata.
     topics_writer.writerow([
@@ -402,26 +411,30 @@ def main(
 
 if __name__ == "__main__":
     parser = argparse.ArgumentParser(description="Download images and metadata from the forum.")
-    parser.add_argument("--topic-limit", type=int, default=None,
+    parser.add_argument("-topic-limit", type=int, default=None,
                         help="Limit the number of topics processed per tag.")
-    parser.add_argument("--max-images", type=int, default=5,
+    parser.add_argument("-max-images", type=int, default=5,
                         help="Maximum number of images to download from a given post (default: 5).")
-    parser.add_argument("--min-likes", type=int, default=3,
+    parser.add_argument("-min-likes", type=int, default=3,
                         help="Minimum number of likes a post must have to download its images (default: 3).")
-    parser.add_argument("--skip-download", action="store_true",
+    parser.add_argument("-skip-download", action="store_true",
                         help="Skip downloading images; only gather metadata and count potential downloads.")
-    parser.add_argument("--no-cache", action="store_true",
+    parser.add_argument("-no-cache", action="store_true",
                         help="Do not use cached API responses (default uses cache).")
-    parser.add_argument("--fetch-topics", action="store_true",
+    parser.add_argument("-fetch-topics", action="store_true",
                         help="Force fetching Topics list, ignore cached Topics list.  But does NOT "
                         "fetch each Topic again.  Cached data for each Topic remains.  Use to fetch "
                         "new gallery topics, without having to fetch all the known Topics again.  "
                         "TODO: Ideally, should do something smarter that doesn't miss updates to cached topics.")
+    parser.add_argument("-verbose", "-v", action="store_true",
+                        help="Enable verbose logging.")
     args = parser.parse_args()
 
     # use_cache is True unless --no-cache is provided
     use_cache = not args.no_cache
-        
+    
+    verbose_enabled = args.verbose
+    
     main(
         topic_limit=args.topic_limit,
         max_images=args.max_images,
