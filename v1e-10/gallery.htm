@@ -1,0 +1,405 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>V1 Engineering Gallery</title>
+  <!-- Comfortaa Font -->
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Comfortaa:wght@400;700&display=swap" />
+  <!-- Font Awesome CSS for SVG icons -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" 
+        integrity="sha512-yH4/67r4HE6JlYJJ5A+2RS9+P8CuxVv0+zJQIqDj+H7UQq/x0eVuRT8S3HmK9KQv/1UwXcT0g7vB+M7zj6l5Mw==" 
+        crossorigin="anonymous" referrerpolicy="no-referrer" />
+  <style>
+    /* --- Base reset --- */
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+    body {
+      font-family: 'Comfortaa', cursive;
+      background-color: #f4f4f4;
+      color: #333;
+      line-height: 1.6;
+    }
+    /* --- Banner (header) styles --- */
+    .banner {
+      background-color: #222;
+      color: #fff;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 10px 16px;
+      position: sticky;
+      top: 0;
+      z-index: 100;
+    }
+    .logo {
+      display: flex;
+      align-items: center;
+    }
+    .logo-img {
+      height: 40px;
+      margin-right: 10px;
+    }
+    .logo-text {
+      font-size: 1.5em;
+      font-weight: bold;
+    }
+    .banner-controls {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      position: relative;
+    }
+    .banner-controls input {
+      padding: 6px 10px;
+      font-size: 1em;
+      border: none;
+      border-radius: 4px;
+    }
+    .settings-container {
+      position: relative;
+    }
+    #settings-btn {
+      background: none;
+      border: none;
+      color: #fff;
+      font-size: 1.5em;
+      cursor: pointer;
+    }
+    .dropdown-menu {
+      display: none;
+      position: absolute;
+      right: 0;
+      top: 40px;
+      background: #fff;
+      border: 1px solid #ccc;
+      border-radius: 4px;
+      min-width: 150px;
+      z-index: 10;
+    }
+    .dropdown-menu a {
+      display: block;
+      padding: 8px 12px;
+      text-decoration: none;
+      color: #333;
+      font-size: 0.9em;
+    }
+    .dropdown-menu a:hover {
+      background: #f0f0f0;
+    }
+    /* --- Gallery (masonry layout) styles --- */
+    #gallery {
+      column-width: 360px;
+      column-gap: 16px;
+      padding: 16px;
+    }
+    .project-card {
+      display: inline-block;
+      width: 100%;
+      margin: 0 0 16px;
+      background: #fff;
+      border-radius: 8px;
+      box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+      overflow: hidden;
+      break-inside: avoid;
+      position: relative;
+    }
+    .image-container {
+      width: 100%;
+      overflow: hidden;
+    }
+    .image-container img {
+      display: block;
+      width: 100%;
+      height: auto;
+    }
+    .card-footer {
+      position: relative;
+      padding: 8px;
+      background-color: #3B3B3B;
+      color: #fff;
+      font-size: 0.8rem;
+    }
+    .project-info p {
+      margin: 4px 0;
+    }
+    .avatar {
+      width: 24px;
+      height: 24px;
+      border-radius: 50%;
+      vertical-align: middle;
+      margin-right: 4px;
+    }
+    /* QR code image styling */
+    .qr-code {
+      position: absolute;
+      bottom: 4px;
+      right: 4px;
+      width: 90px;  /* 50% larger than 60px */
+      height: 90px;
+      border-radius: 5%;
+    }
+  </style>
+</head>
+<body>
+  <!-- Banner with logo, filter input, and settings -->
+  <header class="banner">
+    <div class="logo">
+      <img src="./logo.png" alt="V1 Engineering Logo" class="logo-img">
+      <span class="logo-text"></span>
+    </div>
+    <div class="banner-controls">
+      <input type="text" id="filter-input" placeholder="Filter projects...">
+      <div class="settings-container">
+        <button id="settings-btn"><i class="fas fa-cog"></i></button>
+        <div id="settings-menu" class="dropdown-menu">
+          <a href="#" id="toggle-qr">Hide QR Codes</a>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <!-- Gallery container using a masonry layout -->
+  <main id="gallery"></main>
+
+  <script>
+    /*********************************************************************
+     * Constants and Magic Numbers
+     *********************************************************************/
+    // Layout constants
+    const MIN_COLUMN_WIDTH = 360; // px, minimum column width for gallery masonry
+    const CARD_GAP = 16; // px, gap between cards
+    const QR_CODE_SIZE = 90; // px, width and height for QR code image (50% larger than 60px)
+    const AVATAR_DISPLAY_SIZE = 24; // px, display size for user avatar
+
+    // CSV and file paths
+    const TOPICS_CSV_PATH = './.output/gallery-lowrider-cnc/gallery-lowrider-cnc_topics.csv';
+    const IMAGES_CSV_PATH = './.output/gallery-lowrider-cnc/gallery-lowrider-cnc_images.csv';
+    const USERS_CSV_PATH  = './.output/users.csv'; // extra user info if needed
+    const IMAGE_DIR       = './.output/gallery-lowrider-cnc/';
+    const QR_CODE_DIR     = './.output/gallery-lowrider-cnc/qr/';
+    const USER_AVATAR_DIR = './.output/users/';
+
+    // File naming patterns
+    const QR_CODE_PREFIX = 'qr_topic_';
+    const QR_CODE_SUFFIX = '.png';
+
+    // Lazy loading observer threshold
+    const LAZY_LOAD_THRESHOLD = 0.1; // 10% visibility
+
+    // Settings defaults
+    let showQRCodes = true;
+
+    /*********************************************************************
+     * Utility functions
+     *********************************************************************/
+    // Simple CSV parser (assumes no commas inside values)
+    function parseCSV(csvText) {
+      const lines = csvText.trim().split('\n');
+      const headers = lines[0].split(',').map(h => h.trim());
+      return lines.slice(1).map(line => {
+        const values = line.split(',').map(v => v.trim());
+        const obj = {};
+        headers.forEach((header, i) => {
+          obj[header] = values[i];
+        });
+        return obj;
+      });
+    }
+
+    // Format a date string into YYYY/mm/dd.
+    function formatDate(dateStr) {
+      const date = new Date(dateStr);
+      const year = date.getFullYear();
+      const month = ('0' + (date.getMonth() + 1)).slice(-2);
+      const day = ('0' + date.getDate()).slice(-2);
+      return `${year}/${month}/${day}`;
+    }
+
+    // Check if filename has a .jpg or .jpeg extension (case-insensitive)
+    function isJpeg(filename) {
+      const lower = filename.toLowerCase();
+      return lower.endsWith('.jpg') || lower.endsWith('.jpeg');
+    }
+
+    // Create an element with optional class names and innerText
+    function createElem(tag, classNames, innerText) {
+      const el = document.createElement(tag);
+      if (classNames) el.className = classNames;
+      if (innerText) el.innerText = innerText;
+      return el;
+    }
+
+    /*********************************************************************
+     * Lazy loading for images using IntersectionObserver
+     *********************************************************************/
+    const lazyLoadObserver = new IntersectionObserver((entries, observer) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          const img = entry.target;
+          if (img.dataset.src) {
+            img.src = img.dataset.src;
+            img.removeAttribute('data-src');
+          }
+          observer.unobserve(img);
+        }
+      });
+    }, { threshold: LAZY_LOAD_THRESHOLD });
+
+    /*********************************************************************
+     * Main function to load CSVs, process data, and render gallery
+     *********************************************************************/
+    async function initGallery() {
+      try {
+        // Load CSV files concurrently
+        const [topicsResponse, imagesResponse] = await Promise.all([
+          fetch(TOPICS_CSV_PATH),
+          fetch(IMAGES_CSV_PATH)
+        ]);
+        const topicsText = await topicsResponse.text();
+        const imagesText = await imagesResponse.text();
+
+        const topics = parseCSV(topicsText);
+        const images = parseCSV(imagesText);
+
+        // Map topic_id -> default image filename (first .jpg/.jpeg encountered)
+        const topicImageMap = {};
+        images.forEach(imgObj => {
+          const topicId = imgObj.topic_id;
+          let filename = (imgObj.image_filename || imgObj.file || '');
+          if (isJpeg(filename) && !topicImageMap[topicId]) {
+            topicImageMap[topicId] = filename;
+          }
+        });
+
+        // Render gallery items (only those topics with a valid image)
+        const galleryContainer = document.getElementById('gallery');
+        topics.forEach(topic => {
+          const topicId = topic.topic_id;
+          const imageFilename = topicImageMap[topicId];
+          if (!imageFilename) return; // skip if no valid image
+
+          // Create card container
+          const card = createElem('div', 'project-card');
+
+          // Image container and lazy loaded image
+          const imgContainer = createElem('div', 'image-container');
+          const img = document.createElement('img');
+          img.dataset.src = IMAGE_DIR + imageFilename;
+          img.setAttribute('loading', 'lazy');
+          img.alt = topic.name || 'Project Image';
+          imgContainer.appendChild(img);
+          card.appendChild(imgContainer);
+
+          // Card footer with project details
+          const footer = createElem('div', 'card-footer');
+
+          // Project info section
+          const info = createElem('div', 'project-info');
+
+          // Avatar image (from user's image)
+          const avatar = document.createElement('img');
+          avatar.src = USER_AVATAR_DIR + topic.username + '.png';
+          avatar.alt = topic.username;
+          avatar.className = 'avatar';
+          info.appendChild(avatar);
+
+          // Topic name/title
+          const nameP = createElem('p', 'project-name', topic.name || '');
+          info.appendChild(nameP);
+
+          // Stats using Font Awesome icons (eye for views, heart for likes)
+          const statsP = createElem('p', 'project-stats');
+          statsP.innerHTML = `<i class="fas fa-eye"></i> ${topic.view_count} <span style="margin-left: 10px;"><i class="fas fa-heart"></i> ${topic.like_count}</span>`;
+          info.appendChild(statsP);
+
+          // Created date and username info
+          const metaP = createElem('p', 'project-meta', `${formatDate(topic.created_datetime)} by ${topic.username}`);
+          info.appendChild(metaP);
+
+          footer.appendChild(info);
+
+          // QR code image
+          const qr = document.createElement('img');
+          qr.src = QR_CODE_DIR + QR_CODE_PREFIX + topicId + QR_CODE_SUFFIX;
+          qr.alt = 'QR Code';
+          qr.className = 'qr-code';
+          footer.appendChild(qr);
+
+          card.appendChild(footer);
+
+          // Data attributes for filtering
+          card.dataset.name = (topic.name || '').toLowerCase();
+          card.dataset.username = (topic.username || '').toLowerCase();
+
+          galleryContainer.appendChild(card);
+
+          // Observe the image for lazy loading
+          lazyLoadObserver.observe(img);
+        });
+      } catch (error) {
+        console.error('Error initializing gallery:', error);
+      }
+    }
+
+    /*********************************************************************
+     * Filter functionality: filter cards as user types
+     *********************************************************************/
+    function setupFilters() {
+      const filterInput = document.getElementById('filter-input');
+      filterInput.addEventListener('input', function() {
+        const filterText = this.value.trim().toLowerCase();
+        const cards = document.querySelectorAll('.project-card');
+        cards.forEach(card => {
+          const name = card.dataset.name || '';
+          const username = card.dataset.username || '';
+          card.style.display = (name.indexOf(filterText) > -1 || username.indexOf(filterText) > -1) ? '' : 'none';
+        });
+      });
+    }
+
+    /*********************************************************************
+     * Settings functionality: toggle QR code display
+     *********************************************************************/
+    function setupSettings() {
+      const settingsBtn = document.getElementById('settings-btn');
+      const settingsMenu = document.getElementById('settings-menu');
+      const toggleQrItem = document.getElementById('toggle-qr');
+
+      // Toggle dropdown menu display
+      settingsBtn.addEventListener('click', function(e) {
+        e.stopPropagation();
+        settingsMenu.style.display = settingsMenu.style.display === 'block' ? 'none' : 'block';
+      });
+
+      // Hide dropdown when clicking outside
+      document.addEventListener('click', function() {
+        settingsMenu.style.display = 'none';
+      });
+
+      // Toggle QR code visibility when clicking the menu item
+      toggleQrItem.addEventListener('click', function(e) {
+        e.preventDefault();
+        showQRCodes = !showQRCodes;
+        const qrCodes = document.querySelectorAll('.qr-code');
+        qrCodes.forEach(qr => {
+          qr.style.display = showQRCodes ? 'block' : 'none';
+        });
+        // Update menu text accordingly
+        toggleQrItem.innerText = showQRCodes ? 'Hide QR Codes' : 'Show QR Codes';
+        settingsMenu.style.display = 'none';
+      });
+    }
+
+    // Initialize gallery, filters, and settings after DOM loads
+    document.addEventListener('DOMContentLoaded', function() {
+      initGallery();
+      setupFilters();
+      setupSettings();
+    });
+  </script>
+</body>
+</html>

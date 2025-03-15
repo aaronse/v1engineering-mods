@@ -11,7 +11,36 @@
       "request": "launch",
       "program": "${file}",
       "console": "integratedTerminal",
-      "args": ["--fetch-topics", "--skip-download", "--topic-limit", "1000", "--max-images", "5", "--min-likes", "3"]
+
+      // Run normally...
+      "args": ["--topic-limit", "1000", "--max-images", "5", "--min-likes", "3"]
+      
+      // Run normally, but skip downloading image files
+      // "args": ["--skip-download", "--topic-limit", "1000", "--max-images", "5", "--min-likes", "3"]
+      
+      // Fetch latest topics list, use cached Topic data or fetch if cache miss 
+      //"args": ["--fetch-topics", "--skip-download", "--topic-limit", "1000", "--max-images", "5", "--min-likes", "3"]
+    },
+    {
+      "name": "Launch Chrome for Web Debugging",
+      "type": "pwa-chrome",
+      "request": "launch",
+      "url": "http://localhost:8000/gallery.htm",
+      "webRoot": "${workspaceFolder}"
     }
+    
+    // {
+    //   "name": "Attach to Chrome",
+    //   "port": 9222,
+    //   "request": "attach",
+    //   "type": "chrome",
+    //   "webRoot": "${workspaceFolder}"
+    // },
+    // {
+    //   "type": "chrome",
+    //   "request": "launch",
+    //   "name": "Open gallery.htm",
+    //   "file": "e:\\git\\v1engineering-mods\\v1e-10\\gallery.htm"
+    // }
   ]
 }
