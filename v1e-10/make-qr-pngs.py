@@ -12,6 +12,13 @@ ERROR_CORRECTION = qrcode.constants.ERROR_CORRECT_L
 BOX_SIZE = 10   # Each module is 10 pixels
 BORDER = 4      # Border width in modules (~290x290 image size)
 
+# Using #FF2600 instead of pure #FF0000 so QR code remains both distinctly red and easily 
+# perceptible, even to individuals with red–green color blindness.
+# See https://chatgpt.com/share/67d508fa-eb7c-800b-b461-48b988e19777 
+QR_FILL_COLOR = "#FF2600"
+QR_BACK_COLOR = "black"
+FORCE_GENERATE = False
+
 def find_csv_files(base_dir: str) -> List[str]:
     """
     Recursively find all .csv files in the given base directory.
@@ -56,7 +63,7 @@ def process_csv_file(csv_path: str) -> None:
             target_path = os.path.join(qr_dir, target_filename)
             
             # Only create and save the QR code if the file does not already exist
-            if not os.path.exists(target_path):
+            if FORCE_GENERATE or not os.path.exists(target_path):
                 generate_qr_code(topic_id, target_path)
 
 
@@ -77,7 +84,7 @@ def generate_qr_code(topic_id: str, output_path: str) -> None:
     qr.make(fit=True)
     
     # Create an image with red fill and black background
-    img = qr.make_image(fill_color="red", back_color="black")
+    img = qr.make_image(fill_color = QR_FILL_COLOR, back_color = QR_BACK_COLOR)
     img.save(output_path)
     print(f"Generated QR for topic_id {topic_id} at {output_path}")
 
