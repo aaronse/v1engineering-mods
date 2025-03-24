@@ -1,4 +1,4 @@
-# V1E LowRider 3 Mist Cooling setup
+# V1E LowRider 4 Mist Cooling setup
 
 ![alt text](img/irl-mist-spray-overview.png)
 
