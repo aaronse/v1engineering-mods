@@ -1,0 +1,1 @@
+Python scraper script to find .step files Ryan V1Engineering has shared on Printables.com, note that https://github.com/V1EngineeringInc and/or https://forum.v1e.com/ may have .step files too 🤷‍♂️
