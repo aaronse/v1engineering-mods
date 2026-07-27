@@ -1,6 +1,9 @@
 # V1Engineering Mods, Notes and Resources
 Collection of modifications for V1 Engineering related projects that are (initially...) too small to be worth spinning out as separate repos.
 
+## [V1E ZenXY v3 Notes and Resources](/zenxy-v3/README.md)
+- [ZenXY v3 pre-release BOM / build notes](/zenxy-v3/README.md) — what's known so far, see [forum topic](https://forum.v1e.com/t/zenxy-build/54481?u=azab2c)
+
 ## [V1E LowRider 4 Mods, Notes and Resources](/lowrider4/README.md)
 - [LR4 Custom Struts with text, logos and measurement markers](/lowrider4/mods/aza-strut/README.md)
 - [LR4 Cooling/Misting setup](/lowrider4/mods/mist-cooling/README.md)
