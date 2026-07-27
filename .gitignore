@@ -136,3 +136,6 @@ js-paint/
 .cache/
 .output/
 .output.old/
+
+# tools/check-links.ps1 result cache
+tools/.link-cache.json
