@@ -1,0 +1,26 @@
+{
+    "java.configuration.updateBuildConfiguration": "interactive",
+    "window.title": "${rootName}${separator}${activeEditorShort}",
+    "workbench.colorCustomizations": {
+        // ⬆️ Inserted code
+        "diffEditor.insertedLineBackground": "#144d2a33",    // darker green (20% opacity)
+        "diffEditor.insertedTextBackground": "#144d2a48",    // inline insert (55% opacity)
+        //"diffEditor.insertedTextBorder": "#22c55e",          // border for clarity
+
+        // ⬇️ Removed code
+        "diffEditor.removedLineBackground": "#5a1d1d53",     // darker red (20% opacity)
+        "diffEditor.removedTextBackground": "#5a1d1dc8",     // inline removal (55% opacity)
+        //"diffEditor.removedTextBorder": "#f87171",           // border for clarity
+
+        // Gutter indicators (left margin)
+        "editorGutter.addedBackground": "#22c55e",
+        "editorGutter.deletedBackground": "#f87171",
+
+        // Minimap indicators
+        "minimapGutter.addedBackground": "#22c55e",
+        "minimapGutter.deletedBackground": "#f87171"
+    },
+    "cSpell.words": [
+        "signalr"
+    ]
+}
