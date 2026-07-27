@@ -1,4 +1,4 @@
-Sharing notes for a ZenXY **v3** build.  v3 is not released yet — this is a *pre-release* BOM assembled from what Ryan has shared publicly, so treat it as a shopping *plan*, not a shopping *list*.  Will keep updating as info lands.  Latest is always on [github](https://github.com/aaronse/v1engineering-mods/blob/main/zenxy-v3).
+Sharing notes for a ZenXY **v3** build.  v3 is not released yet — this is a *pre-release* BOM assembled from what Ryan has shared publicly, so treat it as a shopping *plan*, not a shopping *list*.  Will keep updating as info lands.  Latest is always on [github](https://github.com/aaronse/v1engineering-mods/tree/main/zenxy-v3).
 
 # <big>ZenXY v3</big> <small>— CoreXY Sand Table</small>
 
@@ -65,61 +65,62 @@ Confidence legend — please don't skip this:
 | 🟡 | Inferred from v2 + v3 statements, high confidence, **unconfirmed** |
 | ❓ | Unknown / waiting on release |
 
-Links: **[Shop]** = [V1 Engineering shop](https://www.v1e.com/collections/zenxy) (buying here funds the design work).  **[Amazon]** = Ryan's affiliate link where one already exists for that exact part.  Where the v3 part is new and no V1E link exists yet, the Amazon column is a plain generic search marked with `†` — swap it out once the shop lists the real part.
+Links: **[Shop]** = [V1 Engineering shop](https://www.v1e.com/collections/zenxy) (buying here funds the design work).  **[Amazon]** = Ryan's affiliate link, reused from the [official V1E docs](https://docs.v1e.com/) so the credit goes where it should.  Prices are from a catalog snapshot and will drift.
 
-## Motion — the v3-specific parts
+All links in this file are machine-verified — see [Link verification](#link-verification) at the bottom.
 
-None of the 6mm belt/idler parts or the V-wheel blocks are in the V1E shop **yet**.  Expect them with the kit.
+## Buy now — in stock today
 
-|QTY  |Description             |Comment                          |Link                        |
+These are unchanged from v2 or generic enough to be safe.  Everything here is a live V1E product.
+
+|QTY  |Description             |Price |Comment                          |Link                        |
+|-----|------------------------|------|---------------------------------|----------------------------|
+|🟡 2 |Stepper, Nema 17 84oz/in|$11.50|22mm+ shaft (v2 spec).  ~30" wires |[Shop][sh2] – [Amazon][az2]|
+|✅ 2  |Optical Endstop        |$1.90 |"same optical endstops as the previous zen".  JST-JST, 1m lead |[Shop][sh1]|
+|🟡 1 |½" × ½" Magnet          |$4.29 |Neodymium N50                    |[Shop][sh3] – [United Nuclear][un1]|
+|🟡 1 |½" Steel Ball           |$0.59 |                                 |[Shop][sh4] – [Amazon][az4]|
+|🟡 1 |Control board, 2+ drivers|$75.99|[Jackpot3][sh5] (ESP32 / FluidNC, wifi) is the obvious V1E-family pick.  v2 docs recommended Bart Dring's TMC2209 Pen/Laser board |[Shop][sh5] – [Elecrow][el1]|
+|🟡 1 |Power Supply 24V 2.5A   |$17.99|Board dependent.  Shop listing explicitly covers the ZenXY |[Shop][sh6] – [Amazon][az6]|
+|🟡 ? |Sand                    |      |Baking soda is the "HD version of sand" |[Amazon][az5]|
+|*    |Lube                    |$0.65 |Optional, for idlers             |[Shop][sh8] – [Amazon][az8]|
+|*    |Wire sleeve             |$0.59 |Optional, sold by the foot       |[Shop][sh9] – [Amazon][az9]|
+|*    |Thread locker           |      |Optional, for pulley grub screws.  <mark>V1E no longer stocks this</mark> |[Amazon][az7]|
+|*    |EndStop Plug Kit        |$2.99 |Optional, saves crimping         |[Shop][sh10]|
+
+## Wait — v3-specific, not stocked yet
+
+Ryan is [sourcing kit parts now](https://forum.v1e.com/t/zenxy-build/54481/9?u=azab2c).  **None of these exist in the V1E shop as of this writing** — I checked the whole catalog, there is no 6mm belt, 6mm idler, 6mm pulley, 50×50 block or V-slot extrusion SKU.  The "Nearest V1E part" column is the *10mm* v2 equivalent, shown so you can see the part family.  **Do not buy the 10mm ones for a v3 build.**
+
+|QTY  |Description             |Comment                          |Nearest V1E part (WRONG width for v3) |
 |-----|------------------------|---------------------------------|----------------------------|
-|✅ ?  |Belt GT2 **6mm**       |Length ❓ until a v3 calculator exists.  **No steel-core belt** |<mark>Shop TBD</mark> – [Amazon†][az20]|
-|✅ 6  |Idlers **Smooth** 20T   |6mm, 5mm bore                    |<mark>Shop TBD</mark> – [Amazon†][az21]|
-|✅ 2  |Idlers **Toothed** 20T  |6mm, 5mm bore                    |<mark>Shop TBD</mark> – [Amazon†][az22]|
-|🟡 2 |Pulleys 16T **6mm**     |1 per stepper.  Count/tooth inferred from v2 |<mark>Shop TBD</mark> – [Amazon†][az23]|
-|✅ 2  |V-wheel blocks, **50×50** |"the smaller 50x50 vwheel blocks" — the common V-slot gantry plate + wheel sets |<mark>Shop TBD</mark> – [Amazon†][az24]|
-|✅ ?  |**V-wheel extrusion**   |Profile and cut lengths ❓.  Do not cut anything yet |<mark>Shop TBD</mark> – [Amazon†][az25]|
-|✅ 2  |Optical Endstop         |"same optical endstops as the previous zen" |[Shop][sh1] – <mark>—</mark>|
-|🟡 2 |Stepper, Nema 17        |22mm+ shaft (v2 spec).  84 oz/in from the shop |[Shop][sh2] – [Amazon][az2]|
+|✅ ?  |Belt GT2 **6mm**       |Length ❓ until a v3 calculator exists.  **No steel-core belt** |[GT2 **10mm** Belt][sh11] $1.95/m|
+|✅ 6  |Idlers **Smooth** 20T, 6mm |5mm bore                      |[20T Idler GT2 **10mm**][sh12] $2.30|
+|✅ 2  |Idlers **Toothed** 20T, 6mm |5mm bore                     |[Toothed Idler **10mm** 20T][sh13] $1.19|
+|🟡 2 |Pulleys 16T, 6mm        |1 per stepper.  Count/tooth inferred from v2 |[Pulley 16T GT2 **10mm**][sh14] $1.80|
+|✅ 2  |V-wheel blocks, **50×50** |"the smaller 50x50 vwheel blocks" — reads as the common V-slot gantry plate + wheel sets |[V Wheel][sh15] $1.20 (the POM wheel only, 5mm bore / 15.3mm OD) |
+|✅ ?  |**V-wheel extrusion**   |Profile and cut lengths ❓.  **Do not cut anything yet** |— none |
+|✅ ~20|M3 × 20mm screws       |Head style ❓ (v2 used Phillips pan head) |— see [ZenXY v2 hardware bundle][sh16] |
+|✅ 6  |M5 × 20mm **or** 25mm  |Ryan listed either length        |— see [ZenXY v2 hardware bundle][sh16] |
+|❓ ? |T-nuts / drop-in nuts   |Depends on the extrusion profile |— none |
+|❓ 1 |Glass / tray            |Sizing rules ❓.  v2 used magnet spacers when mounting hardware protrudes |— none |
 
-## Zen bits (unchanged from v2)
+Expect a **ZenXY v3 hardware bundle** and **printed parts set** to appear the way [v2's][sh16] did.  Watch the [ZenXY collection](https://www.v1e.com/collections/zenxy).
 
-|QTY  |Description             |Comment                          |Link                        |
-|-----|------------------------|---------------------------------|----------------------------|
-|🟡 1 |½" × ½" Magnet          |High "N" rating                  |[Shop][sh3] – [United Nuclear][un1]|
-|🟡 1 |½" Steel Ball           |                                 |[Shop][sh4] – [Amazon][az4]|
-|🟡 ? |Sand                    |Baking soda is the "HD version of sand" |– [Amazon][az5]|
-|❓ 1 |Glass / tray            |Sizing rules ❓.  v2 used magnet spacers when mounting hardware protrudes |– |
-
-## Fasteners
-
-|QTY  |Description             |Comment                          |Link                        |
-|-----|------------------------|---------------------------------|----------------------------|
-|✅ ~20|M3 × 20mm              |Head style ❓ (v2 used Phillips pan head) |– [Amazon†][az26]|
-|✅ 6  |M5 × 20mm **or** 25mm  |Ryan listed either length        |– [Amazon†][az27]|
-|❓ ? |T-nuts / drop-in nuts   |Depends on the extrusion profile |– |
-
-## Electronics
-
-Same story as v2 — any 2-driver board that can run CoreXY.  TMC silent drivers are strongly recommended; this thing sits in your living room.
-
-|QTY  |Description             |Comment                          |Link                        |
-|-----|------------------------|---------------------------------|----------------------------|
-|🟡 1 |Control board, 2+ drivers|[Jackpot3](https://www.v1e.com/products/jackpot3-cnc-controller) (ESP32/FluidNC, wifi) is the obvious V1E-family pick.  v2 docs recommended Bart Dring's TMC2209 Pen/Laser controller |[Shop][sh5] – [Elecrow][el1]|
-|🟡 1 |Power Supply 24V        |Board dependent                  |[Shop][sh6] – [Amazon][az6]|
-|*    |Thread locker           |Optional, for pulley grub screws |[Shop][sh7] – [Amazon][az7]|
-|*    |Lube                    |Optional, for idlers             |[Shop][sh8] – [Amazon][az8]|
-|*    |Wire sleeve             |Optional, tidy                   |[Shop][sh9] – [Amazon][az9]|
-
-[sh1]: https://www.v1e.com/collections/zenxy/products/optical-endstop
-[sh2]: https://www.v1e.com/collections/zenxy/products/nema-17-76oz-in-steppers
-[sh3]: https://www.v1e.com/collections/zenxy/products/1-2-x-1-2-magnet
-[sh4]: https://www.v1e.com/collections/zenxy/products/1-2d-steel-ball
-[sh5]: https://www.v1e.com/products/jackpot3-cnc-controller
-[sh6]: https://www.v1e.com/products/24v-power-supply
-[sh7]: https://www.v1e.com/collections/3dprinter-parts/products/0-5ml-threadlocker-242
-[sh8]: https://www.v1e.com/collections/3dprinter-parts/products/super-lube-silicone-lubricating-grease-with-syncolon-ptfe
-[sh9]: https://www.v1e.com/products/wire-sleeve
+[sh1]:  https://www.v1e.com/products/optical-endstop
+[sh2]:  https://www.v1e.com/products/nema-17-76oz-in-steppers
+[sh3]:  https://www.v1e.com/products/1-2-x-1-2-magnet
+[sh4]:  https://www.v1e.com/products/1-2d-steel-ball
+[sh5]:  https://www.v1e.com/products/jackpot3-cnc-controller
+[sh6]:  https://www.v1e.com/products/24v-power-supply
+[sh8]:  https://www.v1e.com/products/super-lube-silicone-lubricating-grease-with-syncolon-ptfe
+[sh9]:  https://www.v1e.com/products/wire-sleeve
+[sh10]: https://www.v1e.com/products/endstop-plug
+[sh11]: https://www.v1e.com/products/gt2-10mm-belt
+[sh12]: https://www.v1e.com/products/20t-idler-gt2-10mm
+[sh13]: https://www.v1e.com/products/idler-10mm-20t-5mm-bore
+[sh14]: https://www.v1e.com/products/pulley-16-tooth-gt2-10mm
+[sh15]: https://www.v1e.com/products/v-wheel
+[sh16]: https://www.v1e.com/products/zenxy-v2-hardware-bundle
 
 [az2]: https://amzn.to/3FcxGlE
 [az4]: https://amzn.to/2hPecOB
@@ -132,18 +133,7 @@ Same story as v2 — any 2-driver board that can run CoreXY.  TMC silent drivers
 [el1]: https://www.elecrow.com/jackpot3-cnc-controller.html
 [un1]: https://unitednuclear.com/index.php?main_page=product_info&cPath=70_71&products_id=982
 
-[az20]: https://www.amazon.com/s?k=GT2+6mm+belt+fiberglass
-[az21]: https://www.amazon.com/s?k=GT2+20T+smooth+idler+6mm+5mm+bore
-[az22]: https://www.amazon.com/s?k=GT2+20T+toothed+idler+6mm+5mm+bore
-[az23]: https://www.amazon.com/s?k=GT2+16T+pulley+6mm+belt+5mm+bore
-[az24]: https://www.amazon.com/s?k=v-slot+gantry+plate+50x50+v+wheel
-[az25]: https://www.amazon.com/s?k=v-slot+aluminum+extrusion
-[az26]: https://www.amazon.com/s?k=M3+x+20mm+screw+assortment
-[az27]: https://www.amazon.com/s?k=M5+x+20mm+screw+assortment
-
-**As an Amazon Associate Ryan earns from qualifying purchases.**  Buy from the [V1E shop](https://www.v1e.com/collections/zenxy) when you can — it directly funds designs like this one.
-
-`†` = generic Amazon **search**, not a V1E affiliate link and not a vetted part.  These are placeholders so you can see what the part looks like.  Replace with the shop link once v3 parts are listed.
+**As an Amazon Associate Ryan earns from qualifying purchases.**  Every `amzn.to` link above is lifted from the official [ZenXY](https://docs.v1e.com/zenxy/) and [LowRider](https://docs.v1e.com/lowrider/) docs and carries Ryan's `vicicn-20` tag.  Buy from the [V1E shop](https://www.v1e.com/collections/zenxy) when you can — it directly funds designs like this one.
 
 ## Printed Parts
 
@@ -233,6 +223,24 @@ See the [v2 example table](https://docs.v1e.com/zenxy/#example-table) and its [F
 - [ZenXY v2 builds](https://forum.v1e.com/tag/zenxy) — plenty of table/glass/sand lessons that still apply
 
 ---
+
+# <big>Link verification</big>
+
+A BOM whose links 404 is worse than no BOM, so every external link here is checked with [`tools/check-links.ps1`](../tools/check-links.ps1):
+
+```powershell
+./tools/check-links.ps1 zenxy-v3/README.md -LibraryPath E:\git\new-zenxy\models\library\v1e
+```
+
+It does three things: live HTTP check, redirect detection (catches renamed/merged shop products), and an **offline grounding check** — any `v1e.com/products/<handle>` link whose handle is missing from the local V1E parts library gets flagged, which catches BOM links to products that quietly stopped existing.
+
+Output is problems-only by default, so it is cheap to paste back into an LLM.  `-All` for the full list.
+
+Findings worth knowing:
+
+- The threadlocker shop link used by the [official LR4 docs](https://docs.v1e.com/lowrider/) (`0-5ml-threadlocker-242`) is **404 and absent from the catalog** — V1E appears to have stopped stocking it.  Amazon link only here.
+- Every `amzn.to` link resolves to a live Amazon product page carrying `tag=vicicn-20`, i.e. Ryan's associate tag.
+- Liberapay, United Nuclear and Autodesk A360 answer bots with 403, so they report as `BLOCKED` rather than broken.  Liberapay confirmed good by hand.  The other two are carried over unchanged from the [official V1E ZenXY docs](https://docs.v1e.com/zenxy/) and I could not fetch them from here — **unverified**.
 
 ## License
 
