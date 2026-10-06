@@ -37,3 +37,23 @@ Looked at a few different setups, including…
 Currently leaning towards something that’s a combination of all the good things above. Cheers!
 [/quote]
 
+# Parts
+
+Print these (latest versions):
+
+| Part | STL | G-code |
+|---|---|---|
+| PTFE guide, 110mm | [stl](aza-ptfe-guide-110mm.v4.stl) ([3mf](aza-ptfe-guide-110mm.v4.3mf)) | [gcode](aza-ptfe-guide-110mm.v4.gcode) |
+| Guide mount, PTFE | [stl](aza-ptfe-guide-mount-can-ptfe-v5.stl) | [gcode](aza-ptfe-guide-mount-can-ptfe-v5.gcode) |
+| Guide mount, BTT runout sensor | [stl](aza-ptfe-guide-mount-sensor-v5.stl) | [gcode](aza-ptfe-guide-mount-sensor-v5.gcode) |
+
+Folders:
+
+* [img/](img/) — photos and renders.
+* [vendor/btt/](vendor/btt/) — BigTreeTech Smart Filament Sensor reference models, used to fit the sensor mount. Not for printing.
+* [archive/](archive/) — superseded parts (v3 guide, v4 mount).
+
+# History
+
+- 2026-10-06 v5 — Split the v4 mount into two parts: `aza-ptfe-guide-mount-can-ptfe-v5` (PTFE guide) and `aza-ptfe-guide-mount-sensor-v5` (BTT runout sensor), so the sensor can be swapped/iterated without reprinting the guide. Also reworked the guide's overhead 90° bend for better support. Prompted by TPU print failures traced to feed issues — the v4 PTFE tube was found kinked/cut where the unsupported upper bend let it collapse.
+
