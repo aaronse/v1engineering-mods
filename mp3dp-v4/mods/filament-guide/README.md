@@ -43,17 +43,19 @@ Print these (latest versions):
 
 | Part | STL | G-code |
 |---|---|---|
-| PTFE guide, 110mm | [stl](aza-ptfe-guide-110mm.v4.stl) ([3mf](aza-ptfe-guide-110mm.v4.3mf)) | [gcode](aza-ptfe-guide-110mm.v4.gcode) |
+| PTFE guide, 110mm | [stl](aza-ptfe-guide-110mm-v4.stl) ([3mf](aza-ptfe-guide-110mm-v4.3mf)) | [gcode](aza-ptfe-guide-110mm-v4.gcode) |
 | Guide mount, PTFE | [stl](aza-ptfe-guide-mount-can-ptfe-v5.stl) | [gcode](aza-ptfe-guide-mount-can-ptfe-v5.gcode) |
 | Guide mount, BTT runout sensor | [stl](aza-ptfe-guide-mount-sensor-v5.stl) | [gcode](aza-ptfe-guide-mount-sensor-v5.gcode) |
 
 Folders:
 
 * [img/](img/) — photos and renders.
-* [vendor/btt/](vendor/btt/) — BigTreeTech Smart Filament Sensor reference models, used to fit the sensor mount. Not for printing.
+* [specs/btt-smart-filament-sensor/](specs/btt-smart-filament-sensor/) — BigTreeTech Smart Filament Sensor reference models, used to fit the sensor mount. Not for printing; see its [SOURCE.md](specs/btt-smart-filament-sensor/SOURCE.md).
 * [archive/](archive/) — superseded parts (v3 guide, v4 mount).
 
 # History
 
-- 2026-10-06 v5 — Split the v4 mount into two parts: `aza-ptfe-guide-mount-can-ptfe-v5` (PTFE guide) and `aza-ptfe-guide-mount-sensor-v5` (BTT runout sensor), so the sensor can be swapped/iterated without reprinting the guide. Also reworked the guide's overhead 90° bend for better support. Prompted by TPU print failures traced to feed issues — the v4 PTFE tube was found kinked/cut where the unsupported upper bend let it collapse.
+The full record, including the reasons for each change, is in [STORY-LOG.md](STORY-LOG.md).
+
+- 2026-10-06 v5 — Split the v4 mount into separate PTFE guide and BTT runout sensor parts, and better supported the overhead 90° bend. The v4 bend kinked and cut the PTFE tube, causing TPU feed failures.
 
