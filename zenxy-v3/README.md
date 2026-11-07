@@ -81,7 +81,7 @@ These are unchanged from v2 or generic enough to be safe.  Everything here is a 
 |🟡 1 |½" Steel Ball           |$0.59 |                                 |[Shop][sh4] – [Amazon][az4]|
 |🟡 1 |Control board, 2+ drivers|$75.99|[Jackpot3][sh5] (ESP32 / FluidNC, wifi) is the obvious V1E-family pick.  v2 docs recommended Bart Dring's TMC2209 Pen/Laser board |[Shop][sh5] – [Elecrow][el1]|
 |🟡 1 |Power Supply 24V 2.5A   |$17.99|Board dependent.  Shop listing explicitly covers the ZenXY |[Shop][sh6] – [Amazon][az6]|
-|🟡 ? |Sand                    |      |Baking soda is the "HD version of sand" |[Amazon][az5]|
+|🟡 ? |Sand                    |      |Plain baking soda — Ryan's "HD version of sand".  Grocery store, cheapest big bag.  Fine play sand also works |— |
 |*    |Lube                    |$0.65 |Optional, for idlers             |[Shop][sh8] – [Amazon][az8]|
 |*    |Wire sleeve             |$0.59 |Optional, sold by the foot       |[Shop][sh9] – [Amazon][az9]|
 |*    |Thread locker           |      |Optional, for pulley grub screws.  <mark>V1E no longer stocks this</mark> |[Amazon][az7]|
@@ -124,7 +124,6 @@ Expect a **ZenXY v3 hardware bundle** and **printed parts set** to appear the wa
 
 [az2]: https://amzn.to/3FcxGlE
 [az4]: https://amzn.to/2hPecOB
-[az5]: https://amzn.to/2vWrmiO
 [az6]: https://amzn.to/3TXtjoM
 [az7]: https://amzn.to/3GhaKmx
 [az8]: https://amzn.to/31H7yS6
@@ -239,7 +238,12 @@ Output is problems-only by default, so it is cheap to paste back into an LLM.  `
 Findings worth knowing:
 
 - The threadlocker shop link used by the [official LR4 docs](https://docs.v1e.com/lowrider/) (`0-5ml-threadlocker-242`) is **404 and absent from the catalog** — V1E appears to have stopped stocking it.  Amazon link only here.
-- Every `amzn.to` link resolves to a live Amazon product page carrying `tag=vicicn-20`, i.e. Ryan's associate tag.
+- The baking soda link in the [original ZenXY docs](https://docs.v1e.com/zenxy/og_zen/) (`amzn.to/2vWrmiO` → ASIN `B00K1JFC0S`) is **dead** — the product was delisted.  Dropped it; baking soda is a grocery item and does not need a link.  Worth reporting to Ryan.
+- Every surviving `amzn.to` link resolves to an Amazon product page carrying `tag=vicicn-20`, i.e. Ryan's associate tag.
+
+⚠️ **A "good" Amazon link here means nothing.**  The checker does request every `amzn.to` link — a `404` or a timeout from Amazon is still reported as broken — but Amazon serves an anti-bot page with a `200` status for delisted products, alternating with an honest `404` for the *same* URL.  So a `2xx` proves nothing and is reported as `MANUAL`, not OK.  The request still resolves the shortener, surfaces the ASIN and confirms Ryan's `vicicn-20` tag is intact.
+
+**Click them yourself before trusting them.**  ASINs currently linked: `B00QEYADRQ` steppers, `B002BBM5SG` steel ball, `B08MTLLLGJ` PSU, `B009I2UC3Q` threadlocker, `B07CFS66GV` lube, `B097HSRNKM` wire sleeve.
 - Liberapay, United Nuclear and Autodesk A360 answer bots with 403, so they report as `BLOCKED` rather than broken.  Liberapay confirmed good by hand.  The other two are carried over unchanged from the [official V1E ZenXY docs](https://docs.v1e.com/zenxy/) and I could not fetch them from here — **unverified**.
 
 ## License
